@@ -16,4 +16,24 @@ public:
 private:
 
 	bool debug;
+
+};
+
+class Body 
+{
+public:
+	//Variables
+	float x;
+	float y;
+	float w;
+	float h;
+
+	double rotation;
+
+	float mass;
+
+public:
+	//Methods
+	void addForce(int force);
+	void addMomentum(int momentum);
 };
