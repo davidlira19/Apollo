@@ -1,2 +1,7 @@
 ﻿  ModulePlayer.cpp
+C:\Users\adria\OneDrive\Documentos\GitHub\Apollo\Apollo\ModulePlayer.cpp(39,48): warning C4244: '+=': conversión de 'float' a 'TYPE'; posible pérdida de datos
+          with
+          [
+              TYPE=int
+          ]
   SDL Game.vcxproj -> C:\Users\adria\OneDrive\Documentos\GitHub\Apollo\Apollo\Debug\Physics 2 Class 1 Handout.exe

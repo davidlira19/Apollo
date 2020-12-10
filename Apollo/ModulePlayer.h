@@ -31,6 +31,8 @@ public:
 	bool CleanUp();
 
 public:
+	float velocity;
+	float gravity;
 
 	Object player;
 	Object ball;

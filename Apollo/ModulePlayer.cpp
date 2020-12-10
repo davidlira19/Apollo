@@ -13,6 +13,8 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
+	velocity = 0.0f;
+	gravity = 0.001f;
 	//Player Position
 	player.position.x = 0;
 	player.position.y = 0;
@@ -33,9 +35,19 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {	
+	velocity += gravity * 0.05f * 100.0f;
+	player.position.y += velocity * 0.05f * 100.0f;
+
+	if (player.position.y >= 656)
+	{
+		player.position.y = 656;
+		velocity = 0;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		player.position.y -= 2;
+		velocity = 0;
+		player.position.y -= 6;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
@@ -50,7 +62,7 @@ update_status ModulePlayer::Update()
 		player.position.x += 2;
 	}
 
-	SDL_Rect rect = { 684,645,118,316 };
+	SDL_Rect rect = { 684 / 3,645 / 3,118 / 3,316 / 3 };
 	App->renderer->Blit(player.graphic, player.position.x, player.position.y, &rect);
 
 	return UPDATE_CONTINUE;
