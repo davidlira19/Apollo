@@ -46,8 +46,8 @@ update_status ModulePlayer::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		velocity = 0;
-		player.position.y -= 6;
+		velocity -=0.002 * 0.05f * 100.0f;
+		//player.position.y -= 6;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
