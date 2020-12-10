@@ -9,6 +9,7 @@ Application::Application()
 	audio = new ModuleAudio(this, true);
 	player = new ModulePlayer(this, false);
 	scene_intro = new ModuleSceneIntro(this, true);
+	scene = new ModuleScene(this, false);
 	physics = new ModulePhysics(this, false);
 	fade = new ModuleFadeToBlack(this, true);
 	// The order of calls is very important!
@@ -25,7 +26,7 @@ Application::Application()
 	AddModule(fade);
 	// Scenes
 	AddModule(scene_intro);
-	
+	AddModule(scene);
 	// Player
 	AddModule(player);
 	

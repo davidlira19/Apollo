@@ -27,7 +27,6 @@ public:
 	bool CleanUp();
 
 public:
-	SDL_Texture* ship;
 	Object ball;
 	Object flipper1;
 	Object flipper2;

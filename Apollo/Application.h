@@ -12,6 +12,7 @@
 #include "ModulePlayer.h"
 #include "ModulePhysics.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleScene.h"
 #include"FadeToBlack.h"
 class Application
 {
@@ -23,6 +24,7 @@ public:
 	ModuleAudio* audio;
 	ModulePlayer* player;
 	ModuleSceneIntro* scene_intro;
+	ModuleScene* scene;
 	ModulePhysics* physics;
 	ModuleFadeToBlack* fade;
 private:

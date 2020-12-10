@@ -19,7 +19,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
-	introText=App->textures->Load("Assets/Textures/qfK8Ykf1.png");
+	introText=App->textures->Load("Assets/Textures/intro.png");
 	return ret;
 }
 
@@ -35,7 +35,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-		App->fade->FadeToBlack((Module*)this, (Module*)App->player, 60);
+		App->fade->FadeToBlack((Module*)this, (Module*)App->scene, 60);
 	}
 	App->renderer->Blit(introText, 0, 0);
 	return UPDATE_CONTINUE;
