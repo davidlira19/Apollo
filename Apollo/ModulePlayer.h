@@ -3,7 +3,6 @@
 #include "Animation.h"
 #include "Globals.h"
 #include "p2Point.h"
-
 class PhysBody;
 
 struct Object
@@ -24,10 +23,11 @@ public:
 
 	bool Start();
 	update_status Update();
+	update_status PostUpdate();
 	bool CleanUp();
 
 public:
-
+	SDL_Texture* ship;
 	Object ball;
 	Object flipper1;
 	Object flipper2;

@@ -1,13 +1,2 @@
-﻿  Application.cpp
-  log.cpp
-  Main.cpp
-  ModuleAudio.cpp
-  ModuleInput.cpp
-  ModulePhysics.cpp
-  ModulePlayer.cpp
-  ModuleRender.cpp
-  ModuleSceneIntro.cpp
-  ModuleTextures.cpp
-  ModuleWindow.cpp
-  Generando código...
-  SDL Game.vcxproj -> C:\Users\adria\OneDrive\Documentos\GitHub\Apollo\Apollo\Debug\Physics 2 Class 1 Handout.exe
+﻿  ModulePlayer.cpp
+  SDL Game.vcxproj -> C:\Users\unaiddgs\Desktop\Apollo\Apollo\Debug\Physics 2 Class 1 Handout.exe

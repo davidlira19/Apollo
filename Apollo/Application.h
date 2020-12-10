@@ -12,7 +12,7 @@
 #include "ModulePlayer.h"
 #include "ModulePhysics.h"
 #include "ModuleSceneIntro.h"
-
+#include"FadeToBlack.h"
 class Application
 {
 public:
@@ -24,7 +24,7 @@ public:
 	ModulePlayer* player;
 	ModuleSceneIntro* scene_intro;
 	ModulePhysics* physics;
-
+	ModuleFadeToBlack* fade;
 private:
 
 	p2List<Module*> list_modules;

@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
-
+#include"FadeToBlack.h"
 
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -19,7 +19,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
-
+	introText=App->textures->Load("Assets/Textures/qfK8Ykf1.png");
 	return ret;
 }
 
@@ -27,14 +27,16 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
-
+	App->textures->Unload(introText);
 	return true;
 }
 
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	
-
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+		App->fade->FadeToBlack((Module*)this, (Module*)App->player, 60);
+	}
+	App->renderer->Blit(introText, 0, 0);
 	return UPDATE_CONTINUE;
 }

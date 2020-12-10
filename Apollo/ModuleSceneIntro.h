@@ -55,7 +55,7 @@ public:
 
 	SDL_Texture* graphics;
 	PhysBody* background;
-
+	SDL_Texture* introText;
 	Bouncer bouncer1;
 	Bouncer bouncer2;
 
