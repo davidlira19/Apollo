@@ -19,7 +19,6 @@ public:
 	bool CleanUp();
 
 public:
-	SDL_Texture* ship;
 
 	SDL_Texture* graphics;
 	PhysBody* background;

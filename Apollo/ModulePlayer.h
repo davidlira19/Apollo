@@ -3,13 +3,17 @@
 #include "Animation.h"
 #include "Globals.h"
 #include "p2Point.h"
-class PhysBody;
+
+class PhysBody
+{
+};
 
 struct Object
 {
 	SDL_Texture* graphic;
 	PhysBody* body;
 	uint fx;
+	p2Point<int> position;
 
 	Object() : graphic(NULL), body(NULL)
 	{}
@@ -27,6 +31,8 @@ public:
 	bool CleanUp();
 
 public:
+
+	Object player;
 	Object ball;
 	Object flipper1;
 	Object flipper2;

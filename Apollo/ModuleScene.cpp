@@ -19,7 +19,7 @@ bool ModuleScene::Start()
 	bool ret = true;
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
-	ship = App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
+	
 	return ret;
 }
 
@@ -27,15 +27,13 @@ bool ModuleScene::Start()
 bool ModuleScene::CleanUp()
 {
 	LOG("Unloading Intro scene");
-	App->textures->Unload(ship);
+	
 	return true;
 }
 
 // Update: draw background
 update_status ModuleScene::Update()
 {
-	SDL_Rect rect = { 684,645,118,316 };
-	App->renderer->Blit(ship, 0, 0, &rect);
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 		App->fade->FadeToBlack((Module*)this, (Module*)App->player, 60);
