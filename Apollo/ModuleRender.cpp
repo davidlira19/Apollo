@@ -46,7 +46,7 @@ update_status ModuleRender::PreUpdate()
 }
 
 // Update: debug camera
-update_status ModuleRender::Update()
+update_status ModuleRender::Update(float dt)
 {
 	/*
 	int speed = 3;
@@ -88,7 +88,7 @@ bool ModuleRender::CleanUp()
 }
 
 // Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y )
+bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, int scale, float speed, double angle, int pivot_x, int pivot_y)
 {
 	bool ret = true;
 	SDL_Rect rect;
@@ -97,8 +97,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 
 	if(section != NULL)
 	{
-		rect.w = section->w;
-		rect.h = section->h;
+		rect.w = section->w*scale;
+		rect.h = section->h*scale;
 	}
 	else
 	{

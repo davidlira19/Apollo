@@ -1,5 +1,5 @@
 #pragma once
-
+#include"Timer.h"
 #include "p2List.h"
 #include "Globals.h"
 #include "Module.h"
@@ -41,6 +41,12 @@ public:
 	bool CleanUp();
 
 private:
+	Timer startupTime;
+	Timer frameTime;
+	Timer lastSecFrameTime;
+	int lastSecFrameCount = 0;
+	int prevLastSecFrameCount = 0;
 
+	float dt = 0.0f;
 	void AddModule(Module* mod);
 };

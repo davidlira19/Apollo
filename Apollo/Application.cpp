@@ -19,7 +19,7 @@ Application::Application()
 	// Main Modules
 	AddModule(window);
 	AddModule(physics);
-	AddModule(renderer);
+	
 	AddModule(textures);
 	AddModule(input);
 	AddModule(audio);
@@ -29,7 +29,7 @@ Application::Application()
 	AddModule(scene);
 	// Player
 	AddModule(player);
-	
+	AddModule(renderer);
 }
 
 Application::~Application()
@@ -76,6 +76,8 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 	p2List_item<Module*>* item = list_modules.getFirst();
 
+	
+
 	while(item != NULL && ret == UPDATE_CONTINUE)
 	{
 		if(item->data->IsEnabled())
@@ -84,11 +86,12 @@ update_status Application::Update()
 	}
 
 	item = list_modules.getFirst();
-
+	dt = frameTime.ReadSec();
+	frameTime.Start();
 	while(item != NULL && ret == UPDATE_CONTINUE)
 	{
 		if(item->data->IsEnabled())
-  			ret = item->data->Update();
+  			ret = item->data->Update(dt);
 		item = item->next;
 	}
 

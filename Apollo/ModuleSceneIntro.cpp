@@ -32,7 +32,7 @@ bool ModuleSceneIntro::CleanUp()
 }
 
 // Update: draw background
-update_status ModuleSceneIntro::Update()
+update_status ModuleSceneIntro::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 		App->fade->FadeToBlack((Module*)this, (Module*)App->player, 60);

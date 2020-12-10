@@ -32,7 +32,7 @@ bool ModuleScene::CleanUp()
 }
 
 // Update: draw background
-update_status ModuleScene::Update()
+update_status ModuleScene::Update(float dt)
 {
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {

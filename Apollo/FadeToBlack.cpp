@@ -21,7 +21,7 @@ bool ModuleFadeToBlack::Start()
 	return true;
 }
 
-update_status ModuleFadeToBlack::Update()
+update_status ModuleFadeToBlack::Update(float dt)
 {
 	// Exit this function if we are not performing a fade
 	if (currentStep == Fade_Step::NONE) return UPDATE_CONTINUE;
