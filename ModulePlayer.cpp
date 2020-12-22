@@ -78,10 +78,9 @@ update_status ModulePlayer::Update(float dt)
 	{
 		player.position.x += 2;
 	}
-	float cant = velocity * dt + ((1 / 2) * gravity * dt * dt);
-	player.position.y += metersToPixels(cant);
-	
 
+	
+	App->player->player.position.y += metersToPixels(App->physics->Integrator(velocity,dt, gravity));
 	return UPDATE_CONTINUE;
 }
 update_status ModulePlayer::PostUpdate()

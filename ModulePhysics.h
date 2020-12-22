@@ -1,7 +1,6 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-
 class ModulePhysics : public Module
 {
 public:
@@ -12,7 +11,7 @@ public:
 	update_status PreUpdate();
 	update_status PostUpdate();
 	bool CleanUp();
-
+	float Integrator(int velocity, float dt, float gravity);
 private:
 
 	bool debug;

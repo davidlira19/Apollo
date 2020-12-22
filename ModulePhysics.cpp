@@ -40,7 +40,10 @@ update_status ModulePhysics::PostUpdate()
 
 	return UPDATE_CONTINUE;
 }
-
+float ModulePhysics::Integrator(int velocity, float dt, float gravity) {
+	float cant = velocity * dt + ((1 / 2) * gravity * dt * dt);	
+	return cant;
+}
 
 // Called before quitting
 bool ModulePhysics::CleanUp()

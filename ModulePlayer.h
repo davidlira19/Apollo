@@ -34,6 +34,6 @@ public:
 public:
 	float velocity;
 	float gravity;
-
+	float angle;
 	Object player;
 };
