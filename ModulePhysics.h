@@ -13,7 +13,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	float Integrator(int velocity, float dt, float gravity);
+	Vec2 Integrator(Vec2 velocity, float dt, float gravity);
 
 	Vec2 GravityForce(float gravity, float M, float m, float distance, Vec2 direction);
 private:

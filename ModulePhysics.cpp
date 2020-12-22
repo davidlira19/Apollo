@@ -50,10 +50,11 @@ bool ModulePhysics::CleanUp()
 	return true;
 }
 
-float ModulePhysics::Integrator(int velocity, float dt, float acceleration)
-{
-	float cant = velocity * dt + ((1 / 2) * acceleration * dt * dt);
-	return cant;
+Vec2 ModulePhysics::Integrator(Vec2 velocity, float dt, float gravity) {
+	Vec2 pos;
+	pos.y = velocity.y * dt + ((1 / 2) * gravity * dt * dt);
+	pos.x = velocity.x * dt;
+	return pos;
 }
 
 Vec2 ModulePhysics::GravityForce(float gravity, float M, float m, float distance, Vec2 direction)

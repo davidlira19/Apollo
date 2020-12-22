@@ -22,7 +22,8 @@ bool ModulePlayer::Start()
 {
 	
 	LOG("Loading player");
-	velocity = 1.0f;
+	velocity.y = 0.0f;
+	velocity.x = 0.0f;
 	gravity = 10.0f;
 	//Player Position
 	player.position.x = 0;
@@ -51,20 +52,25 @@ update_status ModulePlayer::Update(float dt)
 	if (player.position.y >= 656)
 	{
 		player.position.y = 656;
-		velocity = 0;
+		velocity.y = 0;
+		velocity.x = 0;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT|| App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
+		float ang;
 		SDL_Rect rec = currentAnimation->GetCurrentFrame();
 		currentAnimation->Update();
-		App->renderer->Blit(firetexture, player.position.x+8, player.position.y+92, &rec,2);
-		velocity -=(20.0 * dt);
+		App->renderer->Blit(firetexture, player.position.x + 8, player.position.y + 92, &rec, 2, 1.0f, angle, 20, 52);
+		ang = ((angle * M_PI) / 180);
+		velocity.y -= (20.0 * dt * cos(ang));
+		velocity.x += (20.0 * dt * sin(ang));
+
 	}
-	else 
+	else
 	{
-	
-		velocity += (gravity * dt);
+
+		velocity.y += (gravity * dt);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
@@ -72,21 +78,27 @@ update_status ModulePlayer::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		player.position.x -= 2;
+		angle -= 1;
+
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		player.position.x += 2;
+		angle += 1;
+
 	}
 
 	
-	App->player->player.position.y += metersToPixels(App->physics->Integrator(velocity,dt, gravity));
+	Vec2 ps;
+	ps = App->physics->Integrator(velocity, dt, gravity);
+
+	App->player->player.position.y += metersToPixels(ps.y);
+	App->player->player.position.x += metersToPixels(ps.x);
 	return UPDATE_CONTINUE;
 }
 update_status ModulePlayer::PostUpdate()
 {
 	SDL_Rect rect = { 684 / 3,645 / 3,118 / 3,316 / 3 };
-	App->renderer->Blit(player.graphic, player.position.x, player.position.y, &rect);
+	App->renderer->Blit(player.graphic, player.position.x, player.position.y, &rect, 1, 1.0f, angle, 20, 52);
 	return UPDATE_CONTINUE;
 }
 

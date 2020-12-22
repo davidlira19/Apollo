@@ -32,8 +32,8 @@ public:
 	Animation fireanimation;
 	Animation* currentAnimation;
 public:
-	float velocity;
 	float gravity;
+	Vec2 velocity;
 	float angle;
 	Object player;
 };
