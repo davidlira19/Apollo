@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModulePhysics.h"
+
 #include "math.h"
 
 
@@ -24,7 +25,7 @@ bool ModulePhysics::Start()
 // 
 update_status ModulePhysics::PreUpdate()
 {
-
+	Vec2 Fg = GravityForce(9.81, 100000000, 20000000, 200, { 100,200 });
 	return UPDATE_CONTINUE;
 }
 
@@ -40,10 +41,6 @@ update_status ModulePhysics::PostUpdate()
 
 	return UPDATE_CONTINUE;
 }
-float ModulePhysics::Integrator(int velocity, float dt, float gravity) {
-	float cant = velocity * dt + ((1 / 2) * gravity * dt * dt);	
-	return cant;
-}
 
 // Called before quitting
 bool ModulePhysics::CleanUp()
@@ -51,4 +48,18 @@ bool ModulePhysics::CleanUp()
 	LOG("Destroying physics world");
 
 	return true;
+}
+
+float ModulePhysics::Integrator(int velocity, float dt, float acceleration)
+{
+	float cant = velocity * dt + ((1 / 2) * acceleration * dt * dt);
+	return cant;
+}
+
+Vec2 ModulePhysics::GravityForce(float gravity, float M, float m, float distance, Vec2 direction)
+{
+	float G = pow(6.674,-11);
+	Vec2 Fg = { -G * (m * M / (distance * distance)) * direction.x,-G * (m * M / (distance * distance)) * direction.y };
+
+	return Fg;
 }

@@ -85,7 +85,7 @@
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="p2DynArray.h" />
-    <ClInclude Include="p2Point.h" />
+    <ClInclude Include="Vec2.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>

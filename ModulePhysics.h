@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "Vec2.h"
 class ModulePhysics : public Module
 {
 public:
@@ -11,7 +12,10 @@ public:
 	update_status PreUpdate();
 	update_status PostUpdate();
 	bool CleanUp();
+
 	float Integrator(int velocity, float dt, float gravity);
+
+	Vec2 GravityForce(float gravity, float M, float m, float distance, Vec2 direction);
 private:
 
 	bool debug;

@@ -2,7 +2,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Globals.h"
-#include "p2Point.h"
+#include "Vec2.h"
 
 class PhysBody
 {
@@ -13,7 +13,7 @@ struct Object
 	SDL_Texture* graphic;
 	PhysBody* body;
 	uint fx;
-	p2Point<int> position;
+	Vec2 position;
 
 	Object() : graphic(NULL), body(NULL)
 	{}

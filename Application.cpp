@@ -10,7 +10,7 @@ Application::Application()
 	player = new ModulePlayer(this, false);
 	scene_intro = new ModuleSceneIntro(this, true);
 	scene = new ModuleScene(this, false);
-	physics = new ModulePhysics(this, false);
+	physics = new ModulePhysics(this, true);
 	fade = new ModuleFadeToBlack(this, true);
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
