@@ -23,6 +23,7 @@ public:
 	Vec2 GravityForce(float gravity, float M, float m, float distance, Vec2 direction);
 	Vec2 LiftForce(float density, float velocity, float surface, float LiftCoeficient);
 	Vec2 DragForce(float density, float velocity, float surface, float DragCoeficient);
+	Vec2 AddMomentum(float x, float y, Vec2 velocity, float m);
 
 	Rocket* CreateRocket(Vec2 pos, double rotation, float mass, int life, Vec2 acceleration, Vec2 velocity);
 	Planet* CreatePlanet(Vec2 pos, float mass, float radius, Vec2 localGravity);
@@ -33,4 +34,3 @@ private:
 	bool debug;
 
 };
-

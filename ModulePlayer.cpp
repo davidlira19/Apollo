@@ -1,8 +1,8 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModulePlayer.h"
-#include"ModuleRender.h"
-#include"Animation.h"
+#include "ModuleRender.h"
+
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	fireanimation.PushBack({ 0,0,10,19 });
@@ -48,7 +48,6 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update(float dt)
 {	
 	
-
 	if (player.position.y >= 656)
 	{
 		player.position.y = 656;
@@ -86,7 +85,6 @@ update_status ModulePlayer::Update(float dt)
 		angle += 1;
 
 	}
-
 	
 	Vec2 ps;
 	ps = App->physics->Integrator(velocity, dt, gravity);
@@ -101,6 +99,3 @@ update_status ModulePlayer::PostUpdate()
 	App->renderer->Blit(player.graphic, player.position.x, player.position.y, &rect, 1, 1.0f, angle, 20, 52);
 	return UPDATE_CONTINUE;
 }
-
-
-

@@ -77,6 +77,14 @@ Vec2 ModulePhysics::DragForce(float density, float velocity, float surface, floa
 	return Fdrag;
 }
 
+Vec2 ModulePhysics::AddMomentum(float x, float y, Vec2 velocity, float m)
+{
+	float Xvelocity = x / m;
+	float Yvelocity = y / m;
+	velocity.x += Xvelocity;
+	velocity.y += Yvelocity;
+}
+
 /*Rocket* ModulePhysics::CreateRocket(Vec2 pos, double rotation, float mass, int life, Vec2 acceleration, Vec2 velocity)
 {
 	Rocket* rocket = new Rocket();

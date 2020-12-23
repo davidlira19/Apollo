@@ -8,4 +8,5 @@ public:
 public:
 	float radius;
 	Vec2 localGravity;
+	SDL_Texture* planetTexture;
 };

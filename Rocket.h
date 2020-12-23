@@ -10,4 +10,5 @@ public:
 	Vec2 acceleration;
 	Vec2 velocity;
 	float force;
+	SDL_Texture* rocketTexture;
 };
