@@ -64,3 +64,43 @@ Vec2 ModulePhysics::GravityForce(float gravity, float M, float m, float distance
 
 	return Fg;
 }
+
+Vec2 ModulePhysics::LiftForce(float density, float velocity, float surface, float LiftCoeficient)
+{
+	Vec2 Flift = { 0, (density * velocity * velocity * surface * LiftCoeficient) / 2 };
+	return Flift;
+}
+
+Vec2 ModulePhysics::DragForce(float density, float velocity, float surface, float DragCoeficient)
+{
+	Vec2 Fdrag = { (density * velocity * velocity * surface * DragCoeficient) / 2,0 };
+	return Fdrag;
+}
+
+/*Rocket* ModulePhysics::CreateRocket(Vec2 pos, double rotation, float mass, int life, Vec2 acceleration, Vec2 velocity)
+{
+	Rocket* rocket = new Rocket();
+	rocket->position = pos;
+	rocket->rotation = rotation;
+	rocket->mass = mass;
+	rocket->life = life;
+	rocket->acceleration = acceleration;
+	rocket->velocity = velocity;
+
+	bodyList.add(rocket);
+
+	return rocket;
+}
+
+Planet* ModulePhysics::CreatePlanet(Vec2 pos, float mass, float radius, Vec2 localGravity)
+{
+	Planet* planet = new Planet();
+	planet->position = pos;
+	planet->mass = mass;
+	planet->radius = radius;
+	planet->localGravity = localGravity;
+
+	bodyList.add(planet);
+	return planet;
+}
+*/
