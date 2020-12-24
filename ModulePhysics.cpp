@@ -57,10 +57,14 @@ Vec2 ModulePhysics::Integrator(Vec2 velocity, float dt, float gravity) {
 	return pos;
 }
 
-Vec2 ModulePhysics::GravityForce(float gravity, float M, float m, float distance, Vec2 direction)
+Vec2 ModulePhysics::GravityForce(double gravity, double M, double m, double distance, Vec2 direction)
 {
-	float G = pow(6.674,-11);
-	Vec2 Fg = { -G * (m * M / (distance * distance)) * direction.x,-G * (m * M / (distance * distance)) * direction.y };
+	double G = pow(6.674,-11);
+	Vec2 Fg = Vec2(0, 0);
+	double F_x = -G * (m * M / (distance * distance)) * direction.x;
+	double F_y = -G * (m * M / (distance * distance)) * direction.y;
+
+	Fg = Vec2((float)F_x, (float)F_y);
 
 	return Fg;
 }
@@ -87,7 +91,7 @@ Vec2 ModulePhysics::AddMomentum(float x, float y, Vec2 velocity, float m)
 	return velocity;
 }
 
-Rocket* ModulePhysics::CreateRocket(Vec2 pos, double rotation, float mass, int life, int ammo, Vec2 acceleration, Vec2 velocity)
+Rocket* ModulePhysics::CreateRocket(Vec2 pos, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity)
 {
 	Rocket* rocket = new Rocket();
 	rocket->position = pos;
@@ -95,6 +99,7 @@ Rocket* ModulePhysics::CreateRocket(Vec2 pos, double rotation, float mass, int l
 	rocket->mass = mass;
 	rocket->life = life;
 	rocket->ammo = ammo;
+	rocket->fuel = fuel;
 	rocket->acceleration = acceleration;
 	rocket->velocity = velocity;
 

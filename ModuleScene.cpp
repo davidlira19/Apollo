@@ -29,7 +29,7 @@ bool ModuleScene::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	earth = App->physics->CreatePlanet(Vec2(0, 0), 0, 100, Vec2(0, 0));
-	rocket = App->physics->CreateRocket(Vec2(100, 100), 0, 100, 100, 50, Vec2(0, 0), Vec2(0, 0));
+	rocket = App->physics->CreateRocket(Vec2(100, 100), 0, 100, 100, 50, 500, Vec2(0, 0), Vec2(0, 0));
 	rocket->rocketTexture = App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
 	fireTexture = App->textures->Load("Assets/Textures/fire.png");
 
@@ -58,14 +58,17 @@ update_status ModuleScene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		float ang;
-		SDL_Rect rec = currentAnimation->GetCurrentFrame();
-		currentAnimation->Update();
-		App->renderer->Blit(fireTexture, rocket->position.x + 8, rocket->position.y + 112, &rec, 2, 1.0f, rocket->rotation, 20, 52);
-		ang = ((rocket->rotation * M_PI) / 180);
-		rocket->velocity.y -= (20.0 * dt * cos(ang));
-		rocket->velocity.x += (20.0 * dt * sin(ang));
-
+		if (rocket->fuel > 0)
+		{
+			rocket->fuel -= (1.0f);
+			float ang;
+			SDL_Rect rec = currentAnimation->GetCurrentFrame();
+			currentAnimation->Update();
+			App->renderer->Blit(fireTexture, rocket->position.x + 8, rocket->position.y + 112, &rec, 2, 1.0f, rocket->rotation, 20, 52);
+			ang = ((rocket->rotation * M_PI) / 180);
+			rocket->velocity.y -= (20.0 * dt * cos(ang));
+			rocket->velocity.x += (20.0 * dt * sin(ang));
+		}
 	}
 	else
 	{
@@ -82,6 +85,10 @@ update_status ModuleScene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		rocket->rotation += 1;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		rocket->launchTorpedo();
 	}
 
 	Vec2 ps;
