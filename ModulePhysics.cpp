@@ -83,15 +83,18 @@ Vec2 ModulePhysics::AddMomentum(float x, float y, Vec2 velocity, float m)
 	float Yvelocity = y / m;
 	velocity.x += Xvelocity;
 	velocity.y += Yvelocity;
+	
+	return velocity;
 }
 
-/*Rocket* ModulePhysics::CreateRocket(Vec2 pos, double rotation, float mass, int life, Vec2 acceleration, Vec2 velocity)
+Rocket* ModulePhysics::CreateRocket(Vec2 pos, double rotation, float mass, int life, int ammo, Vec2 acceleration, Vec2 velocity)
 {
 	Rocket* rocket = new Rocket();
 	rocket->position = pos;
 	rocket->rotation = rotation;
 	rocket->mass = mass;
 	rocket->life = life;
+	rocket->ammo = ammo;
 	rocket->acceleration = acceleration;
 	rocket->velocity = velocity;
 
@@ -110,5 +113,5 @@ Planet* ModulePhysics::CreatePlanet(Vec2 pos, float mass, float radius, Vec2 loc
 
 	bodyList.add(planet);
 	return planet;
-}*/
+}
 

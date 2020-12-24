@@ -19,6 +19,14 @@ public:
 	bool CleanUp();
 
 public:
+	float gravity;
+
+	Planet* earth;
+	Rocket* rocket;
+
+	SDL_Texture* fireTexture;
+	Animation fireAnimation;
+	Animation* currentAnimation;
 
 	SDL_Texture* graphics;
 	PhysBody* background;

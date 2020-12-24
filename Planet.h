@@ -3,8 +3,8 @@
 class Planet : public Body
 {
 public:
-	Planet();
-	~Planet();
+	Planet() {}
+	~Planet() {}
 public:
 	float radius;
 	Vec2 localGravity;

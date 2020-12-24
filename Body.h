@@ -1,10 +1,10 @@
 #pragma once
-
+#include "Vec2.h"
 class Body
 {
 public:
-	Body();
-	~Body();
+	Body() {}
+	~Body() {}
 public:
 	//Variables
 	Vec2 position;
