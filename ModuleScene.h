@@ -3,7 +3,7 @@
 #include "Animation.h"
 #include "p2DynArray.h"
 #include "Globals.h"
-
+#include"Collisions.h"
 #define BOUNCER_TIME 200
 
 class ModuleScene;
@@ -46,7 +46,7 @@ public:
 	uint fx_light_big;
 
 	p2DynArray<Light> lights;
-
+	collider* playerColl;
 	PhysBody* player_lose;
 	uint player_lose_fx;
 };

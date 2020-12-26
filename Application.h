@@ -14,6 +14,7 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleScene.h"
 #include"FadeToBlack.h"
+#include"Collisions.h"
 class Application
 {
 public:
@@ -27,6 +28,7 @@ public:
 	ModuleScene* scene;
 	ModulePhysics* physics;
 	ModuleFadeToBlack* fade;
+	collision* collisions;
 private:
 
 	p2List<Module*> list_modules;

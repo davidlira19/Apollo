@@ -12,6 +12,7 @@ Application::Application()
 	scene = new ModuleScene(this, false);
 	physics = new ModulePhysics(this, true);
 	fade = new ModuleFadeToBlack(this, true);
+	collisions = new collision(this, true);
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -29,6 +30,7 @@ Application::Application()
 	AddModule(scene);
 	// Player
 	AddModule(player);
+	AddModule(collisions);
 	AddModule(renderer);
 }
 

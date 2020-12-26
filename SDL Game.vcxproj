@@ -72,6 +72,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Body.h" />
+    <ClInclude Include="Collisions.h" />
     <ClInclude Include="FadeToBlack.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="ModulePhysics.h" />

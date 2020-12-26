@@ -2,7 +2,7 @@
 
 class Application;
 class PhysBody;
-
+class collider;
 class Module
 {
 private :
@@ -70,6 +70,6 @@ public:
 		return true; 
 	}
 
-	virtual void OnCollision(PhysBody* body1, PhysBody* body2)
+	virtual void OnCollision(collider* body1, collider* body2)
 	{ }
 };

@@ -32,7 +32,9 @@ bool ModuleScene::Start()
 	rocket = App->physics->CreateRocket(Vec2(100, 100), 0, 100, 100, 50, 500, Vec2(0, 0), Vec2(0, 0));
 	rocket->rocketTexture = App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
 	fireTexture = App->textures->Load("Assets/Textures/fire.png");
+	App->collisions->addCollider(35, colliderType::roket, this, 0, 0);
 
+	playerColl = App->collisions->addCollider(10, colliderType::player, this, 70, 70);
 	currentAnimation = &fireAnimation;
 
 	return ret;
@@ -49,6 +51,7 @@ bool ModuleScene::CleanUp()
 // Update: draw background
 update_status ModuleScene::Update(float dt)
 {
+	playerColl->setPos(rocket->position.x, rocket->position.y);
 	if (rocket->position.y >= 656)
 	{
 		rocket->position.y = 656;
@@ -105,5 +108,17 @@ update_status ModuleScene::Update(float dt)
 	SDL_Rect rocket_rect = { 186,215,42,124 };
 	App->renderer->Blit(rocket->rocketTexture, rocket->position.x, rocket->position.y, &rocket_rect, 1, 1.0f, rocket->rotation);
 	App->renderer->DrawCircle(earth->position.x, earth->position.y, earth->radius, 255, 0, 0, 255);
+
+
+
+
+	p2List_item<collider*>* auxiliar;
+	auxiliar = App->collisions->colliderList.getFirst();
+	while (auxiliar != nullptr)
+	{
+
+		App->renderer->DrawCircle(auxiliar->data->position.x, auxiliar->data->position.y, auxiliar->data->circleRad, 255, 0, 0, 255);
+		auxiliar = auxiliar->next;
+	}
 	return UPDATE_CONTINUE;
 }
