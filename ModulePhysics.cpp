@@ -26,6 +26,7 @@ bool ModulePhysics::Start()
 update_status ModulePhysics::PreUpdate()
 {
 	Vec2 Fg = GravityForce(9.81, 100000000, 20000000, 200, { 100,200 });
+	float moduleFg = sqrt((Fg.x * Fg.x) + (Fg.y * Fg.y));
 	return UPDATE_CONTINUE;
 }
 
@@ -59,7 +60,7 @@ Vec2 ModulePhysics::Integrator(Vec2 velocity, float dt, float gravity) {
 
 Vec2 ModulePhysics::GravityForce(double gravity, double M, double m, double distance, Vec2 direction)
 {
-	double G = pow(6.674,-11);
+	const double G = 6.674E-11;
 	Vec2 Fg = Vec2(0, 0);
 	double F_x = -G * (m * M / (distance * distance)) * direction.x;
 	double F_y = -G * (m * M / (distance * distance)) * direction.y;
