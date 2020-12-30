@@ -20,10 +20,14 @@ public:
 
 	Vec2 Integrator(Vec2 velocity, float dt, float gravity);
 
-	Vec2 GravityForce(double gravity, double M, double m, double distance, Vec2 direction);
-	Vec2 LiftForce(float density, float velocity, float surface, float LiftCoeficient);
-	Vec2 DragForce(float density, float velocity, float surface, float DragCoeficient);
 	Vec2 AddMomentum(float x, float y, Vec2 velocity, float m);
+	Vec2 GravityForce(double gravity, double M, double m, double distance, Vec2 direction);
+	Vec2 AeroLiftForce(float density, float velocity, float surface, float LiftCoeficient);
+	Vec2 AeroDragForce(float density, float velocity, float surface, float DragCoeficient);
+	Vec2 HydroLiftForce(float density, float velocity, float surface, float LiftCoeficient); // only if you go faaaaast!
+	Vec2 HydroDragForce(float velocity, float b); // b is a constant that depends on the properties of the fluid and the dimensions of the object
+	Vec2 BuoyancyForce(float density, float gravity, float volume, float mass);
+	Vec2 SpringsForce(float cK, float dDisplacement);
 
 	Rocket* CreateRocket(Vec2 pos, double rotation, float mass, int life,int ammo,float fuel, Vec2 acceleration, Vec2 velocity);
 	Planet* CreatePlanet(Vec2 pos, float mass, float radius, Vec2 localGravity);

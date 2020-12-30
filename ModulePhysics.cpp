@@ -70,16 +70,34 @@ Vec2 ModulePhysics::GravityForce(double gravity, double M, double m, double dist
 	return Fg;
 }
 
-Vec2 ModulePhysics::LiftForce(float density, float velocity, float surface, float LiftCoeficient)
+Vec2 ModulePhysics::AeroLiftForce(float density, float velocity, float surface, float LiftCoeficient)
 {
-	Vec2 Flift = { 0, (density * velocity * velocity * surface * LiftCoeficient) / 2 };
-	return Flift;
+	return Vec2(0, (density * velocity * velocity * surface * LiftCoeficient) / 2);
 }
 
-Vec2 ModulePhysics::DragForce(float density, float velocity, float surface, float DragCoeficient)
+Vec2 ModulePhysics::AeroDragForce(float density, float velocity, float surface, float DragCoeficient)
 {
-	Vec2 Fdrag = { (density * velocity * velocity * surface * DragCoeficient) / 2,0 };
-	return Fdrag;
+	return Vec2((density * velocity * velocity * surface * DragCoeficient) / 2, 0);
+}
+
+Vec2 ModulePhysics::HydroLiftForce(float density, float velocity, float surface, float LiftCoeficient)
+{
+	return Vec2( 0, (density * velocity * velocity * surface * LiftCoeficient) / 2 );
+}
+
+Vec2 ModulePhysics::HydroDragForce(float velocity, float b)
+{
+	return Vec2(-b * velocity, 0);
+}
+
+Vec2 ModulePhysics::BuoyancyForce(float density, float gravity, float volume, float mass)
+{
+	return Vec2(0, (density * gravity * volume) - (mass * gravity));
+}
+
+Vec2 ModulePhysics::SpringsForce(float cK, float dDisplacement)
+{
+	return Vec2(-cK * dDisplacement, 0);
 }
 
 Vec2 ModulePhysics::AddMomentum(float x, float y, Vec2 velocity, float m)

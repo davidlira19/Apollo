@@ -29,7 +29,7 @@ bool ModuleScene::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	earth = App->physics->CreatePlanet(Vec2(0, 0), 0, 100, Vec2(0, 0));
-	rocket = App->physics->CreateRocket(Vec2(100, 100), 0, 100, 100, 50, 500, Vec2(0, 0), Vec2(0, 0));
+	rocket = App->physics->CreateRocket(Vec2(100, 100), 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 	rocket->rocketTexture = App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
 	fireTexture = App->textures->Load("Assets/Textures/fire.png");
 	App->collisions->addCollider(35, colliderType::roket, this, 0, 0);
