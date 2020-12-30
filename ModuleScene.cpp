@@ -33,6 +33,7 @@ bool ModuleScene::Start()
 	rocket->rocketTexture = App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
 	fireTexture = App->textures->Load("Assets/Textures/fire.png");
 	App->collisions->addCollider(35, colliderType::roket, this, 0, 0);
+	App->audio->PlayMusic("Assets/Audio/music.ogg");
 
 	playerColl = App->collisions->addCollider(10, colliderType::player, this, 70, 70);
 	currentAnimation = &fireAnimation;
