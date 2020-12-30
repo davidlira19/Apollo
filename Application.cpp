@@ -9,6 +9,8 @@ Application::Application()
 	audio = new ModuleAudio(this, true);
 	player = new ModulePlayer(this, false);
 	scene_intro = new ModuleSceneIntro(this, true);
+	scene_lose = new ModuleSceneLose(this, false);
+	scene_win = new ModuleSceneWin(this, false);
 	scene = new ModuleScene(this, false);
 	physics = new ModulePhysics(this, true);
 	fade = new ModuleFadeToBlack(this, true);
@@ -27,6 +29,8 @@ Application::Application()
 	AddModule(fade);
 	// Scenes
 	AddModule(scene_intro);
+	AddModule(scene_lose);
+	AddModule(scene_win);
 	AddModule(scene);
 	// Player
 	AddModule(player);

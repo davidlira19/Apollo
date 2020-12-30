@@ -12,6 +12,8 @@
 #include "ModulePlayer.h"
 #include "ModulePhysics.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleSceneLose.h"
+#include "ModuleSceneWin.h"
 #include "ModuleScene.h"
 #include"FadeToBlack.h"
 #include"Collisions.h"
@@ -25,6 +27,8 @@ public:
 	ModuleAudio* audio;
 	ModulePlayer* player;
 	ModuleSceneIntro* scene_intro;
+	ModuleSceneLose* scene_lose;
+	ModuleSceneWin* scene_win;
 	ModuleScene* scene;
 	ModulePhysics* physics;
 	ModuleFadeToBlack* fade;
