@@ -1,9 +1,12 @@
 #pragma once
 #include "Module.h"
+#include"ModuleSceneIntro.h"
+#include"Rocket.h"
 #include "Animation.h"
 #include "p2DynArray.h"
 #include "Globals.h"
 #include"Collisions.h"
+#include"ModulePlayer.h"
 #define BOUNCER_TIME 200
 
 class ModuleScene;
@@ -20,13 +23,9 @@ public:
 
 public:
 	float gravity;
-
-	Planet* earth;
 	Rocket* rocket;
-
-	SDL_Texture* fireTexture;
-	Animation fireAnimation;
-	Animation* currentAnimation;
+	ModulePlayer* player;
+	
 
 	SDL_Texture* graphics;
 	PhysBody* background;
@@ -46,7 +45,7 @@ public:
 	uint fx_light_big;
 
 	p2DynArray<Light> lights;
-	collider* playerColl;
+	
 	PhysBody* player_lose;
 	uint player_lose_fx;
 };
