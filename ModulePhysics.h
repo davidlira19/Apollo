@@ -28,6 +28,11 @@ public:
 	Vec2 HydroDragForce(float velocity, float b); // b is a constant that depends on the properties of the fluid and the dimensions of the object
 	Vec2 BuoyancyForce(float density, float gravity, float volume, float mass);
 	Vec2 SpringsForce(float cK, float dDisplacement);
+
+	Rocket* CreateRocket(Vec2 pos, double rotation, float mass, int life,int ammo,float fuel, Vec2 acceleration, Vec2 velocity);
+	Planet* CreatePlanet(Vec2 pos, float mass, float radius, Vec2 localGravity);
+
+	p2List<Body*> bodyList;
 private:
 
 	bool debug;

@@ -72,7 +72,6 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Body.h" />
-    <ClInclude Include="BodyManager.h" />
     <ClInclude Include="Collisions.h" />
     <ClInclude Include="FadeToBlack.h" />
     <ClInclude Include="Globals.h" />
@@ -97,7 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="BodyManager.cpp" />
     <ClCompile Include="FadeToBlack.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />

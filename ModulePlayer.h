@@ -1,29 +1,31 @@
-#ifndef _MODULEPLAYER_H_
-#define _MODULEPLAYER_H_
-
+#pragma once
+#include "Module.h"
 #include "Animation.h"
-//#include "Globals.h"
+#include "Globals.h"
+#include "Vec2.h"
 
-#include"Body.h"
+class PhysBody
+{
+};
 
-#include"ModuleRender.h"
-class ModulePlayer : public Body
+/*struct Object
+{
+	SDL_Texture* graphic;
+	PhysBody* body;
+	uint fx;
+	Vec2 position;
+
+	Object() : graphic(NULL), body(NULL)
+	{}
+};*/
+
+class ModulePlayer : public Module
 {
 public:
-	ModulePlayer(SDL_Texture* adTexture);
+	ModulePlayer(Application* app, bool start_enabled = true);
 	virtual ~ModulePlayer();
-	bool Start(Application* app)override;
-	bool PreUpdate(Application* app)override;
-	bool Update(float dt, Application* app)override;
-	bool PostUpdate(Application* app)override;
-	bool CleanUp(Application* app)override;
-	void launchTorpedo();
-	SDL_Texture* fire;
-	Animation fireAnimation;
-	Animation* currentAnimation;
-	void Draw(Application* app)override;
-	int life;
-	int ammo;
-	int fuel;
+	bool Start();
+	update_status Update(float dt)override;
+	update_status PostUpdate()override;
+	bool CleanUp();
 };
-#endif
