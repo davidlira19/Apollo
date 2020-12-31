@@ -4,7 +4,7 @@
 #include "Vec2.h"
 #include "p2List.h"
 #include "Body.h"
-#include "Rocket.h"
+#include "Asteroid.h"
 #include "Planet.h"
 
 class ModulePhysics : public Module

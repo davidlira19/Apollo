@@ -4,7 +4,7 @@
 #include"Body.h"
 #include"Module.h"
 #include"Globals.h"
-#include"Rocket.h"
+#include"Asteroid.h"
 #include"planet.h"
 #include"ModulePlayer.h"
 
@@ -19,7 +19,7 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate();
 	bool CleanUp();
-	Rocket* CreateRocket(Vec2 pos, int rad, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity);
+	Asteroid* CreateAsteroid(Vec2 pos, int rad, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity);
 	Planet* CreatePlanet(Vec2 pos, int rad, float mass, float radius, Vec2 localGravity);
 	ModulePlayer* CreatePlayer(Vec2 pos, float mass);
 	p2List<Body*>bodyList;

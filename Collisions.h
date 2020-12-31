@@ -68,7 +68,7 @@ public:
 				if (auxiliar1->data->Type != auxiliar2->data->Type)
 				{
 					if (auxiliar1->data->intersect(auxiliar2->data) == true) {
-						auxiliar1->data->lisener->OnCollision(auxiliar1->data, auxiliar2->data);
+						auxiliar1->data->lisener->OnCollision(auxiliar1->data, auxiliar2->data,App);
 					}
 				}
 				auxiliar2 = auxiliar2->next;

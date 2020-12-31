@@ -36,10 +36,12 @@ public:
 		float finalPositionY = Collider->position.y + (res * sin(ang));
 		float finalPositionX = Collider->position.x + (res * cos(ang));
 		Collider->setPos(finalPositionX+ respX, finalPositionY+ respY);*/
-		Collider->setPos(position.x, position.y);
+		Collider->setPos(position.x+ getXMiddle(), position.y+ getYMiddle());
 
 	}
-	virtual void Draw(Application* app){}
+	virtual void Draw(Application* app){
+		//app->renderer->Blit(boodyTexture, position.x, position.y, &bodyRect, 1, 1, rotation, getXMiddle(), getYMiddle());
+	}
 	int getXMiddle() {
 		return bodyRect.w / 2;
 	}

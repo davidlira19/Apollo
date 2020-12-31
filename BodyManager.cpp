@@ -78,9 +78,9 @@ bool bodyManager::CleanUp()
 	App->textures->Unload(Texture);
 	return true;
 }
-Rocket* bodyManager::CreateRocket(Vec2 pos,int rad, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity)
+Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity)
 {
-	Rocket* rocket = new Rocket();
+	Asteroid* rocket = new Asteroid();
 	rocket->position = pos;
 	rocket->rotation = rotation;
 	rocket->mass = mass;
@@ -120,8 +120,7 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 }
 
 
-void OnCollision(collider* body1, collider* body2)
+void OnCollision(collider* body1, collider* body2,Application* app)
 { 
-
 
 }

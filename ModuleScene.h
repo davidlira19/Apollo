@@ -1,7 +1,7 @@
 #pragma once
 #include "Module.h"
 #include"ModuleSceneIntro.h"
-#include"Rocket.h"
+#include"Asteroid.h"
 #include "Animation.h"
 #include "p2DynArray.h"
 #include "Globals.h"
@@ -23,7 +23,7 @@ public:
 
 public:
 	float gravity;
-	Rocket* rocket;
+	Asteroid* asteroid;
 	ModulePlayer* player;
 	
 
