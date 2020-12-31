@@ -3,10 +3,10 @@
 #include"Vec2.h"
 #include "p2List.h"
 #include "Module.h"
-#include"Application.h"
+//#include"Application.h"
 #include"SDL/include/SDL.h"
 enum class colliderType {
-	player, roket
+	player, roket,planet
 };
 class collider {
 public:
@@ -14,6 +14,8 @@ public:
 		circleRad = rad;
 		Type = type;
 		lisener = Lisener;
+		position.x = x;
+		position.y = y;
 	}
 	//private:
 	int circleRad;

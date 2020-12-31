@@ -2,12 +2,12 @@
 
 Application::Application()
 {
+	bodyesManager = new bodyManager(this, true);
 	renderer = new ModuleRender(this,true);
 	window = new ModuleWindow(this, true);
 	textures = new ModuleTextures(this, true);
 	input = new ModuleInput(this, true);
 	audio = new ModuleAudio(this, true);
-	player = new ModulePlayer(this, false);
 	scene_intro = new ModuleSceneIntro(this, true);
 	scene_lose = new ModuleSceneLose(this, false);
 	scene_win = new ModuleSceneWin(this, false);
@@ -33,7 +33,7 @@ Application::Application()
 	AddModule(scene_win);
 	AddModule(scene);
 	// Player
-	AddModule(player);
+	AddModule(bodyesManager);
 	AddModule(collisions);
 	AddModule(renderer);
 }

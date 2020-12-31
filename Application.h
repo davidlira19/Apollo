@@ -1,4 +1,5 @@
 #pragma once
+
 #include"Timer.h"
 #include "p2List.h"
 #include "Globals.h"
@@ -9,7 +10,7 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
-#include "ModulePlayer.h"
+#include "BodyManager.h"
 #include "ModulePhysics.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleSceneLose.h"
@@ -17,15 +18,16 @@
 #include "ModuleScene.h"
 #include"FadeToBlack.h"
 #include"Collisions.h"
+
 class Application
 {
 public:
+	bodyManager* bodyesManager;
 	ModuleRender* renderer;
 	ModuleWindow* window;
 	ModuleTextures* textures;
 	ModuleInput* input;
 	ModuleAudio* audio;
-	ModulePlayer* player;
 	ModuleSceneIntro* scene_intro;
 	ModuleSceneLose* scene_lose;
 	ModuleSceneWin* scene_win;
