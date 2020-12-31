@@ -113,7 +113,7 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 	player->mass = mass;
 	player->boodyTexture = Texture;
 	player->bodyRect = { 186,215,42,124 };
-	player->Collider=App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
+	player->Collider=App->collisions->addCollider(45, colliderType::player, this, pos.x, pos.y);
 	//App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
 	bodyList.add(player);
 	return player;
