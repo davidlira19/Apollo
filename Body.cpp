@@ -25,10 +25,6 @@
 		{
 			Collider->setPos(getXMiddle()+position.x +app->renderer->camera.x , position.y +app->renderer->camera.y + getYMiddle());
 		}
-		else 
-		{
-			Collider->setPos(position.x + app->renderer->camera.x + getXMiddle() , position.y + app->renderer->camera.y + getYMiddle());
-		}
 		//Collider->setPos(position.x + getXMiddle(), position.y + getYMiddle());
 
 

@@ -18,6 +18,7 @@ public:
 	bool PostUpdate(Application* app)override;
 	bool CleanUp(Application* app)override;
 	void launchTorpedo();
+	void setPos(Application* app) override;
 	SDL_Texture* fire;
 	Animation fireAnimation;
 	Animation* currentAnimation;
@@ -25,5 +26,11 @@ public:
 	int life;
 	int ammo;
 	int fuel;
+	collider* col1;
+	collider* col2;
+	collider* col3;
+	collider* col4;
+	collider* col5;
+	collider* col6;
 };
 #endif

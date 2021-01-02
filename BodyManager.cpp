@@ -123,7 +123,12 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 	player->mass = mass;
 	player->boodyTexture = Texture;
 	player->bodyRect = { 186,215,42,124 };
-	player->Collider=App->collisions->addCollider(45, colliderType::player, this, pos.x, pos.y);
+	player->col1 = App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
+	player->col2 = App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
+	player->col3 = App->collisions->addCollider(10, colliderType::player, this, pos.x, pos.y);
+	player->col4 = App->collisions->addCollider(10, colliderType::player, this, pos.x, pos.y);
+	player->col5 = App->collisions->addCollider(10, colliderType::player, this, pos.x, pos.y);
+	player->col6 = App->collisions->addCollider(10, colliderType::player, this, pos.x, pos.y);
 	//App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
 	bodyList.add(player);
 	return player;
@@ -132,9 +137,8 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 
 void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 { 
-	if ((body1->Type == colliderType::planet && body2->Type == colliderType::player) || (body1->Type == colliderType::player && body2->Type == colliderType::planet)) {
-		int a;
-		a = 0;
-
+	if ((body1->Type == colliderType::planet && body2->Type == colliderType::player) || (body1->Type == colliderType::player && body2->Type == colliderType::planet)) 
+	{
+		int a = 0;
 	}
 }
