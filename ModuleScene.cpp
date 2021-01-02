@@ -25,8 +25,8 @@ bool ModuleScene::Start()
 
 	//asteroid = App->bodyesManager->CreateAsteroid({ 100, 100 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 	player = App->bodyesManager->CreatePlayer({ 100, 100 }, 100);
-	earth = App->bodyesManager->CreatePlanet(Vec2(0, -500),1, 500, 5.972E24, 500.0f, Vec2(0, 9.81));
-	moon = App->bodyesManager->CreatePlanet(Vec2(1000, 1000),2, 200, 7.349E22, 200.0f, Vec2(0, 1.62));
+	earth = App->bodyesManager->CreatePlanet(Vec2(0,0),1, 379, 5.972E24, 379.0f, Vec2(0, 9.81));
+	moon = App->bodyesManager->CreatePlanet(Vec2(0,0),2, 190, 7.349E22, 190.0f, Vec2(0, 1.62));
 
 	return ret;
 }
@@ -63,8 +63,8 @@ update_status ModuleScene::Update(float dt)
 	App->renderer->Blit(backgroundTexture, 2760, 1036);
 	App->renderer->Blit(backgroundTexture, 2760, 1554);
 
-	App->renderer->camera.x = (player->position.x * -1) - 512;
-	App->renderer->camera.y = (player->position.y * -1) - 379;
+	App->renderer->camera.x = (player->position.x * -1) + 500;
+	App->renderer->camera.y = (player->position.y * -1) + 379;
 
 	//Camera Limits
 	if (App->renderer->camera.y < -1300)
@@ -88,7 +88,6 @@ update_status ModuleScene::Update(float dt)
 	auxiliar = App->collisions->colliderList.getFirst();
 	while (auxiliar != nullptr)
 	{
-
 		App->renderer->DrawCircle(auxiliar->data->position.x,auxiliar->data->position.y, auxiliar->data->circleRad, 255, 0, 0, 255);
 		auxiliar = auxiliar->next;
 	}

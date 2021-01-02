@@ -104,11 +104,11 @@ Planet* bodyManager::CreatePlanet(Vec2 pos,int type, int rad, float mass, float 
 	{
 	case 1:
 		planet->boodyTexture = Texture2;
-		planet->bodyRect = { 0,0,1600,1599 };
+		planet->bodyRect = { 0,0,800,800 };
 		break;
 	case 2:
 		planet->boodyTexture = Texture3;
-		planet->bodyRect = { 0,0,800,800 };
+		planet->bodyRect = { 0,0,600,600 };
 		break;
 	}
 	//planet->boodyTexture = Texture;
