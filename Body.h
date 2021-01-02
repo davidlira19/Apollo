@@ -23,7 +23,7 @@ public:
 	bool pendingToDelete;
 	Vec2 acceleration;
 	Vec2 velocity;
-	void setPos() 
+	void setPos(Application* app) 
 	{
 		/*float posX = position.x + getXMiddle();
 		float posY = position.y + getYMiddle();
@@ -36,7 +36,10 @@ public:
 		float finalPositionY = Collider->position.y + (res * sin(ang));
 		float finalPositionX = Collider->position.x + (res * cos(ang));
 		Collider->setPos(finalPositionX+ respX, finalPositionY+ respY);*/
-		Collider->setPos(position.x+ getXMiddle(), position.y+ getYMiddle());
+		
+		Collider->setPos(position.x + getXMiddle(), position.y + getYMiddle());
+		
+		
 
 	}
 	virtual void Draw(Application* app){

@@ -23,10 +23,10 @@ bool ModuleScene::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	asteroid = App->bodyesManager->CreateAsteroid({ 100, 100 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	//asteroid = App->bodyesManager->CreateAsteroid({ 100, 100 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 	player = App->bodyesManager->CreatePlayer({ 100, 100 }, 100);
-	earth = App->bodyesManager->CreatePlanet(Vec2(0, -500), 100, 5.972E24, 100.0f, Vec2(0, 9.81));
-	moon = App->bodyesManager->CreatePlanet(Vec2(1000, 1000), 50, 7.349E22, 50.0f, Vec2(0, 1.62));
+	earth = App->bodyesManager->CreatePlanet(Vec2(0, -500),1, 500, 5.972E24, 500.0f, Vec2(0, 9.81));
+	moon = App->bodyesManager->CreatePlanet(Vec2(1000, 1000),2, 200, 7.349E22, 200.0f, Vec2(0, 1.62));
 
 	return ret;
 }
@@ -89,7 +89,7 @@ update_status ModuleScene::Update(float dt)
 	while (auxiliar != nullptr)
 	{
 
-		App->renderer->DrawCircle(auxiliar->data->position.x, auxiliar->data->position.y, auxiliar->data->circleRad, 255, 0, 0, 255);
+		App->renderer->DrawCircle(auxiliar->data->position.x,auxiliar->data->position.y, auxiliar->data->circleRad, 255, 0, 0, 255);
 		auxiliar = auxiliar->next;
 	}
 	return UPDATE_CONTINUE;
