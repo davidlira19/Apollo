@@ -16,7 +16,6 @@ ModuleScene::~ModuleScene()
 // Load assets
 bool ModuleScene::Start()
 {
-	backgroundTexture = App->textures->Load("Assets/Textures/background.png");
 	LOG("Loading Intro assets");
 	bool ret = true;
 	gravity = 10.0f;
@@ -41,28 +40,7 @@ bool ModuleScene::CleanUp()
 // Update: draw background
 update_status ModuleScene::Update(float dt)
 {
-	App->renderer->Blit(backgroundTexture, 0, 0);
-	App->renderer->Blit(backgroundTexture, 920, 0);
-	App->renderer->Blit(backgroundTexture, 0, 518);
-	App->renderer->Blit(backgroundTexture, 1840, 0);
-	App->renderer->Blit(backgroundTexture, 0, 1036);
-	App->renderer->Blit(backgroundTexture, 2760, 0);
-	App->renderer->Blit(backgroundTexture, 0, 1554);
 
-	App->renderer->Blit(backgroundTexture, 920, 518);
-	App->renderer->Blit(backgroundTexture, 920, 1036);
-	App->renderer->Blit(backgroundTexture, 920, 1554);
-
-	App->renderer->Blit(backgroundTexture, 1840, 518);
-	App->renderer->Blit(backgroundTexture, 1840, 1036);
-	App->renderer->Blit(backgroundTexture, 1840, 1554);
-
-	App->renderer->Blit(backgroundTexture, 2760, 518);
-	App->renderer->Blit(backgroundTexture, 2760, 1036);
-	App->renderer->Blit(backgroundTexture, 2760, 1554);
-
-	App->renderer->camera.x = (player->position.x * -1) - 300;
-	App->renderer->camera.y = (player->position.y * -1) - 400;
 
 	p2List_item<collider*>* auxiliar;
 	auxiliar = App->collisions->colliderList.getFirst();
