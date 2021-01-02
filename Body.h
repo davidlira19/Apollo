@@ -1,5 +1,5 @@
-#ifndef _BODY_H_
-#define _BODY_H_
+#ifndef _BODYH
+#define _BODYH
 #include "Vec2.h"
 #include"Animation.h"
 #include<math.h>
@@ -10,69 +10,32 @@
 class Body
 {
 public:
-	Body() 
-	{
-		pendingToDelete = false;
-	}
-	~Body() {}
+    Body();
+    ~Body();
 public:
-	//Variables
-	Vec2 position;
-	double rotation;
-	float mass;
-	bool pendingToDelete;
-	Vec2 acceleration;
-	Vec2 velocity;
-	void setPos(Application* app) 
-	{
-		/*float posX = position.x + getXMiddle();
-		float posY = position.y + getYMiddle();
-		float ang = ((rotation * M_PI) / 180);
-		float respX = Collider->position.x- posX;
-		float respY = Collider->position.y- posY;
-		float totalResp = sqrt((respX * respX) + (respY * respY));
-		float res = totalResp * sin(ang/2);
-		res = res * 2;
-		float finalPositionY = Collider->position.y + (res * sin(ang));
-		float finalPositionX = Collider->position.x + (res * cos(ang));
-		Collider->setPos(finalPositionX+ respX, finalPositionY+ respY);*/
-		
-		Collider->setPos(position.x + getXMiddle(), position.y + getYMiddle());
-		
-		
-
-	}
-	virtual void Draw(Application* app){
-		//app->renderer->Blit(boodyTexture, position.x, position.y, &bodyRect, 1, 1, rotation, getXMiddle(), getYMiddle());
-	}
-	int getXMiddle() {
-		return bodyRect.w / 2;
-	}
-	int getYMiddle() {
-		return bodyRect.h / 2;
-	}
-	SDL_Texture* boodyTexture;
-	virtual bool Start(Application* app){
-		return true;
-	}
-	virtual bool PreUpdate(Application* app){
-		return true;
-	}
-	virtual bool Update(float dt, Application* app){
-		return true;
-	}
-	virtual bool PostUpdate(Application* app){
-		return true;
-	}
-	virtual bool CleanUp(Application* app){
-		return true;
-	}
+    //Variables
+    Vec2 position;
+    double rotation;
+    float mass;
+    bool pendingToDelete;
+    Vec2 acceleration;
+    Vec2 velocity;
+    void setPos(Application* app);
+    virtual void Draw(Application* app);
+    int getXMiddle();
+    int getYMiddle();
+    SDL_Texture* boodyTexture;
+    virtual bool Start(Application* app);
+    virtual bool PreUpdate(Application* app);
+    virtual bool Update(float dt, Application* app);
+    virtual bool PostUpdate(Application* app);
+    virtual bool CleanUp(Application* app);
 public:
-	Animation* currentAnimation;
-	SDL_Rect bodyRect;
-	collider* Collider;
-	//Methods
-	/*void addForce(int force);
-	void addMomentum(int momentum);*/
+    Animation* currentAnimation;
+    SDL_Rect bodyRect;
+    collider* Collider;
+    //Methods
+    void addForce(int force);
+    void addMomentum(int momentum);
 };
 #endif
