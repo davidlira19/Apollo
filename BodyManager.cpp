@@ -7,13 +7,14 @@ bodyManager::bodyManager(Application* app, bool start_enabled) : Module(app, sta
 bodyManager::~bodyManager() {
 
 }
+void bodyManager::OnCollision(collider* body1, collider* body2) 
+{
 
+}
 bool bodyManager::Start() 
 {
 	fireText = App->textures->Load("Assets/Textures/fire.png");
 	Texture=App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
-	Texture2 = App->textures->Load("Assets/Textures/earth.png");
-	Texture3 = App->textures->Load("Assets/Textures/moon.png");
 	return true;
 }
 update_status bodyManager::PreUpdate() 
@@ -32,7 +33,7 @@ update_status bodyManager::PreUpdate()
 	auxiliar = bodyList.getFirst();
 	while (auxiliar != nullptr)
 	{
-		auxiliar->data->setPos(App);
+		auxiliar->data->setPos();
 		auxiliar = auxiliar->next;
 	}
 	auxiliar = bodyList.getFirst();
@@ -93,25 +94,14 @@ Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float m
 
 	return rocket;
 }
-Planet* bodyManager::CreatePlanet(Vec2 pos,int type, int rad, float mass, float radius, Vec2 localGravity)
+Planet* bodyManager::CreatePlanet(Vec2 pos, int rad, float mass, float radius, Vec2 localGravity)
 {
 	Planet* planet = new Planet();
 	planet->position = pos;
 	planet->mass = mass;
 	planet->radius = radius;
 	planet->localGravity = localGravity;
-	switch (type)
-	{
-	case 1:
-		planet->boodyTexture = Texture2;
-		planet->bodyRect = { 0,0,1600,1599 };
-		break;
-	case 2:
-		planet->boodyTexture = Texture3;
-		planet->bodyRect = { 0,0,800,800 };
-		break;
-	}
-	//planet->boodyTexture = Texture;
+	planet->boodyTexture = Texture;
 	planet->Collider=App->collisions->addCollider(rad, colliderType::planet, this, pos.x, pos.y);
 	bodyList.add(planet);
 	return planet;
@@ -130,11 +120,7 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 }
 
 
-void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
+void OnCollision(collider* body1, collider* body2,Application* app)
 { 
-	if ((body1->Type == colliderType::planet && body2->Type == colliderType::player) || (body1->Type == colliderType::player && body2->Type == colliderType::planet)) {
-		int a;
-		a = 0;
 
-	}
 }
