@@ -60,10 +60,6 @@ bool ModulePlayer::Update(float dt, Application* app)
 			velocity.y -= (20.0 * dt * cos(ang));
 			velocity.x += (20.0 * dt * sin(ang));
 		}
-		else 
-		{
-			velocity.y += (app->scene->gravity * dt);
-		}
 	}
 	else
 	{
