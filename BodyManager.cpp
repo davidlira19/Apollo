@@ -102,7 +102,7 @@ Planet* bodyManager::CreatePlanet(Vec2 pos, int rad, float mass, float radius, V
 	planet->radius = radius;
 	planet->localGravity = localGravity;
 	planet->boodyTexture = Texture;
-	planet->Collider=App->collisions->addCollider(rad, colliderType::planet, this, pos.x, pos.y);
+	App->collisions->addCollider(rad, colliderType::planet, this, pos.x, pos.y);
 	bodyList.add(planet);
 	return planet;
 }
