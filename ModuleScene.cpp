@@ -23,10 +23,10 @@ bool ModuleScene::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	//earth = App->body->CreatePlanet(Vec2(0, 0),20, 0, 100, Vec2(0, 0));
 	asteroid = App->bodyesManager->CreateAsteroid({ 100, 100 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 	player = App->bodyesManager->CreatePlayer({ 100, 100 }, 100);
-	
+	//earth = App->bodyesManager->CreatePlanet(Vec2(0, -500), 100, 5.972E24, 100.0f, Vec2(0, 9.81));
+	//moon = App->bodyesManager->CreatePlanet(Vec2(1000, 1000), 50, 7.349E22, 50.0f, Vec2(0, 1.62));
 
 	return ret;
 }
@@ -41,6 +41,8 @@ bool ModuleScene::CleanUp()
 // Update: draw background
 update_status ModuleScene::Update(float dt)
 {
+	LOG("%d %d", player->position.x, player->position.y);
+
 	App->renderer->Blit(backgroundTexture, 0, 0);
 	App->renderer->Blit(backgroundTexture, 920, 0);
 	App->renderer->Blit(backgroundTexture, 0, 518);
@@ -61,8 +63,26 @@ update_status ModuleScene::Update(float dt)
 	App->renderer->Blit(backgroundTexture, 2760, 1036);
 	App->renderer->Blit(backgroundTexture, 2760, 1554);
 
-	App->renderer->camera.x = (player->position.x * -1) - 300;
-	App->renderer->camera.y = (player->position.y * -1) - 400;
+	App->renderer->camera.x = (player->position.x * -1) - 512;
+	App->renderer->camera.y = (player->position.y * -1) - 379;
+
+	//Camera Limits
+	if (App->renderer->camera.y < -1300)
+	{
+		App->renderer->camera.y = -1299;
+	}
+	if (App->renderer->camera.y > 0)
+	{
+		App->renderer->camera.y = -1;
+	}
+	if (App->renderer->camera.x > 0)
+	{
+		App->renderer->camera.x = -1;
+	}
+	if (App->renderer->camera.x < -2500)
+	{
+		App->renderer->camera.x = -2499;
+	}
 
 	p2List_item<collider*>* auxiliar;
 	auxiliar = App->collisions->colliderList.getFirst();

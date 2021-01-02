@@ -2,6 +2,7 @@
 #include "Module.h"
 #include"ModuleSceneIntro.h"
 #include"Asteroid.h"
+#include "Planet.h"
 #include "Animation.h"
 #include "p2DynArray.h"
 #include "Globals.h"
@@ -25,6 +26,8 @@ public:
 	float gravity;
 	Asteroid* asteroid;
 	ModulePlayer* player;
+	Planet* earth;
+	Planet* moon;
 	
 
 	SDL_Texture* graphics;
