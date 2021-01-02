@@ -93,7 +93,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 }
 void ModulePlayer::Draw(Application* app)
 {
-	app->renderer->Blit(boodyTexture, position.x, position.y, &bodyRect, 1, 1, rotation, getXMiddle(), getYMiddle());
+	app->renderer->Blit(boodyTexture, position.x+ (app->renderer->camera.x*-1),position.y+ (app->renderer->camera.y*-1), &bodyRect, 1, 1, rotation, getXMiddle(), getYMiddle());
 }
 bool ModulePlayer::PostUpdate(Application* app)
 {
