@@ -41,7 +41,7 @@ bool ModuleScene::CleanUp()
 // Update: draw background
 update_status ModuleScene::Update(float dt)
 {
-	LOG("%d %d", player->position.x, player->position.y);
+	LOG("%f %f", player->position.x, player->position.y);
 
 	App->renderer->Blit(backgroundTexture, 0, 0);
 	App->renderer->Blit(backgroundTexture, 920, 0);
@@ -83,6 +83,12 @@ update_status ModuleScene::Update(float dt)
 	{
 		App->renderer->camera.x = -2499;
 	}
+
+	if (player->position.x > 3500 || player->position.x < -30 || player->position.y > 2030 || player->position.y < -30 || player->fuel <= 0)
+	{
+		App->fade->FadeToBlack((Module*)this, (Module*)App->scene_lose, 60);
+	}
+
 
 	p2List_item<collider*>* auxiliar;
 	auxiliar = App->collisions->colliderList.getFirst();

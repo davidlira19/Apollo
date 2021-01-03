@@ -16,7 +16,7 @@ ModulePlayer::ModulePlayer(SDL_Texture* adTexture)
 	fireAnimation.loop = true;
 	fireAnimation.speed = 0.3f;
 	currentAnimation = &fireAnimation;
-	fuel = 1000;
+	fuel = 5000;
 	velocity.y = 1;
 	rotation = 0;
 	ammo = 10;

@@ -34,7 +34,7 @@ bool ModuleSceneLose::CleanUp()
 update_status ModuleSceneLose::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-		App->fade->FadeToBlack((Module*)this, (Module*)App->scene_win, 60);
+		App->fade->FadeToBlack((Module*)this, (Module*)App->scene_intro, 60);
 	}
 	App->renderer->Blit(loseTexture, 0, 0);
 	return UPDATE_CONTINUE;
