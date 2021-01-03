@@ -17,6 +17,7 @@ ModuleScene::~ModuleScene()
 bool ModuleScene::Start()
 {
 	backgroundTexture = App->textures->Load("Assets/Textures/background.png");
+	fuelBar = App->textures->Load("Assets/Textures/fuel_bar.png");
 	LOG("Loading Intro assets");
 	bool ret = true;
 	gravity = 10.0f;
@@ -41,6 +42,10 @@ bool ModuleScene::CleanUp()
 // Update: draw background
 update_status ModuleScene::Update(float dt)
 {
+	SDL_Rect rectBar = { 0,0,200,20 };
+	int widthBar = (float)player->fuel / 5000 * 200;
+	rectBar = { 0,0,widthBar,20 };
+
 	LOG("%f %f", player->position.x, player->position.y);
 
 	App->renderer->Blit(backgroundTexture, 0, 0);
@@ -97,5 +102,8 @@ update_status ModuleScene::Update(float dt)
 		App->renderer->DrawCircle(auxiliar->data->position.x,auxiliar->data->position.y, auxiliar->data->circleRad, 255, 0, 0, 255);
 		auxiliar = auxiliar->next;
 	}
+
+	App->renderer->Blit(fuelBar, App->renderer->camera.x * -1, App->renderer->camera.y * -1, &rectBar);
+
 	return UPDATE_CONTINUE;
 }

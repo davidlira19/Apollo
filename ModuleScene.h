@@ -28,7 +28,7 @@ public:
 	ModulePlayer* player;
 	Planet* earth;
 	Planet* moon;
-	
+	SDL_Texture* fuelBar;
 
 	SDL_Texture* graphics;
 	PhysBody* background;
