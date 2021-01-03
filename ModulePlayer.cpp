@@ -47,8 +47,28 @@ bool ModulePlayer::PreUpdate(Application* app)
 // Update: draw background
 bool ModulePlayer::Update(float dt, Application* app)
 {	
+	Vec2 finalGravity;
+	p2List_item<Body*>* auxiliar=nullptr;
+	auxiliar = app->bodyesManager->bodyList.getFirst();
+	float distanceX;
+	float distanceY;
+	float distance;
+	while (auxiliar != nullptr)
+	{
+		if (auxiliar->data->type == bodyType::Planet)
+		{
+			distanceX = auxiliar->data->position.x + auxiliar->data->getXMiddle() - position.x + getXMiddle();
+			distanceY = auxiliar->data->position.y + auxiliar->data->getYMiddle() - position.y + getYMiddle();
+			distance = sqrt((distanceX * distanceX) + (distanceY * distanceY));
+			finalGravity = app->physics->GravityForce(auxiliar->data->mass, mass, distance, Vec2(distanceX, distanceY));
+			velocity.y += (finalGravity.y * -1);//* dt
+			velocity.x += (finalGravity.x * -1);//* dt
+		}
+		auxiliar = auxiliar->next;
+	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
+		
 		if (fuel > 0)
 		{
 			fuel -= (1.0f);
@@ -60,14 +80,6 @@ bool ModulePlayer::Update(float dt, Application* app)
 			velocity.y -= (20.0 * dt * cos(ang));
 			velocity.x += (20.0 * dt * sin(ang));
 		}
-		else 
-		{
-			velocity.y += (app->scene->gravity * dt);
-		}
-	}
-	else
-	{
-		velocity.y += (app->scene->gravity * dt);
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{

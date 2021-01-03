@@ -6,7 +6,10 @@
 #include"Collisions.h"
 
 //#include"Application.h"
-
+enum class bodyType 
+{
+	Planet,Player,Asteroid
+};
 class Body
 {
 public:
@@ -14,6 +17,7 @@ public:
     ~Body();
 public:
     //Variables
+	bodyType type;
     Vec2 position;
     double rotation;
     float mass;

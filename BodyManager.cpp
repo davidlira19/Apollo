@@ -83,6 +83,7 @@ Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float m
 	rocket->position = pos;
 	rocket->rotation = rotation;
 	rocket->mass = mass;
+	rocket->type = bodyType::Asteroid;
 	rocket->acceleration = acceleration;
 	rocket->velocity = velocity;
 	rocket->boodyTexture = Texture;
@@ -100,6 +101,7 @@ Planet* bodyManager::CreatePlanet(Vec2 pos,int type, int rad, float mass, float 
 	planet->mass = mass;
 	planet->radius = radius;
 	planet->localGravity = localGravity;
+	planet->type = bodyType::Planet;
 	switch (type)
 	{
 	case 1:
@@ -123,6 +125,7 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 	player->mass = mass;
 	player->boodyTexture = Texture;
 	player->bodyRect = { 186,215,42,124 };
+	player->type = bodyType::Player;
 	player->col1 = App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
 	player->col2 = App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
 	player->col3 = App->collisions->addCollider(10, colliderType::player, this, pos.x, pos.y);
@@ -137,8 +140,28 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 
 void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 { 
+	/*p2List_item<Body*>* auxiliar1 = nullptr;
+	p2List_item<Body*>* auxiliar2 = nullptr;
+	auxiliar2=auxiliar1 = app->bodyesManager->bodyList.getFirst();
+
+	while (auxiliar1 != nullptr)
+	{
+		if (auxiliar1->data->Collider== body1)
+		{
+			break;
+		}
+		auxiliar1 = auxiliar1->next;
+	}
+	while (auxiliar2 != nullptr)
+	{
+		if (auxiliar2->data->Collider == body2)
+		{
+			break;
+		}
+		auxiliar2 = auxiliar2->next;
+	}*/
 	if ((body1->Type == colliderType::planet && body2->Type == colliderType::player) || (body1->Type == colliderType::player && body2->Type == colliderType::planet)) 
 	{
-		int a = 0;
+		
 	}
 }

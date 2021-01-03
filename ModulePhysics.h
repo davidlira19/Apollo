@@ -21,7 +21,7 @@ public:
 	Vec2 Integrator(Vec2 velocity, float dt, float gravity);
 
 	Vec2 AddMomentum(float x, float y, Vec2 velocity, float m);
-	Vec2 GravityForce(double gravity, double M, double m, double distance, Vec2 direction);
+	Vec2 GravityForce(double M, double m, double distance, Vec2 direction);
 	Vec2 AeroLiftForce(float density, float velocity, float surface, float LiftCoeficient);
 	Vec2 AeroDragForce(float density, float velocity, float surface, float DragCoeficient);
 	Vec2 HydroLiftForce(float density, float velocity, float surface, float LiftCoeficient); // only if you go faaaaast!
