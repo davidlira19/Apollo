@@ -75,6 +75,7 @@
     <ClInclude Include="Body.h" />
     <ClInclude Include="BodyManager.h" />
     <ClInclude Include="Collisions.h" />
+    <ClInclude Include="Defs.h" />
     <ClInclude Include="FadeToBlack.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="ModulePhysics.h" />
@@ -91,6 +92,7 @@
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="p2DynArray.h" />
+    <ClInclude Include="PerfTimer.h" />
     <ClInclude Include="Planet.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="Timer.h" />
@@ -114,6 +116,7 @@
     <ClCompile Include="ModuleSceneWin.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
+    <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="Planet.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>

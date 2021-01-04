@@ -1,6 +1,8 @@
 #pragma once
 
 #include"Timer.h"
+#include "Defs.h"
+#include "PerfTimer.h"
 #include "p2List.h"
 #include "Globals.h"
 #include "Module.h"
@@ -44,11 +46,18 @@ public:
 	Application();
 	~Application();
 
+	bool Awake();
 	bool Init();
 	update_status Update();
 	bool CleanUp();
 
 private:
+	uint frames;
+	PerfTimer ptimer;
+	PerfTimer dif;
+
+	uint frameCount = 0;
+
 	Timer startupTime;
 	Timer frameTime;
 	Timer lastSecFrameTime;
@@ -57,4 +66,9 @@ private:
 
 	float dt = 0.0f;
 	void AddModule(Module* mod);
+
+	int cappedMs = -1;
+
+public:
+	int maxFPS;
 };

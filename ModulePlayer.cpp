@@ -1,5 +1,3 @@
-//#include "Globals.h"
-
 #include"ModulePlayer.h"
 #include "ModuleScene.h"
 #include "ModulePhysics.h"
@@ -61,8 +59,8 @@ bool ModulePlayer::Update(float dt, Application* app)
 			distanceY = auxiliar->data->position.y + auxiliar->data->getYMiddle() - position.y + getYMiddle();
 			distance = sqrt((distanceX * distanceX) + (distanceY * distanceY));
 			finalGravity = app->physics->GravityForce(auxiliar->data->mass, mass, distance, Vec2(distanceX, distanceY));
-			velocity.y += (finalGravity.y * -1);//* dt
-			velocity.x += (finalGravity.x * -1);//* dt
+			velocity.y += (finalGravity.y * -4 * dt);
+			velocity.x += (finalGravity.x * -4 * dt);
 		}
 		auxiliar = auxiliar->next;
 	}
@@ -77,28 +75,28 @@ bool ModulePlayer::Update(float dt, Application* app)
 			currentAnimation->Update();
 			app->renderer->Blit(fire,position.x + 8, position.y + 112, &rec, 2, 1.0f, rotation, 20, 52);
 			ang = ((rotation * M_PI) / 180);
-			velocity.y -= (20.0 * dt * cos(ang));
-			velocity.x += (20.0 * dt * sin(ang));
+			velocity.y -= (2  *dt* cos(ang));
+			velocity.x += (2  *dt* sin(ang));
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		position.y += 2;
+		position.y += 0.2 * dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		rotation -= 1;
+		rotation -= 0.2 * dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		rotation += 1;
+		rotation += 0.2* dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		launchTorpedo();
 	}
 	Vec2 pos;
-	pos= app->physics->Integrator(velocity, dt, app->scene->gravity);
+	pos= app->physics->Integrator(velocity, 0.00032, app->scene->gravity);
 	position.y += metersToPixels(pos.y);
 	position.x += metersToPixels(pos.x);
 	return true;

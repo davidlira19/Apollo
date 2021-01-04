@@ -2,6 +2,9 @@
 
 Application::Application()
 {
+	frames = 0;
+	PERF_START(ptimer);
+
 	bodyesManager = new bodyManager(this, true);
 	renderer = new ModuleRender(this,true);
 	window = new ModuleWindow(this, true);
@@ -36,6 +39,8 @@ Application::Application()
 	AddModule(bodyesManager);
 	AddModule(collisions);
 	AddModule(renderer);
+
+	PERF_PEEK(ptimer);
 }
 
 Application::~Application()
@@ -49,8 +54,18 @@ Application::~Application()
 	}
 }
 
+bool Application::Awake()
+{
+	PERF_START(ptimer);
+	maxFPS = 16;
+	PERF_PEEK(ptimer);
+	return true;
+}
+
 bool Application::Init()
 {
+	PERF_START(ptimer);
+	maxFPS = 16;
 	bool ret = true;
 
 	// Call Init() in all modules
@@ -72,13 +87,19 @@ bool Application::Init()
 			ret = item->data->Start();
 		item = item->next;
 	}
-	
+	PERF_PEEK(ptimer);
 	return ret;
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
 {
+	frameCount++;
+	lastSecFrameCount++;
+
+	dt = frameTime.Read();
+	frameTime.Start();
+
 	update_status ret = UPDATE_CONTINUE;
 	p2List_item<Module*>* item = list_modules.getFirst();
 
@@ -92,8 +113,8 @@ update_status Application::Update()
 	}
 
 	item = list_modules.getFirst();
-	dt = frameTime.ReadSec();
-	frameTime.Start();
+	//dt = frameTime.ReadSec();
+	//frameTime.Start();
 	while(item != NULL && ret == UPDATE_CONTINUE)
 	{
 		if(item->data->IsEnabled())
@@ -108,6 +129,30 @@ update_status Application::Update()
 		if(item->data->IsEnabled())
 			ret = item->data->PostUpdate();
 		item = item->next;
+	}
+
+	if (lastSecFrameTime.Read() > 1000)
+	{
+		lastSecFrameTime.Start();
+		prevLastSecFrameCount = lastSecFrameCount;
+		lastSecFrameCount = 0;
+	}
+
+	float averageFps = float(frameCount) / startupTime.ReadSec();
+	float secondsSinceStartup = startupTime.ReadSec();
+	uint lastFrameMs = frameTime.Read();
+	uint framesOnLastUpdate = prevLastSecFrameCount;
+
+	static char title[256];
+	sprintf_s(title, 256, "FPS: %i / Avg.FPS: %.2f / Last-Frame MS: %.3f", framesOnLastUpdate, averageFps, dt);
+	window->SetTitle(title);
+
+	if (maxFPS > 0 && lastFrameMs < maxFPS)
+	{
+		PERF_START(ptimer);
+		SDL_Delay(maxFPS-lastFrameMs);
+		PERF_PEEK(ptimer);
+
 	}
 
 	return ret;
