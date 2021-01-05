@@ -1,8 +1,10 @@
-/*#include "Application.h"
+#include "Fonts.h"
+
+#include "Application.h"
 
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
-#include "Fonts.h"
+
 
 #include<string.h>
 
@@ -27,7 +29,7 @@ int Fonts::Load(Application* app, const char* texture_path, const char* characte
 		return id;
 	}
 
-	SDL_Texture* tex = app->tex->Load(texture_path);
+	SDL_Texture* tex = app->textures->Load(texture_path);
 
 	if (tex == nullptr || strlen(characters) >= MAX_FONT_CHARS)
 	{
@@ -65,6 +67,7 @@ int Fonts::Load(Application* app, const char* texture_path, const char* characte
 
 	uint tex_w, tex_h;
 	app->textures->GetSize(tex, tex_w, tex_h);
+
 	font.char_w = 32;
 	font.char_h = 55;
 
@@ -123,4 +126,3 @@ void Fonts::BlitText(Application* app, int x, int y, int font_id, const char* te
 		x += 34;
 	}
 }
-*/

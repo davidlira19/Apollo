@@ -1,9 +1,9 @@
-/*#ifndef __FONTS_H__
+#ifndef __FONTS_H__
 #define __FONTS_H__
-
+#include"Globals.h"
 #include "Module.h"
 #include "SDL\include\SDL_pixels.h"
-
+//#include "Application.h"
 #define MAX_FONTS 10
 #define MAX_FONT_CHARS 256
 
@@ -28,7 +28,7 @@ class Fonts : public Module
 public:
 
 	// Constructor
-	Fonts(Application* app, bool start_enabled) : Module(app, start_enabled) {};
+	Fonts(Application* app, bool start_enabled);
 
 	// Destructor
 	~Fonts();
@@ -53,4 +53,4 @@ private:
 };
 
 
-#endif // __ModuleFonts_H__*/
+#endif // __ModuleFonts_H__

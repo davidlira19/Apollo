@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModuleScene.h"
 #include"FadeToBlack.h"
-
+#include "Fonts.h"
 
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -19,7 +19,8 @@ bool ModuleScene::Start()
 	backgroundTexture = App->textures->Load("Assets/Textures/bg.png");
 	fuelBar = App->textures->Load("Assets/Textures/fuel_bar.png");
 	ammo = App->textures->Load("Assets/Textures/ammo.png");
-
+	uint number = 1;
+	font = App->fonts->Load(App, "Assets/Textures/numbers.png","0123456789", number);
 	LOG("Loading Intro assets");
 	bool ret = true;
 	gravity = 10.0f;
@@ -100,6 +101,6 @@ update_status ModuleScene::Update(float dt)
 
 	App->renderer->Blit(fuelBar, App->renderer->camera.x * -1, App->renderer->camera.y * -1, &rectBar);
 	App->renderer->Blit(ammo, App->renderer->camera.x * -1 +800, App->renderer->camera.y * -1+650);
-
+	
 	return UPDATE_CONTINUE;
 }

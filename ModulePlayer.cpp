@@ -3,6 +3,7 @@
 #include "ModulePhysics.h"
 #include "Application.h"
 #include"Globals.h"
+#include "Fonts.h"
 ModulePlayer::ModulePlayer(SDL_Texture* adTexture)
 {
 	ship = adTexture;
@@ -151,6 +152,8 @@ bool ModulePlayer::Update(float dt, Application* app)
 void ModulePlayer::Draw(Application* app)
 {
 	app->renderer->Blit(boodyTexture, position.x , position.y , &bodyRect, 1, 1, rotation, getXMiddle(), getYMiddle());
+	sprintf_s(text, 10, "%2d", ammo);
+	app->fonts->BlitText(app, (app->renderer->camera.x-900) * -1, (app->renderer->camera.y - 675) * -1, app->scene->font, text);
 }
 bool ModulePlayer::PostUpdate(Application* app)
 {

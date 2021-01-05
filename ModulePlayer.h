@@ -3,7 +3,7 @@
 
 #include "Animation.h"
 //#include "Globals.h"
-
+#include<string.h>
 #include"Body.h"
 
 #include"ModuleRender.h"
@@ -28,6 +28,7 @@ public:
 	Animation stopAnimation;
 	Animation* currentAnimation;
 	void Draw(Application* app)override;
+	char text[5] = { "\0" };
 	int life;
 	int ammo;
 	int fuel;

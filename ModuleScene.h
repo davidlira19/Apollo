@@ -23,6 +23,7 @@ public:
 	bool CleanUp();
 
 public:
+	int font;
 	float gravity;
 	Asteroid* asteroid;
 	ModulePlayer* player;
