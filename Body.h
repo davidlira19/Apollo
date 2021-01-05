@@ -14,7 +14,7 @@ class Body
 {
 public:
     Body();
-    ~Body();
+    virtual ~Body();
 public:
     //Variables
 	bodyType type;
@@ -29,6 +29,8 @@ public:
     int getXMiddle();
     int getYMiddle();
     SDL_Texture* boodyTexture;
+	virtual bool checkColliders(collider* body);
+	virtual void Collision(collider* bodies, collider* external, Application* app);
     virtual bool Start(Application* app);
     virtual bool PreUpdate(Application* app);
     virtual bool Update(float dt, Application* app);

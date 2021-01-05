@@ -16,9 +16,11 @@ public:
 		lisener = Lisener;
 		position.x = x;
 		position.y = y;
+		toDelete = false;
 	}
 	//private:
 	int circleRad;
+	bool toDelete;
 	Vec2 position;
 	colliderType Type;
 	Module* lisener;
@@ -54,7 +56,27 @@ public:
 		colliderList.add(node);
 		return node;
 	}
+	update_status PreUpdate()override 
+	{
+		p2List_item<collider*>* auxiliar1;
+		auxiliar1 = colliderList.getFirst();
+		while (auxiliar1 != nullptr)
+		{
+			if (auxiliar1->data->toDelete == true)
+			{
+				auxiliar1 = auxiliar1->next;
+				delete auxiliar1->prev->data;
+				colliderList.del(auxiliar1->prev);
 
+			}
+			else {
+				auxiliar1 = auxiliar1->next;
+			}
+		
+		}
+
+		return UPDATE_CONTINUE;
+	}
 
 	update_status Update(float dt)override {
 		p2List_item<collider*>* auxiliar1;

@@ -56,6 +56,17 @@
 		return true;
 	}
 
+	void Body::Collision(collider* bodies, collider* external, Application* app) {
+
+	}
+	bool Body::checkColliders(collider* body) {
+		if (body == Collider) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	//Methods
 	/*void addForce(int force);
 	void addMomentum(int momentum);*/

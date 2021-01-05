@@ -25,10 +25,15 @@ update_status bodyManager::PreUpdate()
 	{
 		if (auxiliar->data->pendingToDelete == true)
 		{
-			delete auxiliar->data;
-			bodyList.del(auxiliar);
+			auxiliar = auxiliar->next;
+			delete auxiliar->prev->data;
+			bodyList.del(auxiliar->prev);
+
 		}
-		auxiliar = auxiliar->next;
+		else {
+			auxiliar = auxiliar->next;
+		}
+
 	}
 	auxiliar = bodyList.getFirst();
 	while (auxiliar != nullptr)
@@ -131,7 +136,7 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 	player->bodyRect = { 186,215,40,103 };
 	player->type = bodyType::Player;
 	player->col1 = App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
-	player->col2 = App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
+	player->base = App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
 	player->col3 = App->collisions->addCollider(10, colliderType::player, this, pos.x, pos.y);
 	player->col4 = App->collisions->addCollider(10, colliderType::player, this, pos.x, pos.y);
 	player->col5 = App->collisions->addCollider(10, colliderType::player, this, pos.x, pos.y);
@@ -146,11 +151,12 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 { 
 	p2List_item<Body*>* auxiliar1 = nullptr;
 	p2List_item<Body*>* auxiliar2 = nullptr;
-	auxiliar2=auxiliar1 = app->bodyesManager->bodyList.getFirst();
+	auxiliar2 = app->bodyesManager->bodyList.getFirst();
+	auxiliar1 = app->bodyesManager->bodyList.getFirst();
 
 	while (auxiliar1 != nullptr)
 	{
-		if (auxiliar1->data->Collider== body1)
+		if (auxiliar1->data->checkColliders(body1) == true)
 		{
 			break;
 		}
@@ -158,14 +164,21 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 	}
 	while (auxiliar2 != nullptr)
 	{
-		if (auxiliar2->data->Collider == body2)
+		if (auxiliar2->data->checkColliders(body2) == true)
 		{
 			break;
 		}
 		auxiliar2 = auxiliar2->next;
 	}
-	if ((body1->Type == colliderType::planet && body2->Type == colliderType::player) || (body1->Type == colliderType::player && body2->Type == colliderType::planet)) 
+	if ((body1->Type == colliderType::planet && body2->Type == colliderType::player) || (body1->Type == colliderType::player && body2->Type == colliderType::planet))
 	{
+		if (body1->Type == colliderType::player && body2->Type == colliderType::planet)
+		{
+			auxiliar1->data->Collision(body1, body2, app);
+		}
+		else
+		{
 
+		}
 	}
 }

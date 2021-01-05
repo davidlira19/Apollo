@@ -7,9 +7,13 @@
 #include"Body.h"
 
 #include"ModuleRender.h"
+enum class playerState {
+	Free,Static
+};
 class ModulePlayer : public Body
 {
 public:
+	playerState state;
 	ModulePlayer(SDL_Texture* adTexture);
 	virtual ~ModulePlayer();
 	bool Start(Application* app)override;
@@ -27,8 +31,10 @@ public:
 	int life;
 	int ammo;
 	int fuel;
+	bool checkColliders(collider* body)override;
+	void Collision(collider* bodies, collider* external, Application* app)override;
 	collider* col1;
-	collider* col2;
+	collider* base;
 	collider* col3;
 	collider* col4;
 	collider* col5;
