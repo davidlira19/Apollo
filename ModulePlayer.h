@@ -21,7 +21,7 @@ public:
 	bool Update(float dt, Application* app)override;
 	bool PostUpdate(Application* app)override;
 	bool CleanUp(Application* app)override;
-	void launchTorpedo();
+	void launchTorpedo(Application* app);
 	void setPos(Application* app) override;
 	SDL_Texture* ship;
 	Animation fireAnimation;

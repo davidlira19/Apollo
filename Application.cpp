@@ -15,6 +15,7 @@ Application::Application()
 	scene_lose = new ModuleSceneLose(this, false);
 	scene_win = new ModuleSceneWin(this, false);
 	scene = new ModuleScene(this, false);
+	//fonts = new Fonts(this, false);
 	physics = new ModulePhysics(this, true);
 	fade = new ModuleFadeToBlack(this, true);
 	collisions = new collision(this, true);
@@ -30,6 +31,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(audio);
 	AddModule(fade);
+	//AddModule(fonts);
 	// Scenes
 	AddModule(scene_intro);
 	AddModule(scene_lose);

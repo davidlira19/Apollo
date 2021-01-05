@@ -11,7 +11,7 @@ bodyManager::~bodyManager() {
 bool bodyManager::Start() 
 {
 	//fireText = App->textures->Load("Assets/Textures/fire.png");
-	Texture=App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
+	Texture = App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
 	Texture1 = App->textures->Load("Assets/Textures/ship.png");
 	Texture2 = App->textures->Load("Assets/Textures/earth.png");
 	Texture3 = App->textures->Load("Assets/Textures/moon.png");
@@ -127,6 +127,21 @@ Planet* bodyManager::CreatePlanet(Vec2 pos,int type, int rad, float mass, float 
 	bodyList.add(planet);
 	return planet;
 }
+
+Torpedo* bodyManager::CreateTorpedo(Vec2 pos, Vec2 velocity, double rotation)
+{
+	Torpedo* torpedo = new Torpedo();
+	torpedo->position = pos;
+	torpedo->velocity = velocity;
+	torpedo->rotation = rotation;
+	torpedo->boodyTexture = Texture;
+	torpedo->bodyRect = { 319,139,12,48 };
+	torpedo->Collider = App->collisions->addRectCollider(torpedo->bodyRect, colliderType::torpedo, this, pos.x, pos.y);
+	bodyList.add(torpedo);
+
+	return torpedo;
+}
+
 ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 {
 	ModulePlayer* player = new ModulePlayer(Texture1);

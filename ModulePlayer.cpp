@@ -121,7 +121,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		launchTorpedo();
+		launchTorpedo(app);
 	}
 
 
@@ -156,10 +156,11 @@ bool ModulePlayer::PostUpdate(Application* app)
 {
 	return true;
 }
-void ModulePlayer::launchTorpedo()
+void ModulePlayer::launchTorpedo(Application* app)
 {
 	if (ammo > 0)
 	{
+		app->bodyesManager->CreateTorpedo(Vec2(position.x, position.y), Vec2(velocity.x, velocity.y), rotation);
 		ammo -= 1;
 	}
 }

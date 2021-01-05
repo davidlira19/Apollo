@@ -18,6 +18,8 @@ bool ModuleScene::Start()
 {
 	backgroundTexture = App->textures->Load("Assets/Textures/bg.png");
 	fuelBar = App->textures->Load("Assets/Textures/fuel_bar.png");
+	ammo = App->textures->Load("Assets/Textures/ammo.png");
+
 	LOG("Loading Intro assets");
 	bool ret = true;
 	gravity = 10.0f;
@@ -46,7 +48,7 @@ update_status ModuleScene::Update(float dt)
 	int widthBar = (float)player->fuel / 5000 * 200;
 	rectBar = { 0,0,widthBar,20 };
 
-	LOG("%f %f", player->position.x, player->position.y);
+	LOG("%d", player->ammo);
 
 	App->renderer->Blit(backgroundTexture, 200, -13000);
 	/*App->renderer->Blit(backgroundTexture, 920, 0);
@@ -97,6 +99,7 @@ update_status ModuleScene::Update(float dt)
 	}
 
 	App->renderer->Blit(fuelBar, App->renderer->camera.x * -1, App->renderer->camera.y * -1, &rectBar);
+	App->renderer->Blit(ammo, App->renderer->camera.x * -1 +800, App->renderer->camera.y * -1+650);
 
 	return UPDATE_CONTINUE;
 }

@@ -6,12 +6,22 @@
 //#include"Application.h"
 #include"SDL/include/SDL.h"
 enum class colliderType {
-	player, roket,planet
+	player, roket,planet, torpedo
 };
 class collider {
 public:
-	collider(int rad, colliderType type, Module* Lisener, int x, int y) {
+	collider(int rad, colliderType type, Module* Lisener, int x, int y) 
+	{
 		circleRad = rad;
+		Type = type;
+		lisener = Lisener;
+		position.x = x;
+		position.y = y;
+		toDelete = false;
+	}
+	collider(SDL_Rect rect, colliderType type, Module* Lisener, int x, int y)
+	{
+		rectCollider = rect;
 		Type = type;
 		lisener = Lisener;
 		position.x = x;
@@ -20,6 +30,7 @@ public:
 	}
 	//private:
 	int circleRad;
+	SDL_Rect rectCollider;
 	bool toDelete;
 	Vec2 position;
 	colliderType Type;
@@ -45,14 +56,23 @@ public:
 	}
 
 };
-class collision :public Module {
+class collision :public Module 
+{
 public:
-	collision(Application* app, bool start_enabled) : Module(app, start_enabled) {
+	collision(Application* app, bool start_enabled) : Module(app, start_enabled) 
+	{
 
 	}
 	p2List<collider*> colliderList;
-	collider* addCollider(int rad, colliderType type, Module* Lisener, int x, int y) {
+	collider* addCollider(int rad, colliderType type, Module* Lisener, int x, int y) 
+	{
 		collider* node = new collider(rad, type, Lisener, x, y);
+		colliderList.add(node);
+		return node;
+	}
+	collider* addRectCollider(SDL_Rect rect, colliderType type, Module* Lisener, int x, int y)
+	{
+		collider* node = new collider(rect, type, Lisener, x, y);
 		colliderList.add(node);
 		return node;
 	}
@@ -69,7 +89,8 @@ public:
 				colliderList.del(auxiliar1->prev);
 
 			}
-			else {
+			else 
+			{
 				auxiliar1 = auxiliar1->next;
 			}
 		

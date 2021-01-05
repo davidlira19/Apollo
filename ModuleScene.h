@@ -29,6 +29,7 @@ public:
 	Planet* earth;
 	Planet* moon;
 	SDL_Texture* fuelBar;
+	SDL_Texture* ammo;
 
 	SDL_Texture* graphics;
 	PhysBody* background;

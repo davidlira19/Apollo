@@ -18,6 +18,7 @@
 #include "ModuleSceneLose.h"
 #include "ModuleSceneWin.h"
 #include "ModuleScene.h"
+//#include "Fonts.h"
 #include"FadeToBlack.h"
 #include"Collisions.h"
 
@@ -34,6 +35,7 @@ public:
 	ModuleSceneLose* scene_lose;
 	ModuleSceneWin* scene_win;
 	ModuleScene* scene;
+	//Fonts* fonts;
 	ModulePhysics* physics;
 	ModuleFadeToBlack* fade;
 	collision* collisions;
