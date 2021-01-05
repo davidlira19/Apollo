@@ -59,8 +59,8 @@ bool ModulePlayer::Update(float dt, Application* app)
 			distanceY = auxiliar->data->position.y + auxiliar->data->getYMiddle() - position.y + getYMiddle();
 			distance = sqrt((distanceX * distanceX) + (distanceY * distanceY));
 			finalGravity = app->physics->GravityForce(auxiliar->data->mass, mass, distance, Vec2(distanceX, distanceY));
-			velocity.y += (finalGravity.y * -4 * dt);
-			velocity.x += (finalGravity.x * -4 * dt);
+			velocity.y += (finalGravity.y * -2 * dt);
+			velocity.x += (finalGravity.x * -2 * dt);
 		}
 		auxiliar = auxiliar->next;
 	}
@@ -75,8 +75,24 @@ bool ModulePlayer::Update(float dt, Application* app)
 			currentAnimation->Update();
 			app->renderer->Blit(fire,position.x + 8, position.y + 112, &rec, 2, 1.0f, rotation, 20, 52);
 			ang = ((rotation * M_PI) / 180);
-			velocity.y -= (2  *dt* cos(ang));
-			velocity.x += (2  *dt* sin(ang));
+			velocity.y -= (0.2  *dt* cos(ang));
+			velocity.x += (0.2  *dt* sin(ang));
+			if (velocity.y >= 1000)
+			{
+				velocity.y = 999;
+			}
+			if (velocity.y <= -1000)
+			{
+				velocity.y = -999;
+			}
+			if (velocity.x >= 1000)
+			{
+				velocity.x = 999;
+			}
+			if (velocity.x <= -1000)
+			{
+				velocity.x = -999;
+			}
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)

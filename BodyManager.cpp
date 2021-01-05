@@ -140,7 +140,7 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 
 void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 { 
-	/*p2List_item<Body*>* auxiliar1 = nullptr;
+	p2List_item<Body*>* auxiliar1 = nullptr;
 	p2List_item<Body*>* auxiliar2 = nullptr;
 	auxiliar2=auxiliar1 = app->bodyesManager->bodyList.getFirst();
 
@@ -159,9 +159,9 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 			break;
 		}
 		auxiliar2 = auxiliar2->next;
-	}*/
+	}
 	if ((body1->Type == colliderType::planet && body2->Type == colliderType::player) || (body1->Type == colliderType::player && body2->Type == colliderType::planet)) 
 	{
-		
+
 	}
 }

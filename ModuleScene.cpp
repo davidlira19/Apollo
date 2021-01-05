@@ -16,7 +16,7 @@ ModuleScene::~ModuleScene()
 // Load assets
 bool ModuleScene::Start()
 {
-	backgroundTexture = App->textures->Load("Assets/Textures/background.png");
+	backgroundTexture = App->textures->Load("Assets/Textures/bg.png");
 	fuelBar = App->textures->Load("Assets/Textures/fuel_bar.png");
 	LOG("Loading Intro assets");
 	bool ret = true;
@@ -25,9 +25,9 @@ bool ModuleScene::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	//asteroid = App->bodyesManager->CreateAsteroid({ 100, 100 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
-	player = App->bodyesManager->CreatePlayer({ 670, 1500 }, 10000);
+	player = App->bodyesManager->CreatePlayer({ 670, 1800 }, 10000);
 	earth = App->bodyesManager->CreatePlanet(Vec2(300,1900),1, 379, 5.972E7, 379.0f, Vec2(0, 9.81));
-	moon = App->bodyesManager->CreatePlanet(Vec2(600,600),2, 190, 7.349E6, 190.0f, Vec2(0, 1.62));
+	moon = App->bodyesManager->CreatePlanet(Vec2(600,-12500),2, 190, 7.349E6, 190.0f, Vec2(0, 1.62));
 
 	return ret;
 }
@@ -48,8 +48,8 @@ update_status ModuleScene::Update(float dt)
 
 	LOG("%f %f", player->position.x, player->position.y);
 
-	App->renderer->Blit(backgroundTexture, 0, 0);
-	App->renderer->Blit(backgroundTexture, 920, 0);
+	App->renderer->Blit(backgroundTexture, 200, -13000);
+	/*App->renderer->Blit(backgroundTexture, 920, 0);
 	App->renderer->Blit(backgroundTexture, 0, 518);
 	App->renderer->Blit(backgroundTexture, 1840, 0);
 	App->renderer->Blit(backgroundTexture, 0, 1036);
@@ -66,33 +66,26 @@ update_status ModuleScene::Update(float dt)
 
 	App->renderer->Blit(backgroundTexture, 2760, 518);
 	App->renderer->Blit(backgroundTexture, 2760, 1036);
-	App->renderer->Blit(backgroundTexture, 2760, 1554);
+	App->renderer->Blit(backgroundTexture, 2760, 1554);*/
 
-	App->renderer->camera.x = (player->position.x * -1) + 500;
+	App->renderer->camera.x = -200;
 	App->renderer->camera.y = (player->position.y * -1) + 379;
 
 	//Camera Limits
-	if (App->renderer->camera.y < -1300)
+	if (App->renderer->camera.y < -1600)
 	{
-		App->renderer->camera.y = -1299;
+		App->renderer->camera.y = -1599;
 	}
-	if (App->renderer->camera.y > 0)
+	if (App->renderer->camera.y > 13000)
 	{
-		App->renderer->camera.y = -1;
-	}
-	if (App->renderer->camera.x > 0)
-	{
-		App->renderer->camera.x = -1;
-	}
-	if (App->renderer->camera.x < -2500)
-	{
-		App->renderer->camera.x = -2499;
+		App->renderer->camera.y = 12999;
 	}
 
-	if (player->position.x > 3500 || player->position.x < -30 || player->position.y > 2030 || player->position.y < -30 || player->fuel <= 0)
-	{
-		App->fade->FadeToBlack((Module*)this, (Module*)App->scene_lose, 60);
-	}
+
+	//if (player->position.x > 3500 || player->position.x < -30 || player->position.y > 2030 || player->position.y < -30 || player->fuel <= 0)
+	//{
+	//	App->fade->FadeToBlack((Module*)this, (Module*)App->scene_lose, 60);
+	//}
 
 
 	p2List_item<collider*>* auxiliar;
