@@ -10,8 +10,9 @@ bodyManager::~bodyManager() {
 
 bool bodyManager::Start() 
 {
-	fireText = App->textures->Load("Assets/Textures/fire.png");
+	//fireText = App->textures->Load("Assets/Textures/fire.png");
 	Texture=App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
+	Texture1 = App->textures->Load("Assets/Textures/ship.png");
 	Texture2 = App->textures->Load("Assets/Textures/earth.png");
 	Texture3 = App->textures->Load("Assets/Textures/moon.png");
 	return true;
@@ -75,6 +76,9 @@ update_status bodyManager::PostUpdate()
 bool bodyManager::CleanUp() 
 {
 	App->textures->Unload(Texture);
+	App->textures->Unload(Texture1);
+	App->textures->Unload(Texture2);
+	App->textures->Unload(Texture3);
 	return true;
 }
 Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity)
@@ -120,11 +124,11 @@ Planet* bodyManager::CreatePlanet(Vec2 pos,int type, int rad, float mass, float 
 }
 ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 {
-	ModulePlayer* player = new ModulePlayer(fireText);
+	ModulePlayer* player = new ModulePlayer(Texture1);
 	player->position = pos;
 	player->mass = mass;
-	player->boodyTexture = Texture;
-	player->bodyRect = { 186,215,42,124 };
+	//player->boodyTexture = Texture;
+	player->bodyRect = { 186,215,40,103 };
 	player->type = bodyType::Player;
 	player->col1 = App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
 	player->col2 = App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);

@@ -5,15 +5,19 @@
 #include"Globals.h"
 ModulePlayer::ModulePlayer(SDL_Texture* adTexture)
 {
-	fire = adTexture;
-	fireAnimation.PushBack({ 0,0,10,19 });
-	fireAnimation.PushBack({ 0,29,12,21 });
-	fireAnimation.PushBack({ 0,62,10,16 });
-	fireAnimation.PushBack({ 0,88,10,24 });
-	fireAnimation.PushBack({ 0,118,11,25 });
+	ship = adTexture;
+	stopAnimation.PushBack({0,0,38/2,104/2});
+	stopAnimation.speed = 0.0f;
+	stopAnimation.loop = false;
+
+	fireAnimation.PushBack({ 19,0,19,74 });
+	fireAnimation.PushBack({ 39,0,19,74 });
+	fireAnimation.PushBack({ 58,0,19,70 });
+	fireAnimation.PushBack({ 77,0,19,78});
 	fireAnimation.loop = true;
 	fireAnimation.speed = 0.3f;
-	currentAnimation = &fireAnimation;
+	currentAnimation = &stopAnimation;
+
 	fuel = 5000;
 	velocity.y = 1;
 	rotation = 0;
@@ -66,35 +70,32 @@ bool ModulePlayer::Update(float dt, Application* app)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		
 		if (fuel > 0)
 		{
 			fuel -= (1.0f);
 			float ang;
 			SDL_Rect rec = currentAnimation->GetCurrentFrame();
+			currentAnimation = &fireAnimation;
 			currentAnimation->Update();
-			app->renderer->Blit(fire,position.x + 8, position.y + 112, &rec, 2, 1.0f, rotation, 20, 52);
+			app->renderer->Blit(ship, position.x, position.y, &rec, 2, 1.0f, rotation, 20, 52);
 			ang = ((rotation * M_PI) / 180);
-			velocity.y -= (0.2  *dt* cos(ang));
-			velocity.x += (0.2  *dt* sin(ang));
-			if (velocity.y >= 1000)
-			{
-				velocity.y = 999;
-			}
-			if (velocity.y <= -1000)
-			{
-				velocity.y = -999;
-			}
-			if (velocity.x >= 1000)
-			{
-				velocity.x = 999;
-			}
-			if (velocity.x <= -1000)
-			{
-				velocity.x = -999;
-			}
+			velocity.y -= (0.2 * dt * cos(ang));
+			velocity.x += (0.2 * dt * sin(ang));
+			
 		}
 	}
+	else
+	{
+		float ang;
+		SDL_Rect rec = currentAnimation->GetCurrentFrame();
+		currentAnimation = &stopAnimation;
+		currentAnimation->Update();
+		app->renderer->Blit(ship, position.x, position.y, &rec, 2, 1.0f, rotation, 20, 52);
+		/*ang = ((rotation * M_PI) / 180);
+		velocity.y -= (0.2 * dt * cos(ang));
+		velocity.x += (0.2 * dt * sin(ang));*/
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		position.y += 0.2 * dt;
@@ -111,6 +112,25 @@ bool ModulePlayer::Update(float dt, Application* app)
 	{
 		launchTorpedo();
 	}
+
+
+	if (velocity.y >= 1000)
+	{
+		velocity.y = 999;
+	}
+	if (velocity.y <= -1000)
+	{
+		velocity.y = -999;
+	}
+	if (velocity.x >= 1000)
+	{
+		velocity.x = 999;
+	}
+	if (velocity.x <= -1000)
+	{
+		velocity.x = -999;
+	}
+
 	Vec2 pos;
 	pos= app->physics->Integrator(velocity, 0.00032, app->scene->gravity);
 	position.y += metersToPixels(pos.y);

@@ -19,8 +19,9 @@ public:
 	bool CleanUp(Application* app)override;
 	void launchTorpedo();
 	void setPos(Application* app) override;
-	SDL_Texture* fire;
+	SDL_Texture* ship;
 	Animation fireAnimation;
+	Animation stopAnimation;
 	Animation* currentAnimation;
 	void Draw(Application* app)override;
 	int life;

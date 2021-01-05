@@ -24,6 +24,7 @@ public:
 	ModulePlayer* CreatePlayer(Vec2 pos, float mass);
 	p2List<Body*>bodyList;
 	SDL_Texture* Texture;
+	SDL_Texture* Texture1;
 	SDL_Texture* Texture2;
 	SDL_Texture* Texture3;
 	SDL_Texture* fireText;
