@@ -29,6 +29,21 @@ bool ModuleScene::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	asteroid = App->bodyesManager->CreateAsteroid({ 300, 1000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid2 = App->bodyesManager->CreateAsteroid({ 600, 500 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid3 = App->bodyesManager->CreateAsteroid({ 700, 0 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid4 = App->bodyesManager->CreateAsteroid({ 300, -500 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid5 = App->bodyesManager->CreateAsteroid({ 350, -1000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid6 = App->bodyesManager->CreateAsteroid({ 150, -2000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid7 = App->bodyesManager->CreateAsteroid({ 700, -3000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid8 = App->bodyesManager->CreateAsteroid({ 400, -4500 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid9 = App->bodyesManager->CreateAsteroid({ 200, -6000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid10 = App->bodyesManager->CreateAsteroid({ 600, -7000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid11 = App->bodyesManager->CreateAsteroid({ 300, -8000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid12 = App->bodyesManager->CreateAsteroid({ 200, -9000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid13 = App->bodyesManager->CreateAsteroid({ 100, -10000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid14 = App->bodyesManager->CreateAsteroid({ 800, -10500 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid15 = App->bodyesManager->CreateAsteroid({ 400, -11000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+
 	player = App->bodyesManager->CreatePlayer({ 670, 1500 }, 10000);
 	earth = App->bodyesManager->CreatePlanet(Vec2(300,1900),1, 379, 5.972E7, 379.0f, Vec2(0, 9.81));
 	moon = App->bodyesManager->CreatePlanet(Vec2(600,-12500),2, 190, 7.349E6, 190.0f, Vec2(0, 1.62));

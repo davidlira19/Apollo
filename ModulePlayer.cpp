@@ -22,7 +22,7 @@ ModulePlayer::ModulePlayer(SDL_Texture* adTexture)
 	fuel = 5000;
 	velocity.y = 1;
 	rotation = 0;
-	ammo = 10;
+	ammo = 30;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -73,8 +73,8 @@ bool ModulePlayer::Update(float dt, Application* app)
 				distanceY = auxiliar->data->position.y + auxiliar->data->getYMiddle() - position.y + getYMiddle();
 				distance = sqrt((distanceX * distanceX) + (distanceY * distanceY));
 				finalGravity = app->physics->GravityForce(auxiliar->data->mass, mass, distance, Vec2(distanceX, distanceY));
-				velocity.y += (finalGravity.y * -2 * dt);
-				velocity.x += (finalGravity.x * -2 * dt);
+				velocity.y += (finalGravity.y * -1 * dt);
+				velocity.x += (finalGravity.x * -1 * dt);
 			}
 			auxiliar = auxiliar->next;
 		}
@@ -84,15 +84,15 @@ bool ModulePlayer::Update(float dt, Application* app)
 		if (fuel > 0)
 		{
 			state = playerState::Free;
-			fuel -= (1.0f);
+			fuel -= (3.0f);
 			float ang;
 			SDL_Rect rec = currentAnimation->GetCurrentFrame();
 			currentAnimation = &fireAnimation;
 			currentAnimation->Update();
 			app->renderer->Blit(ship, position.x, position.y, &rec, 2, 1.0f, rotation, 20, 52);
 			ang = ((rotation * M_PI) / 180);
-			velocity.y -= (2 * dt * cos(ang));//0.2
-			velocity.x += (2* dt * sin(ang));
+			velocity.y -= (1 * dt * cos(ang));//0.2
+			velocity.x += (1* dt * sin(ang));
 			
 		}
 	}
@@ -110,15 +110,15 @@ bool ModulePlayer::Update(float dt, Application* app)
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		position.y += 0.2 * dt;
+		position.y += 0.1 * dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		rotation -= 0.2 * dt;
+		rotation -= 0.15 * dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		rotation += 0.2* dt;
+		rotation += 0.15* dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{

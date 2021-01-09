@@ -26,6 +26,21 @@ public:
 	int font;
 	float gravity;
 	Asteroid* asteroid;
+	Asteroid* asteroid2;
+	Asteroid* asteroid3;
+	Asteroid* asteroid4;
+	Asteroid* asteroid5;
+	Asteroid* asteroid6;
+	Asteroid* asteroid7;
+	Asteroid* asteroid8;
+	Asteroid* asteroid9;
+	Asteroid* asteroid10;
+	Asteroid* asteroid11;
+	Asteroid* asteroid12;
+	Asteroid* asteroid13;
+	Asteroid* asteroid14;
+	Asteroid* asteroid15;
+
 	ModulePlayer* player;
 	Planet* earth;
 	Planet* moon;
