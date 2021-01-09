@@ -178,77 +178,81 @@ void ModulePlayer::setPos(Application* app)
 }
 void ModulePlayer::Collision(collider* bodies, collider* external, Application* app)
 {
-	if ((bodies == col1 || bodies == col3 || bodies == col4 || bodies == col5 || bodies == col6))
+	if (app->bodyesManager->playerLose == false)
 	{
-		pendingToDelete = true;
-	}
-	else if (bodies == base)
-	{
-		if (velocity.y >= 150.0f && velocity.y < 700.0f)
+		if ((bodies == col1 || bodies == col3 || bodies == col4 || bodies == col5 || bodies == col6))
 		{
-			velocity = app->physics->AddMomentum(velocity.x, velocity.y, velocity, 10);
-			if (base->position.x < external->position.x)
+			app->bodyesManager->playerLose = true;
+		}
+		else if (bodies == base)
+		{
+			if (velocity.y >= 150.0f && velocity.y < 700.0f)
 			{
-				if (velocity.x > 0)
+				velocity = app->physics->AddMomentum(velocity.x, velocity.y, velocity, 10);
+				if (base->position.x < external->position.x)
 				{
-					velocity.x = velocity.x - (velocity.x * 0.3);
-					velocity.x = -velocity.x;
+					if (velocity.x > 0)
+					{
+						velocity.x = velocity.x - (velocity.x * 0.3);
+						velocity.x = -velocity.x;
+					}
+					else {
+						velocity.x = velocity.x - (velocity.x * 0.3);
+					}
 				}
-				else {
-					velocity.x = velocity.x - (velocity.x * 0.3);
+				else
+				{
+					if (velocity.x < 0)
+					{
+						velocity.x = velocity.x - (velocity.x * 0.3);
+						velocity.x = -velocity.x;
+					}
+					else {
+						velocity.x = velocity.x - (velocity.x * 0.3);
+					}
 				}
+
+				if (base->position.y < external->position.y)
+				{
+					if (velocity.y > 0)
+					{
+						velocity.y = velocity.y - (velocity.y * 0.3);
+						velocity.y = -velocity.y;
+					}
+					else {
+						velocity.y = velocity.y - (velocity.y * 0.3);
+					}
+				}
+				else
+				{
+					if (velocity.y < 0)
+					{
+						velocity.y = velocity.y - (velocity.y * 0.3);
+						velocity.y = -velocity.y;
+					}
+					else {
+						velocity.y = velocity.y - (velocity.y * 0.3);
+					}
+				}
+				Vec2 pos;
+				pos.x = velocity.x * 0.0016;
+				pos.y = velocity.y * 0.0016;
+				position.y += metersToPixels(pos.y);
+				position.x += metersToPixels(pos.x);
+			}
+			else if (velocity.y < 150.0f)
+			{
+				velocity.x = 0;
+				velocity.y = 0;
+				state = playerState::Static;
 			}
 			else
 			{
-				if (velocity.x < 0)
-				{
-					velocity.x = velocity.x - (velocity.x * 0.3);
-					velocity.x = -velocity.x;
-				}
-				else {
-					velocity.x = velocity.x - (velocity.x * 0.3);
-				}
+				app->bodyesManager->playerLose = true;
+
 			}
 
-			if (base->position.y < external->position.y)
-			{
-				if (velocity.y > 0)
-				{
-					velocity.y = velocity.y-(velocity.y * 0.3);
-					velocity.y = -velocity.y;
-				}
-				else {
-					velocity.y = velocity.y - (velocity.y * 0.3);
-				}
-			}
-			else
-			{
-				if (velocity.y < 0)
-				{
-					velocity.y = velocity.y - (velocity.y * 0.3);
-					velocity.y = -velocity.y;
-				}
-				else {
-					velocity.y = velocity.y - (velocity.y * 0.3);
-				}
-			}
-			Vec2 pos;
-			pos.x = velocity.x * 0.0016;
-			pos.y = velocity.y * 0.0016;
-			position.y += metersToPixels(pos.y);
-			position.x += metersToPixels(pos.x);
 		}
-		else if (velocity.y < 150.0f)
-		{
-			velocity.x = 0;
-			velocity.y = 0;
-			state = playerState::Static;
-		}
-		else
-		{
-			pendingToDelete = true;
-		}
-
 	}
 }
 

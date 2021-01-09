@@ -38,6 +38,10 @@ bool ModuleScene::Start()
 // Load assets
 bool ModuleScene::CleanUp()
 {
+	App->textures->Unload(backgroundTexture);
+	App->textures->Unload(fuelBar);
+	App->textures->Unload(ammo);
+	App->fonts->UnLoad(App,font);
 	LOG("Unloading Intro scene");	
 	return true;
 }

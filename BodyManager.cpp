@@ -15,6 +15,8 @@ bool bodyManager::Start()
 	Texture1 = App->textures->Load("Assets/Textures/ship.png");
 	Texture2 = App->textures->Load("Assets/Textures/earth.png");
 	Texture3 = App->textures->Load("Assets/Textures/moon.png");
+	playerLose = false;
+	count = false;
 	return true;
 }
 update_status bodyManager::PreUpdate() 
@@ -76,14 +78,33 @@ update_status bodyManager::PostUpdate()
 		auxiliar->data->Draw(App);
 		auxiliar = auxiliar->next;
 	}
+	if (playerLose == true&&count==false) 
+	{
+		App->fade->FadeToBlack(this, App->scene_lose);
+		count = true;
+		
+	}
 	return UPDATE_CONTINUE;
 }
 bool bodyManager::CleanUp() 
 {
+	
 	App->textures->Unload(Texture);
 	App->textures->Unload(Texture1);
 	App->textures->Unload(Texture2);
 	App->textures->Unload(Texture3);
+	p2List_item<Body*>* auxiliar;
+	p2List_item<Body*>* auxiliar1;
+	auxiliar = bodyList.getFirst();
+	while (auxiliar != nullptr)
+	{		
+		auxiliar1 = auxiliar->next;
+		delete auxiliar->data;
+		bodyList.del(auxiliar);
+		auxiliar = nullptr;
+		auxiliar = auxiliar1;
+	}
+	App->scene->Disable();
 	return true;
 }
 Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity)
@@ -165,58 +186,61 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 
 void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 { 
-	p2List_item<Body*>* auxiliar1 = nullptr;
-	p2List_item<Body*>* auxiliar2 = nullptr;
-	auxiliar2 = app->bodyesManager->bodyList.getFirst();
-	auxiliar1 = app->bodyesManager->bodyList.getFirst();
+	if (playerLose == false)
+	{
+		p2List_item<Body*>* auxiliar1 = nullptr;
+		p2List_item<Body*>* auxiliar2 = nullptr;
+		auxiliar2 = app->bodyesManager->bodyList.getFirst();
+		auxiliar1 = app->bodyesManager->bodyList.getFirst();
 
-	while (auxiliar1 != nullptr)
-	{
-		if (auxiliar1->data->checkColliders(body1) == true)
+		while (auxiliar1 != nullptr)
 		{
-			break;
+			if (auxiliar1->data->checkColliders(body1) == true)
+			{
+				break;
+			}
+			auxiliar1 = auxiliar1->next;
 		}
-		auxiliar1 = auxiliar1->next;
-	}
-	while (auxiliar2 != nullptr)
-	{
-		if (auxiliar2->data->checkColliders(body2) == true)
+		while (auxiliar2 != nullptr)
 		{
-			break;
+			if (auxiliar2->data->checkColliders(body2) == true)
+			{
+				break;
+			}
+			auxiliar2 = auxiliar2->next;
 		}
-		auxiliar2 = auxiliar2->next;
-	}
-	if ((body1->Type == colliderType::planet && body2->Type == colliderType::player) || (body1->Type == colliderType::player && body2->Type == colliderType::planet))
-	{
-		if (body1->Type == colliderType::player && body2->Type == colliderType::planet)
+		if ((body1->Type == colliderType::planet && body2->Type == colliderType::player) || (body1->Type == colliderType::player && body2->Type == colliderType::planet))
 		{
-			auxiliar1->data->Collision(body1, body2, app);
-		}
-		else
-		{
+			if (body1->Type == colliderType::player && body2->Type == colliderType::planet)
+			{
+				auxiliar1->data->Collision(body1, body2, app);
+			}
+			else
+			{
 
+			}
 		}
-	}
-	if ((body1->Type == colliderType::torpedo && body2->Type == colliderType::roket) || (body1->Type == colliderType::roket && body2->Type == colliderType::torpedo))
-	{
-		if (auxiliar1->data->type == bodyType::Asteroid)
+		if ((body1->Type == colliderType::torpedo && body2->Type == colliderType::roket) || (body1->Type == colliderType::roket && body2->Type == colliderType::torpedo))
 		{
-			auxiliar1->data->pendingToDelete = true;
+			if (auxiliar1->data->type == bodyType::Asteroid)
+			{
+				auxiliar1->data->pendingToDelete = true;
+			}
+			if (auxiliar2->data->type == bodyType::Asteroid)
+			{
+				auxiliar2->data->pendingToDelete = true;
+			}
 		}
-		if (auxiliar2->data->type == bodyType::Asteroid)
+		if ((body1->Type == colliderType::player && body2->Type == colliderType::roket) || (body1->Type == colliderType::roket && body2->Type == colliderType::player))
 		{
-			auxiliar2->data->pendingToDelete = true;
-		}
-	}
-	if ((body1->Type == colliderType::player && body2->Type == colliderType::roket) || (body1->Type == colliderType::roket && body2->Type == colliderType::player))
-	{
-		if (auxiliar1->data->type == bodyType::Player)
-		{
-			auxiliar1->data->pendingToDelete = true;
-		}
-		if (auxiliar2->data->type == bodyType::Player)
-		{
-			auxiliar2->data->pendingToDelete = true;
+			if (auxiliar1->data->type == bodyType::Player)
+			{
+				auxiliar1->data->pendingToDelete = true;
+			}
+			if (auxiliar2->data->type == bodyType::Player)
+			{
+				auxiliar2->data->pendingToDelete = true;
+			}
 		}
 	}
 }

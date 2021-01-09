@@ -28,6 +28,10 @@ public:
 		position.y = y;
 		toDelete = false;
 	}
+	~collider() 
+	{
+
+	}
 	//private:
 	int circleRad;
 	SDL_Rect rectCollider;
@@ -79,19 +83,21 @@ public:
 	update_status PreUpdate()override 
 	{
 		p2List_item<collider*>* auxiliar1;
-		auxiliar1 = colliderList.getFirst();
-		while (auxiliar1 != nullptr)
+		p2List_item<collider*>* auxiliar;
+		auxiliar = colliderList.getFirst();
+		while (auxiliar != nullptr)
 		{
-			if (auxiliar1->data->toDelete == true)
+			if (auxiliar->data->toDelete == true)
 			{
-				auxiliar1 = auxiliar1->next;
-				delete auxiliar1->prev->data;
-				colliderList.del(auxiliar1->prev);
-
+				auxiliar1 = auxiliar->next;
+				delete auxiliar->data;
+				colliderList.del(auxiliar);
+				auxiliar = nullptr;
+				auxiliar = auxiliar1;
 			}
 			else 
 			{
-				auxiliar1 = auxiliar1->next;
+				auxiliar = auxiliar->next;
 			}
 		
 		}

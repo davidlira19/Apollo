@@ -30,6 +30,8 @@ public:
 	SDL_Texture* Texture2;
 	SDL_Texture* Texture3;
 	SDL_Texture* fireText;
+	bool playerLose;
+	bool count;
 };
 #endif
 
