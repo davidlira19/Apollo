@@ -31,7 +31,7 @@ update_status ModulePhysics::PreUpdate()
 }
 
 // 
-update_status ModulePhysics::PostUpdate(Application* app)
+update_status ModulePhysics::PostUpdate()
 {
 
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)

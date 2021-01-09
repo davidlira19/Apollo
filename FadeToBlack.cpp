@@ -51,7 +51,7 @@ update_status ModuleFadeToBlack::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleFadeToBlack::PostUpdate(Application* app)
+update_status ModuleFadeToBlack::PostUpdate()
 {
 	// Exit this function if we are not performing a fade
 	if (currentStep == Fade_Step::NONE) return UPDATE_CONTINUE;

@@ -10,7 +10,6 @@ bodyManager::~bodyManager() {
 
 bool bodyManager::Start() 
 {
-	playerLose = false;
 	//fireText = App->textures->Load("Assets/Textures/fire.png");
 	Texture = App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
 	Texture1 = App->textures->Load("Assets/Textures/ship.png");
@@ -61,7 +60,7 @@ update_status bodyManager::Update(float dt)
 	}
 	return UPDATE_CONTINUE;
 }
-update_status bodyManager::PostUpdate(Application* app) 
+update_status bodyManager::PostUpdate() 
 {
 	p2List_item<Body*>* auxiliar;
 	
@@ -77,24 +76,10 @@ update_status bodyManager::PostUpdate(Application* app)
 		auxiliar->data->Draw(App);
 		auxiliar = auxiliar->next;
 	}
-	if (playerLose == true) 
-	{
-		app->fade->FadeToBlack(this, app->scene_lose);
-		playerLose = false;
-	}
 	return UPDATE_CONTINUE;
 }
 bool bodyManager::CleanUp() 
 {
-	p2List_item<Body*>* auxiliar;
-	auxiliar = bodyList.getFirst();
-	while (auxiliar != nullptr)
-	{	
-		delete auxiliar->data;
-		bodyList.del(auxiliar);
-	
-		auxiliar = auxiliar->next;
-	}
 	App->textures->Unload(Texture);
 	App->textures->Unload(Texture1);
 	App->textures->Unload(Texture2);

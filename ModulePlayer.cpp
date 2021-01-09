@@ -181,7 +181,6 @@ void ModulePlayer::Collision(collider* bodies, collider* external, Application* 
 	if ((bodies == col1 || bodies == col3 || bodies == col4 || bodies == col5 || bodies == col6))
 	{
 		pendingToDelete = true;
-		app->bodyesManager->playerLose = true;
 	}
 	else if (bodies == base)
 	{
@@ -248,7 +247,6 @@ void ModulePlayer::Collision(collider* bodies, collider* external, Application* 
 		else
 		{
 			pendingToDelete = true;
-			app->bodyesManager->playerLose = true;
 		}
 
 	}
