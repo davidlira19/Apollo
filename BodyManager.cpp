@@ -143,10 +143,11 @@ Planet* bodyManager::CreatePlanet(Vec2 pos,int type, int rad, float mass, float 
 	return planet;
 }
 
-Torpedo* bodyManager::CreateTorpedo(Vec2 pos, Vec2 velocity, double rotation)
+Torpedo* bodyManager::CreateTorpedo(Vec2 pos, Vec2 velocity, double rotation, Vec2 acceleration)
 {
 	Torpedo* torpedo = new Torpedo();
 	torpedo->position = pos;
+	torpedo->acceleration = acceleration;
 	torpedo->velocity = velocity;
 	torpedo->rotation = rotation;
 	torpedo->boodyTexture = Texture;
@@ -209,6 +210,28 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 		else
 		{
 
+		}
+	}
+	if ((body1->Type == colliderType::torpedo && body2->Type == colliderType::roket) || (body1->Type == colliderType::roket && body2->Type == colliderType::torpedo))
+	{
+		if (auxiliar1->data->type == bodyType::Asteroid)
+		{
+			auxiliar1->data->pendingToDelete = true;
+		}
+		if (auxiliar2->data->type == bodyType::Asteroid)
+		{
+			auxiliar2->data->pendingToDelete = true;
+		}
+	}
+	if ((body1->Type == colliderType::player && body2->Type == colliderType::roket) || (body1->Type == colliderType::roket && body2->Type == colliderType::player))
+	{
+		if (auxiliar1->data->type == bodyType::Player)
+		{
+			auxiliar1->data->pendingToDelete = true;
+		}
+		if (auxiliar2->data->type == bodyType::Player)
+		{
+			auxiliar2->data->pendingToDelete = true;
 		}
 	}
 }

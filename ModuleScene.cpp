@@ -28,7 +28,7 @@ bool ModuleScene::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	//asteroid = App->bodyesManager->CreateAsteroid({ 100, 100 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
+	asteroid = App->bodyesManager->CreateAsteroid({ 300, 1000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 	player = App->bodyesManager->CreatePlayer({ 670, 1500 }, 10000);
 	earth = App->bodyesManager->CreatePlanet(Vec2(300,1900),1, 379, 5.972E7, 379.0f, Vec2(0, 9.81));
 	moon = App->bodyesManager->CreatePlanet(Vec2(600,-12500),2, 190, 7.349E6, 190.0f, Vec2(0, 1.62));

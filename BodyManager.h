@@ -23,7 +23,7 @@ public:
 	bool playerLose;
 	Asteroid* CreateAsteroid(Vec2 pos, int rad, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity);
 	Planet* CreatePlanet(Vec2 pos,int type, int rad, float mass, float radius, Vec2 localGravity);
-	Torpedo* CreateTorpedo(Vec2 pos, Vec2 velocity, double rotation);
+	Torpedo* CreateTorpedo(Vec2 pos, Vec2 velocity, double rotation, Vec2 acceleration);
 	ModulePlayer* CreatePlayer(Vec2 pos, float mass);
 	p2List<Body*>bodyList;
 	SDL_Texture* Texture;
