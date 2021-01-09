@@ -163,7 +163,12 @@ void ModulePlayer::launchTorpedo(Application* app)
 {
 	if (ammo > 0)
 	{
-		app->bodyesManager->CreateTorpedo(Vec2(position.x, position.y), Vec2(velocity.x, velocity.y), rotation,Vec2(acceleration.x,acceleration.y));
+		float ang;
+		ang = ((rotation * M_PI) / 180);
+		//velocity.y = ( cos(ang));
+		//velocity.x = ( sin(ang));
+
+		app->bodyesManager->CreateTorpedo(Vec2(position.x, position.y), Vec2((sin(ang)) *1000, (cos(ang)) * -1000), rotation,Vec2(acceleration.x,acceleration.y));
 		ammo -= 1;
 	}
 }
