@@ -60,7 +60,7 @@ public:
 		return UPDATE_CONTINUE;
 	}
 
-	virtual update_status PostUpdate()
+	virtual update_status PostUpdate(Application* app)
 	{
 		return UPDATE_CONTINUE;
 	}

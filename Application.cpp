@@ -5,7 +5,7 @@ Application::Application()
 	frames = 0;
 	PERF_START(ptimer);
 
-	bodyesManager = new bodyManager(this, true);
+	bodyesManager = new bodyManager(this, false);
 	renderer = new ModuleRender(this,true);
 	window = new ModuleWindow(this, true);
 	textures = new ModuleTextures(this, true);
@@ -129,7 +129,7 @@ update_status Application::Update()
 	while(item != NULL && ret == UPDATE_CONTINUE)
 	{
 		if(item->data->IsEnabled())
-			ret = item->data->PostUpdate();
+			ret = item->data->PostUpdate(this);
 		item = item->next;
 	}
 

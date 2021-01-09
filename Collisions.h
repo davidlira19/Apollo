@@ -121,7 +121,7 @@ public:
 		}
 		return UPDATE_CONTINUE;
 	}
-	update_status PostUpdate()override
+	update_status PostUpdate(Application* app)override
 	{
 		
 		return UPDATE_CONTINUE;

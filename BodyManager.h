@@ -18,8 +18,9 @@ public:
 	bool Start();
 	update_status PreUpdate();
 	update_status Update(float dt);
-	update_status PostUpdate();
+	update_status PostUpdate(Application* app);
 	bool CleanUp();
+	bool playerLose;
 	Asteroid* CreateAsteroid(Vec2 pos, int rad, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity);
 	Planet* CreatePlanet(Vec2 pos,int type, int rad, float mass, float radius, Vec2 localGravity);
 	Torpedo* CreateTorpedo(Vec2 pos, Vec2 velocity, double rotation);

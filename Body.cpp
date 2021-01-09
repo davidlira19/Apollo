@@ -5,7 +5,10 @@
 	{
 		pendingToDelete = false;
 	}
-	Body::~Body() {}
+	Body::~Body() {
+		if(Collider!=nullptr){ Collider->toDelete = true; }
+		
+	}
 
 	//Variables
 	void Body::setPos(Application* app)

@@ -15,7 +15,7 @@ class ModulePlayer : public Body
 public:
 	playerState state;
 	ModulePlayer(SDL_Texture* adTexture);
-	virtual ~ModulePlayer();
+	~ModulePlayer();
 	bool Start(Application* app)override;
 	bool PreUpdate(Application* app)override;
 	bool Update(float dt, Application* app)override;

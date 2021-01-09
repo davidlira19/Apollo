@@ -15,7 +15,7 @@ public:
 
 	bool Start();
 	update_status PreUpdate();
-	update_status PostUpdate();
+	update_status PostUpdate(Application* app);
 	bool CleanUp();
 
 	Vec2 Integrator(Vec2 velocity, float dt, float gravity);
