@@ -242,11 +242,13 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 			{
 				auxiliar1->data->pendingToDelete = true;
 				App->scene->asteroids--;
+				App->audio->PlayFx(App->scene->destroyFx);
 			}
 			if (auxiliar2->data->type == bodyType::Asteroid)
 			{
 				auxiliar2->data->pendingToDelete = true;
 				App->scene->asteroids--;
+				App->audio->PlayFx(App->scene->destroyFx);
 			}
 		}
 		if ((body1->Type == colliderType::player && body2->Type == colliderType::roket) || (body1->Type == colliderType::roket && body2->Type == colliderType::player))

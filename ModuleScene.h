@@ -23,6 +23,9 @@ public:
 	bool CleanUp();
 
 public:
+	//FX
+	int shootFx;
+	int destroyFx;
 	//Fonts
 	char textAsteroids[5] = { "\0" };
 	int font;

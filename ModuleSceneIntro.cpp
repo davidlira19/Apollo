@@ -18,7 +18,7 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->audio->PlayMusic("Assets/Audio/star_wars.wav");
+	App->audio->PlayMusic("Assets/Audio/star_wars.ogg");
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 	introText=App->textures->Load("Assets/Textures/intro.png");
 	position = { 0,758 };

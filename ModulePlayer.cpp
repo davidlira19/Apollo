@@ -93,7 +93,6 @@ bool ModulePlayer::Update(float dt, Application* app)
 			ang = ((rotation * M_PI) / 180);
 			velocity.y -= (1 * dt * cos(ang));//0.2
 			velocity.x += (1* dt * sin(ang));
-			
 		}
 	}
 	else
@@ -171,6 +170,7 @@ void ModulePlayer::launchTorpedo(Application* app)
 
 		app->bodyesManager->CreateTorpedo(Vec2(position.x, position.y), Vec2((sin(ang)) *1000, (cos(ang)) * -1000), rotation,Vec2(acceleration.x,acceleration.y));
 		ammo -= 1;
+		app->audio->PlayFx(app->scene->shootFx);
 	}
 }
 void ModulePlayer::setPos(Application* app)
