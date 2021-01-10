@@ -20,11 +20,15 @@ bool ModuleScene::Start()
 	backgroundTexture = App->textures->Load("Assets/Textures/bg.png");
 	fuelBar = App->textures->Load("Assets/Textures/fuel_bar.png");
 	ammo = App->textures->Load("Assets/Textures/ammo.png");
+	asteroidTexture = App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
 	uint number = 1;
+	uint asteroidsLeft = 1;
 	font = App->fonts->Load(App, "Assets/Textures/numbers.png","0123456789", number);
+	fontAsteroids = App->fonts->Load(App, "Assets/Textures/numbers.png","0123456789", asteroidsLeft);
 	LOG("Loading Intro assets");
 	bool ret = true;
 	gravity = 10.0f;
+	canWin = false;
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -69,7 +73,7 @@ update_status ModuleScene::Update(float dt)
 	int widthBar = (float)player->fuel / 5000 * 200;
 	rectBar = { 0,0,widthBar,20 };
 
-	LOG("%d", player->ammo);
+	LOG("%d", canWin);
 
 	App->renderer->Blit(backgroundTexture, 200, -13000);
 	/*App->renderer->Blit(backgroundTexture, 920, 0);
@@ -121,6 +125,12 @@ update_status ModuleScene::Update(float dt)
 
 	App->renderer->Blit(fuelBar, App->renderer->camera.x * -1, App->renderer->camera.y * -1, &rectBar);
 	App->renderer->Blit(ammo, App->renderer->camera.x * -1 +800, App->renderer->camera.y * -1+650);
+
+	sprintf_s(textAsteroids, 5, "%2d", asteroids);
+	App->fonts->BlitText(App, (App->renderer->camera.x - 900) * -1, (App->renderer->camera.y - 560) * -1, fontAsteroids, textAsteroids);
+
+	SDL_Rect section = {0,132,72,73};
+	App->renderer->Blit(asteroidTexture, (App->renderer->camera.x - 820) * -1, (App->renderer->camera.y - 550) * -1, &section);
 	
 	return UPDATE_CONTINUE;
 }

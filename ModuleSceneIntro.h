@@ -52,6 +52,7 @@ public:
 	bool CleanUp();
 
 public:
+	Vec2 position;
 
 	SDL_Texture* graphics;
 	PhysBody* background;

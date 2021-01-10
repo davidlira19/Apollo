@@ -119,7 +119,8 @@ Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float m
 	rocket->boodyTexture = Texture;
 	rocket->bodyRect = {0,132,73,74};
 	rocket->Collider= App->collisions->addCollider(rad, colliderType::roket, this, pos.x, pos.y);
-	
+	App->scene->asteroids++;
+
 	bodyList.add(rocket);
 
 	return rocket;
@@ -215,9 +216,24 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 			{
 				auxiliar1->data->Collision(body1, body2, app);
 			}
-			else
-			{
 
+			if (auxiliar1->data->type == bodyType::Planet && auxiliar1->data->position.y == -12500 && app->scene->asteroids <= 1)
+			{
+				app->scene->canWin = true;
+			}
+			else if (auxiliar1->data->type == bodyType::Planet && auxiliar1->data->position.y == 1900 && app->scene->canWin == true)
+			{
+				auxiliar1->data->pendingToDelete = true;
+				App->fade->FadeToBlack(this, App->scene_win);
+			}
+			if (auxiliar2->data->type == bodyType::Planet && auxiliar2->data->position.y == -12500 && app->scene->asteroids <= 1)
+			{
+				app->scene->canWin = true;
+			}
+			else if (auxiliar2->data->type == bodyType::Planet && auxiliar2->data->position.y == 1900 && app->scene->canWin == true)
+			{
+				auxiliar2->data->pendingToDelete = true;
+				App->fade->FadeToBlack(this, App->scene_win);
 			}
 		}
 		if ((body1->Type == colliderType::torpedo && body2->Type == colliderType::roket) || (body1->Type == colliderType::roket && body2->Type == colliderType::torpedo))
@@ -225,10 +241,12 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 			if (auxiliar1->data->type == bodyType::Asteroid)
 			{
 				auxiliar1->data->pendingToDelete = true;
+				App->scene->asteroids--;
 			}
 			if (auxiliar2->data->type == bodyType::Asteroid)
 			{
 				auxiliar2->data->pendingToDelete = true;
+				App->scene->asteroids--;
 			}
 		}
 		if ((body1->Type == colliderType::player && body2->Type == colliderType::roket) || (body1->Type == colliderType::roket && body2->Type == colliderType::player))

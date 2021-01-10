@@ -18,8 +18,10 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	App->audio->PlayMusic("Assets/Audio/star_wars.wav");
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 	introText=App->textures->Load("Assets/Textures/intro.png");
+	position = { 0,758 };
 	return ret;
 }
 
@@ -37,6 +39,10 @@ update_status ModuleSceneIntro::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 		App->fade->FadeToBlack((Module*)this, (Module*)App->scene, 60);
 	}
-	App->renderer->Blit(introText, 0, 0);
+	App->renderer->Blit(introText, position.x, position.y);
+	if (position.y > 0)
+	{
+		position.y--;
+	}
 	return UPDATE_CONTINUE;
 }

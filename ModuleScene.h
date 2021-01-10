@@ -23,8 +23,15 @@ public:
 	bool CleanUp();
 
 public:
+	//Fonts
+	char textAsteroids[5] = { "\0" };
 	int font;
+	int fontAsteroids;
+
+	bool canWin;
+
 	float gravity;
+	int asteroids;
 	Asteroid* asteroid;
 	Asteroid* asteroid2;
 	Asteroid* asteroid3;
@@ -46,6 +53,7 @@ public:
 	Planet* moon;
 	SDL_Texture* fuelBar;
 	SDL_Texture* ammo;
+	SDL_Texture* asteroidTexture;
 
 	SDL_Texture* graphics;
 	PhysBody* background;

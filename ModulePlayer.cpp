@@ -126,21 +126,21 @@ bool ModulePlayer::Update(float dt, Application* app)
 	}
 
 
-	if (velocity.y >= 1000)
+	if (velocity.y >= 500)
 	{
-		velocity.y = 999;
+		velocity.y = 499;
 	}
-	if (velocity.y <= -1000)
+	if (velocity.y <= -500)
 	{
-		velocity.y = -999;
+		velocity.y = -499;
 	}
-	if (velocity.x >= 1000)
+	if (velocity.x >= 500)
 	{
-		velocity.x = 999;
+		velocity.x = 499;
 	}
-	if (velocity.x <= -1000)
+	if (velocity.x <= -500)
 	{
-		velocity.x = -999;
+		velocity.x = -499;
 	}
 
 	Vec2 pos;
@@ -154,6 +154,7 @@ void ModulePlayer::Draw(Application* app)
 	app->renderer->Blit(boodyTexture, position.x , position.y , &bodyRect, 1, 1, rotation, getXMiddle(), getYMiddle());
 	sprintf_s(text, 10, "%2d", ammo);
 	app->fonts->BlitText(app, (app->renderer->camera.x-900) * -1, (app->renderer->camera.y - 675) * -1, app->scene->font, text);
+
 }
 bool ModulePlayer::PostUpdate(Application* app)
 {

@@ -25,8 +25,6 @@ bool ModulePhysics::Start()
 // 
 update_status ModulePhysics::PreUpdate()
 {
-	//Vec2 Fg = GravityForce(9.81, 100000000, 20000000, 200, { 100,200 });
-	//float moduleFg = sqrt((Fg.x * Fg.x) + (Fg.y * Fg.y));
 	return UPDATE_CONTINUE;
 }
 
