@@ -17,7 +17,7 @@ public:
 	update_status PreUpdate();
 	update_status PostUpdate();
 	bool CleanUp();
-
+	int axis[3];
 	Vec2 Integrator(Vec2 velocity, float dt, float gravity);
 
 	Vec2 AddMomentum(float x, float y, Vec2 velocity, float m);
@@ -28,6 +28,9 @@ public:
 	Vec2 HydroDragForce(float velocity, float b); // b is a constant that depends on the properties of the fluid and the dimensions of the object
 	Vec2 BuoyancyForce(float density, float gravity, float volume, float mass);
 	Vec2 SpringsForce(float cK, float dDisplacement);
+	float* quatMult(float quat1[4], float quat2[4]);
+	float vecMult(float vec1[3], float vec2[3]);
+	float* cross(float vec1[3], float vec2[3]);
 private:
 
 	bool debug;

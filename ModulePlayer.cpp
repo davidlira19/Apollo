@@ -23,6 +23,7 @@ ModulePlayer::ModulePlayer(SDL_Texture* adTexture)
 	velocity.y = 1;
 	rotation = 0;
 	ammo = 30;
+	
 }
 
 ModulePlayer::~ModulePlayer()
@@ -150,7 +151,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 }
 void ModulePlayer::Draw(Application* app)
 {
-	app->renderer->Blit(boodyTexture, position.x , position.y , &bodyRect, 1, 1, rotation, getXMiddle(), getYMiddle());
+	app->renderer->Blit(boodyTexture, position.x, position.y, &bodyRect, 1, 1, rotation, getXMiddle(), getYMiddle());
 	sprintf_s(text, 10, "%2d", ammo);
 	app->fonts->BlitText(app, (app->renderer->camera.x-900) * -1, (app->renderer->camera.y - 675) * -1, app->scene->font, text);
 
@@ -175,12 +176,56 @@ void ModulePlayer::launchTorpedo(Application* app)
 }
 void ModulePlayer::setPos(Application* app)
 {
-	col1->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + 20 + getYMiddle());
-	base->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + 40 + getYMiddle());
-	col3->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + -40 + getYMiddle());
-	col4->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + -30 + getYMiddle());
-	col5->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + -20 + getYMiddle());
-	col6->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + -10 + getYMiddle());
+	for (int i = 0; i < 6; i++) 
+	{
+		float ang = ((-rotation * M_PI) / 180);
+		ang = ang / 2;
+		float cuat1[4] = { cos(ang),0,0,sin(ang) };
+		int desp = 0;
+		switch (i)
+		{
+		case 0:
+			desp = 40;
+			break;
+		case 1:
+			desp = 20;
+			break;
+		case 2:
+			desp = -40;
+			break;
+		case 3:
+			desp = -30;
+			break;
+		case 4:
+			desp = -20;
+			break;
+		case 5:
+			desp = -10;
+			break;
+		}
+		float point[4] = { 0,0,desp,0 };
+		float* semiRes = app->physics->quatMult(point, cuat1);
+		float aux[4];
+		aux[0] = semiRes[0];
+		aux[1] = semiRes[1];
+		aux[2] = semiRes[2];
+		aux[3] = semiRes[3];
+		float cuatNegado[4] = { cos(ang) ,0,0,-cuat1[3] };
+		float* res = app->physics->quatMult(cuatNegado, aux);
+
+		int b = res[1];
+		int c = res[2];
+		playerArr[i]->setPos(position.x + b + app->renderer->camera.x + getXMiddle(), position.y + c + app->renderer->camera.y + getYMiddle());
+
+	}
+
+	
+	//col1->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + 20 + getYMiddle());
+	//base->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + 40 + getYMiddle());
+	////col3->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + -40 + getYMiddle());
+	//col4->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + -30 + getYMiddle());
+	//col5->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + -20 + getYMiddle());
+	//col6->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + -10 + getYMiddle());
 }
 void ModulePlayer::Collision(collider* bodies, collider* external, Application* app)
 {

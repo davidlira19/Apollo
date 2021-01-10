@@ -179,6 +179,12 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 	player->col4 = App->collisions->addCollider(10, colliderType::player, this, pos.x, pos.y);
 	player->col5 = App->collisions->addCollider(10, colliderType::player, this, pos.x, pos.y);
 	player->col6 = App->collisions->addCollider(10, colliderType::player, this, pos.x, pos.y);
+	player->playerArr[0] = player->base;
+	player->playerArr[1] = player->col1;
+	player->playerArr[2] = player->col3;
+	player->playerArr[3] = player->col4;
+	player->playerArr[4] = player->col5;
+	player->playerArr[5] = player->col6;
 	//App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
 	bodyList.add(player);
 	return player;
@@ -255,11 +261,11 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 		{
 			if (auxiliar1->data->type == bodyType::Player)
 			{
-				auxiliar1->data->pendingToDelete = true;
+				playerLose = true;
 			}
 			if (auxiliar2->data->type == bodyType::Player)
 			{
-				auxiliar2->data->pendingToDelete = true;
+				playerLose = true;
 			}
 		}
 	}

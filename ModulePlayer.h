@@ -34,11 +34,12 @@ public:
 	int fuel;
 	bool checkColliders(collider* body)override;
 	void Collision(collider* bodies, collider* external, Application* app)override;
-	collider* col1;
 	collider* base;
+	collider* col1;
 	collider* col3;
 	collider* col4;
 	collider* col5;
 	collider* col6;
+	collider* playerArr [6];
 };
 #endif

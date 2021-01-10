@@ -18,7 +18,7 @@ ModulePhysics::~ModulePhysics()
 bool ModulePhysics::Start()
 {
 	LOG("Creating Physics 2D environment");
-
+	
 	return true;
 }
 
@@ -107,5 +107,45 @@ Vec2 ModulePhysics::AddMomentum(float x, float y, Vec2 velocity, float m)
 	
 	return velocity;
 }
+float* ModulePhysics::quatMult(float quat1[4], float quat2[4])
+{
+	/*q10 = q1(1);
+	q20 = q2(1);
+	q1g = q1(2:4);
+	q2g = q2(2:4);
 
+	q3 = zeros(4, 1);
+	q3(1) = q10 * q20 - q1g'*q2g;
+		q3(2:4) = q10 * q2g + q20 * q1g +cross(q1g,q2g);*/
+	float q10 = quat1[0];
+	float q20 = quat2[0];
 
+	float q1g[3] = { quat1[1],quat1[2],quat1[3] };
+	float q2g[3] = { quat2[1],quat2[2],quat2[3] };
+
+	float res[4] = { 0,0,0,0 };
+	float mult = 0.0f;
+	mult = vecMult(q1g, q2g);
+	res[0] = q10 * q20- mult;
+	float q2gBis[3] = { q10 * q2g[0],q10 * q2g[1],q10 * q2g[2] };
+	float q1gBis[3] = { q20 * q1g[0],q20 * q1g[1],q20 * q1g[2] };
+	float* semires = cross(q1g, q2g);
+	res[1] = { q2gBis[0] + q1gBis[0] + semires[0] };
+	res[2] = { q2gBis[1] + q1gBis[1] + semires[1] };
+	res[3] = { q2gBis[2] + q1gBis[2] + semires[2] };
+	return res;
+}
+float ModulePhysics::vecMult(float vec1[3], float* vec2)
+{
+	float res = 0.0f;
+	for (int i = 0; i < 3; i++)
+	{
+		res = res + (vec1[i] * vec2[i]);
+	}
+	return res;
+}
+float* ModulePhysics::cross(float vec1[3], float vec2[3])
+{
+	float res[3] = { (vec2[2] * vec1[1]) - (vec2[1] * vec1[2]),(vec2[0] * vec1[2]) - (vec2[2] * vec1[0]),(vec2[1] * vec1[0]) - (vec2[0] * vec1[1]) };
+	return res;
+}
