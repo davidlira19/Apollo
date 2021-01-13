@@ -18,7 +18,7 @@ ModulePlayer::ModulePlayer(SDL_Texture* adTexture)
 	fireAnimation.loop = true;
 	fireAnimation.speed = 0.3f;
 	currentAnimation = &stopAnimation;
-
+	angularVelocity = 0.0f;
 	fuel = 5000;
 	velocity.y = 1;
 	rotation = 0;
@@ -103,28 +103,33 @@ bool ModulePlayer::Update(float dt, Application* app)
 		currentAnimation = &stopAnimation;
 		currentAnimation->Update();
 		app->renderer->Blit(ship, position.x, position.y, &rec, 2, 1.0f, rotation, 20, 52);
-		/*ang = ((rotation * M_PI) / 180);
-		velocity.y -= (0.2 * dt * cos(ang));
-		velocity.x += (0.2 * dt * sin(ang));*/
+		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		position.y += 0.1 * dt;
+		//position.y += 0.1 * dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		rotation -= 0.15 * dt;
+		angularVelocity += -1.5 * 0.10;
+		//rotation -= 0.15 * dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		rotation += 0.15* dt;
+		angularVelocity += 1.5 * 0.10;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		launchTorpedo(app);
 	}
-
+	if (angularVelocity < -10) {
+		angularVelocity = -10;
+	}
+	else if (angularVelocity > 10) {
+		angularVelocity = 10;
+	}
+	rotation += angularVelocity * 0.10;
 
 	if (velocity.y >= 500)
 	{

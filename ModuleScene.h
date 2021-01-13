@@ -8,6 +8,7 @@
 #include "Globals.h"
 #include"Collisions.h"
 #include"ModulePlayer.h"
+#include"ModuleTextures.h"
 #define BOUNCER_TIME 200
 
 class ModuleScene;

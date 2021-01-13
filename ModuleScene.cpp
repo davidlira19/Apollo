@@ -3,7 +3,7 @@
 #include "ModuleScene.h"
 #include"FadeToBlack.h"
 #include "Fonts.h"
-
+#include"ModuleRender.h"
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {

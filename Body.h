@@ -24,6 +24,7 @@ public:
     bool pendingToDelete;
     Vec2 acceleration;
     Vec2 velocity;
+	float angularVelocity;
     virtual void setPos(Application* app);
     virtual void Draw(Application* app);
     int getXMiddle();
