@@ -112,12 +112,12 @@ bool ModulePlayer::Update(float dt, Application* app)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		angularVelocity += -1.5 * 0.10;
+		angularVelocity += -1.5 * 0.2;
 		//rotation -= 0.15 * dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		angularVelocity += 1.5 * 0.10;
+		angularVelocity += 1.5 * 0.2;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
@@ -129,7 +129,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 	else if (angularVelocity > 10) {
 		angularVelocity = 10;
 	}
-	rotation += angularVelocity * 0.10;
+	rotation += angularVelocity * 0.20;
 
 	if (velocity.y >= 500)
 	{
