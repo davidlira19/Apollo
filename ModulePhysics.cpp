@@ -73,9 +73,9 @@ Vec2 ModulePhysics::AeroLiftForce(float density, float velocity, float surface, 
 	return Vec2(0, (density * velocity * velocity * surface * LiftCoeficient) / 2);
 }
 
-Vec2 ModulePhysics::AeroDragForce(float density, float velocity, float surface, float DragCoeficient)
+Vec2 ModulePhysics::AeroDragForce(float density, Vec2 velocity, float surface, float DragCoeficient)
 {
-	return Vec2((density * velocity * velocity * surface * DragCoeficient) / 2, 0);
+	return Vec2((density * velocity.x * velocity.x * surface * DragCoeficient) / 2, (density * velocity.y * velocity.y * surface * DragCoeficient) / 2);
 }
 
 Vec2 ModulePhysics::HydroLiftForce(float density, float velocity, float surface, float LiftCoeficient)

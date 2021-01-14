@@ -80,12 +80,21 @@ bool ModulePlayer::Update(float dt, Application* app)
 			auxiliar = auxiliar->next;
 		}
 	}
+	if (position.y >= 850)
+	{
+		Vec2 aeroDragForce;
+		aeroDragForce = app->physics->AeroDragForce(1.29f, Vec2(velocity.x,velocity.y), 30.0f, 0.000021);
+		LOG("%f %f", aeroDragForce.x, aeroDragForce.y);
+		velocity.y += aeroDragForce.y;
+		//velocity.x += aeroDragForce.x;   HAY QUE APLICARLO TAMBIEN EN X
+		
+	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		if (fuel > 0)
 		{
 			state = playerState::Free;
-			fuel -= (3.0f);
+			fuel -= (1.5f);
 			float ang;
 			SDL_Rect rec = currentAnimation->GetCurrentFrame();
 			currentAnimation = &fireAnimation;
