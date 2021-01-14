@@ -101,6 +101,15 @@ update_status ModuleScene::Update(float dt)
 	App->renderer->camera.x = -200;
 	App->renderer->camera.y = (player->position.y * -1) + 379;
 
+	if ((App->renderer->camera.w - App->renderer->camera.x) <= player->position.x)
+	{
+		player->position.x = 170;
+	}
+	else if (player->position.x < 170)
+	{
+		player->position.x = App->renderer->camera.w - App->renderer->camera.x;
+	}
+
 	//Camera Limits
 	if (App->renderer->camera.y < -1600)
 	{
