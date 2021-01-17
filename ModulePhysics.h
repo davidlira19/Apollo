@@ -18,7 +18,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 	int axis[3];
-	Vec2 Integrator(Vec2 velocity, float dt, float gravity);
+	Vec2 Integrator(Vec2* velocity, float dt, Vec2 acceleration);
 
 	Vec2 AddMomentum(float x, float y, Vec2 velocity, float m);
 	Vec2 GravityForce(double M, double m, double distance, Vec2 direction);

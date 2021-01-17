@@ -49,10 +49,13 @@ bool ModulePhysics::CleanUp()
 	return true;
 }
 
-Vec2 ModulePhysics::Integrator(Vec2 velocity, float dt, float gravity) {
+Vec2 ModulePhysics::Integrator(Vec2* velocity, float dt, Vec2 acceleration) {
 	Vec2 pos;
-	pos.y = velocity.y * dt + ((1 / 2) * gravity * dt * dt);
-	pos.x = velocity.x * dt;
+	velocity->x += acceleration.x * dt;
+	velocity->y += acceleration.y * dt;
+	pos.y += velocity->y * dt + ((0.5) * acceleration.y * dt * dt);
+	pos.x += velocity->x * dt + ((0.5) * acceleration.x * dt * dt);
+
 	return pos;
 }
 

@@ -13,6 +13,7 @@ enum class playerState {
 class ModulePlayer : public Body
 {
 public:
+	Vec2 finalForce;
 	playerState state;
 	ModulePlayer(SDL_Texture* adTexture);
 	virtual ~ModulePlayer();
