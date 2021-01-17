@@ -48,7 +48,7 @@ bool ModuleScene::Start()
 	asteroid14 = App->bodyesManager->CreateAsteroid({ 800, -10500 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 	asteroid15 = App->bodyesManager->CreateAsteroid({ 400, -11000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 
-	player = App->bodyesManager->CreatePlayer({ 670, 1500 }, 100000);
+	player = App->bodyesManager->CreatePlayer({ 670, 1700 }, 100);
 	earth = App->bodyesManager->CreatePlanet(Vec2(300,1900),1, 379, 5.972E7, 379.0f, Vec2(0, 9.81));
 	moon = App->bodyesManager->CreatePlanet(Vec2(600,-12500),2, 190, 14.349E6, 190.0f, Vec2(0, 1.62));
 
@@ -144,6 +144,7 @@ update_status ModuleScene::Update(float dt)
 	SDL_Rect section = {0,132,72,73};
 	App->renderer->Blit(asteroidTexture, (App->renderer->camera.x - 820) * -1, (App->renderer->camera.y - 550) * -1, &section);
 
+	App->renderer->DrawLine(-200, 0, 5000, -10, 255, 0, 0);
 	App->renderer->DrawLine(-200,-1500,5000,-1510,255,0,0);
 	
 	return UPDATE_CONTINUE;

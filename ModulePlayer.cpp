@@ -54,12 +54,13 @@ bool ModulePlayer::CleanUp(Application* app)
 }
 bool ModulePlayer::PreUpdate(Application* app)
 {
-
+	acceleration = Vec2(0, 0);
 	return true;
 }
 // Update: draw background
 bool ModulePlayer::Update(float dt, Application* app)
 {
+
 	if (state == playerState::Free) {
 		Vec2 finalGravity;
 		p2List_item<Body*>* auxiliar = nullptr;
@@ -76,10 +77,8 @@ bool ModulePlayer::Update(float dt, Application* app)
 				distanceY = auxiliar->data->position.y + auxiliar->data->getYMiddle() - position.y + getYMiddle();
 				distance = sqrt((distanceX * distanceX) + (distanceY * distanceY));
 				sum = app->physics->GravityForce(auxiliar->data->mass, mass, distance, Vec2(distanceX, distanceY));
-				/*finalForce.x += (sum.x) * 25;
-				finalForce.y -= (sum.y) * 25;*/
-				/*velocity.y += (finalGravity.y * -1 * dt);
-				velocity.x += (finalGravity.x * -1 * dt);*/
+				finalForce.x -= (sum.x) * 25000;
+				finalForce.y -= (sum.y) * 25000;
 			}
 			auxiliar = auxiliar->next;
 		}
@@ -88,14 +87,16 @@ bool ModulePlayer::Update(float dt, Application* app)
 	{
 		Vec2 force;
 		force += app->physics->AeroDragForce(1.29f, Vec2(velocity.x, velocity.y), 30.0f, 0.000021);
-		/*LOG("%f %f", aeroDragForce.x, aeroDragForce.y);*/
-		/*finalForce.y += (force.y) * 10;*/
-		//finalForce.x += (force.x) * 10;
-
+		finalForce.y += (force.y) * 10000;
+		finalForce.x += (force.x) * 100;
 	}
 
-	Vec2 buoyForce = (app->physics->BuoyancyForce(1, 9.81));
-	/*finalForce.y += (buoyForce.y)*0.5 ;*/
+	if (position.y > -2000 && position.y < 0)
+	{
+		Vec2 buoyForce = (app->physics->BuoyancyForce(1, 9.81));
+		finalForce.y += (buoyForce.y) * 0.004;
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		if (fuel > 0)
@@ -108,8 +109,8 @@ bool ModulePlayer::Update(float dt, Application* app)
 			currentAnimation->Update();
 			app->renderer->Blit(ship, position.x, position.y, &rec, 2, 1.0f, rotation, 20, 52);
 			ang = ((rotation * M_PI) / 180);
-			finalForce.y -= (6 * cos(ang));//0.2
-			finalForce.x += (6 * sin(ang));
+			finalForce.y -= (20 * cos(ang));//0.2
+			finalForce.x += (20 * sin(ang));
 		}
 		else
 		{
@@ -185,9 +186,9 @@ bool ModulePlayer::Update(float dt, Application* app)
 	{
 		velocity.x = -5;
 	}*/
-	acceleration.x += (finalForce.x*0.5) / (mass);
-	acceleration.y += (finalForce.y*0.5) / (mass);
-	/*if (acceleration.y > 2)
+	acceleration.x += (finalForce.x) / (mass);
+	acceleration.y += (finalForce.y) / (mass);
+	if (acceleration.y > 2)
 	{
 		acceleration.y = 2;
 	}
@@ -203,7 +204,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 	{
 		acceleration.x = -2;
 	}
-
+	/*
 	if (finalForce.y > 2)
 	{
 		finalForce.y = 2;
@@ -221,12 +222,11 @@ bool ModulePlayer::Update(float dt, Application* app)
 		finalForce.x = -2;
 	}*/
 	Vec2 pos;
-	pos = app->physics->Integrator(&velocity, 0.032, acceleration);
+	pos = app->physics->Integrator(&velocity, 0.064, acceleration);
 	position.y += metersToPixels(pos.y);
 	position.x += metersToPixels(pos.x);
 	finalForce.x = 0;
 	finalForce.y = 0;
-	/*acceleration.x = 0;*/
 	return true;
 }
 void ModulePlayer::Draw(Application* app)

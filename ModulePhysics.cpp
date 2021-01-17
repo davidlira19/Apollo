@@ -96,7 +96,7 @@ Vec2 ModulePhysics::BuoyancyForce(float density, float gravity)
 	//angle
 	float waterLevel = -1500.0f;
 	float area = 0;
-	float pression = (App->scene->player->position.y - waterLevel) * 0.0000003;
+	float pression = (App->scene->player->position.y - waterLevel);
 
 	if (pression <= 0)
 	{
@@ -116,7 +116,7 @@ Vec2 ModulePhysics::BuoyancyForce(float density, float gravity)
 		area = 40 * dif;
 	}
 	LOG("%f", App->scene->player->velocity.y);
-	return Vec2(0, (density * gravity * area * -pression));
+	return Vec2(0, (density * gravity * (area/100) * (-pression/100)));
 }
 
 Vec2 ModulePhysics::SpringsForce(float cK, float dDisplacement)
