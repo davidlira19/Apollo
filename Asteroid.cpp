@@ -8,9 +8,11 @@ bool Asteroid::Start(Application* app) {
 	return true;
 }
 bool Asteroid::PreUpdate(Application* app) {
+	Body::PreUpdate(app);
 	return true;
 }
 bool Asteroid::Update(float dt, Application* app) {
+	position.x += 2;
 	return true;
 }
 bool Asteroid::PostUpdate(Application* app) {

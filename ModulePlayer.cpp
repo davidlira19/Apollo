@@ -55,6 +55,7 @@ bool ModulePlayer::CleanUp(Application* app)
 bool ModulePlayer::PreUpdate(Application* app)
 {
 	acceleration = Vec2(0, 0);
+	Body::PreUpdate(app);
 	return true;
 }
 // Update: draw background
@@ -94,7 +95,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 	if (position.y > -2000 && position.y < 0)
 	{
 		Vec2 buoyForce = (app->physics->BuoyancyForce(1, 9.81));
-		finalForce.y += (buoyForce.y) * 0.004;
+		finalForce.y += (buoyForce.y) * 0.002;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
@@ -298,14 +299,6 @@ void ModulePlayer::setPos(Application* app)
 		playerArr[i]->setPos(position.x + b + app->renderer->camera.x + getXMiddle(), position.y + c + app->renderer->camera.y + getYMiddle());
 
 	}
-
-
-	//col1->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + 20 + getYMiddle());
-	//base->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + 40 + getYMiddle());
-	////col3->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + -40 + getYMiddle());
-	//col4->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + -30 + getYMiddle());
-	//col5->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + -20 + getYMiddle());
-	//col6->setPos(position.x + app->renderer->camera.x + getXMiddle(), position.y + app->renderer->camera.y + -10 + getYMiddle());
 }
 void ModulePlayer::Collision(collider* bodies, collider* external, Application* app)
 {

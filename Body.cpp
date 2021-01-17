@@ -50,6 +50,14 @@
 		return true;
 	}
 	bool Body::PreUpdate(Application* app) {
+		if ((app->renderer->camera.w - app->renderer->camera.x) <= position.x)
+		{
+			position.x = 170;
+		}
+		else if (position.x < 170)
+		{
+			position.x = app->renderer->camera.w - app->renderer->camera.x;
+		}
 		return true;
 	}
 	bool Body::Update(float dt, Application* app) {
