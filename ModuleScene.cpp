@@ -143,6 +143,8 @@ update_status ModuleScene::Update(float dt)
 
 	SDL_Rect section = {0,132,72,73};
 	App->renderer->Blit(asteroidTexture, (App->renderer->camera.x - 820) * -1, (App->renderer->camera.y - 550) * -1, &section);
+
+	App->renderer->DrawLine(-200,-1500,5000,-1510,255,0,0);
 	
 	return UPDATE_CONTINUE;
 }

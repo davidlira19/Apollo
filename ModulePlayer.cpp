@@ -89,6 +89,10 @@ bool ModulePlayer::Update(float dt, Application* app)
 		//velocity.x += aeroDragForce.x;   HAY QUE APLICARLO TAMBIEN EN X
 		
 	}
+
+	Vec2 buoyForce = (app->physics->BuoyancyForce(1, 9.81));
+	velocity.y += (buoyForce.y)*0.8;
+
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		if (fuel > 0)
@@ -140,22 +144,22 @@ bool ModulePlayer::Update(float dt, Application* app)
 	}
 	rotation += angularVelocity * 0.20;
 
-	if (velocity.y >= 500)
-	{
-		velocity.y = 499;
-	}
-	if (velocity.y <= -500)
-	{
-		velocity.y = -499;
-	}
-	if (velocity.x >= 500)
-	{
-		velocity.x = 499;
-	}
-	if (velocity.x <= -500)
-	{
-		velocity.x = -499;
-	}
+	//if (velocity.y >= 500)
+	//{
+	//	velocity.y = 499;
+	//}
+	//if (velocity.y <= -500)
+	//{
+	//	velocity.y = -499;
+	//}
+	//if (velocity.x >= 500)
+	//{
+	//	velocity.x = 499;
+	//}
+	//if (velocity.x <= -500)
+	//{
+	//	velocity.x = -499;
+	//}
 
 	Vec2 pos;
 	pos= app->physics->Integrator(velocity, 0.00032, app->scene->gravity);

@@ -26,7 +26,7 @@ public:
 	Vec2 AeroDragForce(float density, Vec2 velocity, float surface, float DragCoeficient);
 	Vec2 HydroLiftForce(float density, float velocity, float surface, float LiftCoeficient); // only if you go faaaaast!
 	Vec2 HydroDragForce(float velocity, float b); // b is a constant that depends on the properties of the fluid and the dimensions of the object
-	Vec2 BuoyancyForce(float density, float gravity, float volume, float mass);
+	Vec2 BuoyancyForce(float density, float gravity);
 	Vec2 SpringsForce(float cK, float dDisplacement);
 	float* quatMult(float quat1[4], float quat2[4]);
 	float vecMult(float vec1[3], float vec2[3]);
