@@ -78,7 +78,7 @@ update_status bodyManager::PostUpdate()
 		auxiliar->data->Draw(App);
 		auxiliar = auxiliar->next;
 	}
-	if (playerLose == true&&count==false) 
+	if (playerLose == true && count == false && App->scene->player->shipDestroy.HasFinished() == true) 
 	{
 		App->fade->FadeToBlack(this, App->scene_lose);
 		count = true;
@@ -261,11 +261,17 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 		{
 			if (auxiliar1->data->type == bodyType::Player)
 			{
+				auxiliar2->data->pendingToDelete = true;
 				playerLose = true;
+				App->scene->player->alive = false;
+				App->audio->PlayFx(App->scene->destroyFx);
 			}
 			if (auxiliar2->data->type == bodyType::Player)
 			{
+				auxiliar1->data->pendingToDelete = true;
 				playerLose = true;
+				App->scene->player->alive = false;
+				App->audio->PlayFx(App->scene->destroyFx);
 			}
 		}
 	}

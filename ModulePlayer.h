@@ -27,12 +27,14 @@ public:
 	SDL_Texture* ship;
 	Animation fireAnimation;
 	Animation stopAnimation;
+	Animation shipDestroy;
 	Animation* currentAnimation;
 	void Draw(Application* app)override;
 	char text[5] = { "\0" };
 	int life;
 	int ammo;
 	int fuel;
+	bool alive;
 	bool checkColliders(collider* body)override;
 	void Collision(collider* bodies, collider* external, Application* app)override;
 	collider* base;

@@ -120,13 +120,13 @@ update_status ModuleScene::Update(float dt)
 	//}
 
 
-	p2List_item<collider*>* auxiliar;
+	/*p2List_item<collider*>* auxiliar;
 	auxiliar = App->collisions->colliderList.getFirst();
 	while (auxiliar != nullptr)
 	{
 		App->renderer->DrawCircle(auxiliar->data->position.x,auxiliar->data->position.y, auxiliar->data->circleRad, 255, 0, 0, 255);
 		auxiliar = auxiliar->next;
-	}
+	}*/
 
 	App->renderer->Blit(fuelBar, App->renderer->camera.x * -1, App->renderer->camera.y * -1, &rectBar);
 	App->renderer->Blit(ammo, App->renderer->camera.x * -1 +800, App->renderer->camera.y * -1+650);

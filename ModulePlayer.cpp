@@ -12,18 +12,40 @@ ModulePlayer::ModulePlayer(SDL_Texture* adTexture)
 	stopAnimation.speed = 0.0f;
 	stopAnimation.loop = false;
 	state = playerState::Free;
+
 	fireAnimation.PushBack({ 19,0,19,74 });
 	fireAnimation.PushBack({ 39,0,19,74 });
 	fireAnimation.PushBack({ 58,0,19,70 });
 	fireAnimation.PushBack({ 77,0,19,78 });
 	fireAnimation.loop = true;
 	fireAnimation.speed = 0.3f;
+
+	shipDestroy.PushBack({ 100,179,4,3 });
+	shipDestroy.PushBack({ 70,72,4,3 });
+	shipDestroy.PushBack({ 40,174,11,15 });
+	shipDestroy.PushBack({ 5,174,17,17 });
+	shipDestroy.PushBack({ 93,144,19,18 });
+	shipDestroy.PushBack({ 63,144,19,18 });
+	shipDestroy.PushBack({ 33,144,21,21 });
+	shipDestroy.PushBack({ 2,144,24,24 });
+	shipDestroy.PushBack({ 90,113,24,25 });
+	shipDestroy.PushBack({ 59,112,24,25 });
+	shipDestroy.PushBack({ 29,112,24,25 });
+	shipDestroy.PushBack({0,110,24,25});
+	shipDestroy.PushBack({ 88,81,24,25 });
+	shipDestroy.PushBack({ 58,81,24,25 });
+	shipDestroy.PushBack({ 30,81,24,25 });
+	shipDestroy.PushBack({ 1,81,24,25 });
+	shipDestroy.loop = false;
+	shipDestroy.speed = 0.3;
+
 	currentAnimation = &stopAnimation;
 	angularVelocity = 0.0f;
 	fuel = 5000;
 	velocity.y = 0;
 	rotation = 0;
 	ammo = 30;
+	alive = true;
 
 }
 
@@ -61,7 +83,13 @@ bool ModulePlayer::PreUpdate(Application* app)
 // Update: draw background
 bool ModulePlayer::Update(float dt, Application* app)
 {
-
+	if (alive == false)
+	{
+		velocity = Vec2(0, 0);
+		rotation = 0;
+		currentAnimation = &shipDestroy;
+		currentAnimation->Update();
+	}
 	if (state == playerState::Free) {
 		Vec2 finalGravity;
 		p2List_item<Body*>* auxiliar = nullptr;
@@ -91,8 +119,6 @@ bool ModulePlayer::Update(float dt, Application* app)
 		finalForce.y += (force.y) * 10000;
 		finalForce.x += (force.x) * 100;
 	}
-
-	
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
