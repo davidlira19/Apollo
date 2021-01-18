@@ -92,11 +92,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 		finalForce.x += (force.x) * 100;
 	}
 
-	if (position.y > -2000 && position.y < 0)
-	{
-		Vec2 buoyForce = (app->physics->BuoyancyForce(1, 9.81));
-		finalForce.y += (buoyForce.y) * 0.002;
-	}
+	
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
@@ -170,7 +166,17 @@ bool ModulePlayer::Update(float dt, Application* app)
 		angularVelocity = 10;
 	}
 	rotation += angularVelocity * 0.20;
+	if (position.y > -2000 && position.y < 0)
+	{
+		finalForce.y = 0;
+		Vec2 buoyForce = (app->physics->BuoyancyForce(1, 9.81));
+		if (fuel < 200)
+		{
+			fuel += 3;
+		}
 
+		finalForce.y += (buoyForce.y * -1) / 36000;
+	}
 	/*if (velocity.y >= 5)
 	{
 		velocity.y = 5;
@@ -310,7 +316,7 @@ void ModulePlayer::Collision(collider* bodies, collider* external, Application* 
 		}
 		else if (bodies == base)
 		{
-			if (velocity.y >= 150.0f && velocity.y < 700.0f)
+			if (velocity.y <= -1.0f && velocity.y > -3.0f|| velocity.y >= 1.0f && velocity.y < 3.0f)
 			{
 				velocity = app->physics->AddMomentum(velocity.x, velocity.y, velocity, 10);
 				if (base->position.x < external->position.x)
@@ -364,7 +370,7 @@ void ModulePlayer::Collision(collider* bodies, collider* external, Application* 
 				position.y += metersToPixels(pos.y);
 				position.x += metersToPixels(pos.x);
 			}
-			else if (velocity.y < 150.0f)
+			else if (velocity.y < 1.0f)
 			{
 				acceleration.x = 0;
 				acceleration.y = 0;

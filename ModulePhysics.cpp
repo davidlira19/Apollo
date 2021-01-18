@@ -116,7 +116,7 @@ Vec2 ModulePhysics::BuoyancyForce(float density, float gravity)
 		area = 40 * dif;
 	}
 	LOG("%f", App->scene->player->velocity.y);
-	return Vec2(0, (density * gravity * (area/100) * (-pression/100)));
+	return Vec2(0, (density * gravity * (area/100)* (pression) ));
 }
 
 Vec2 ModulePhysics::SpringsForce(float cK, float dDisplacement)
