@@ -88,9 +88,27 @@ Vec2 ModulePhysics::HydroLiftForce(float density, float velocity, float surface,
 	return Vec2( 0, (density * velocity * velocity * surface * LiftCoeficient) / 2 );
 }
 
-Vec2 ModulePhysics::HydroDragForce(float velocity, float b)
+Vec2 ModulePhysics::HydroDragForce(ModulePlayer *player)
 {
-	return Vec2(-b * velocity, 0);
+	Vec2 hydroDragForce;
+
+	float velocityCoeficient = 15.0f;
+
+	Vec2 bodyVelocity = player->velocity;
+
+	float velocity = sqrt((bodyVelocity.x * bodyVelocity.x) + (bodyVelocity.y * bodyVelocity.y));
+
+	float forceDrag = velocityCoeficient * velocity;
+
+	Vec2 direction = player->velocity;
+	direction.x = -direction.x;
+	direction.y = -direction.y;
+
+	Vec2 dragVector;
+	dragVector.x = direction.x * forceDrag;
+	dragVector.y = direction.y * forceDrag;
+
+	return dragVector;
 }
 
 Vec2 ModulePhysics::BuoyancyForce(float density, float gravity)

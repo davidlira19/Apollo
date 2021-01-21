@@ -138,7 +138,7 @@ update_status ModuleScene::Update(float dt)
 	App->renderer->Blit(asteroidTexture, (App->renderer->camera.x - 820) * -1, (App->renderer->camera.y - 550) * -1, &section);
 
 	App->renderer->DrawLine(-200, 0, 5000, -10, 255, 0, 0);
-	App->renderer->DrawLine(-200,-1500,5000,-1510,255,0,0);
+	App->renderer->DrawLine(-200,-2000,5000,-2010,255,0,0);
 	
 	return UPDATE_CONTINUE;
 }

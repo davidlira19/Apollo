@@ -196,12 +196,14 @@ bool ModulePlayer::Update(float dt, Application* app)
 	{
 		finalForce.y = 0;
 		Vec2 buoyForce = (app->physics->BuoyancyForce(1, 9.81));
+		Vec2 hydroDragForce = app->physics->HydroDragForce(app->scene->player);
 		if (fuel < 200)
 		{
 			fuel += 3;
 		}
 
-		finalForce.y += (buoyForce.y * -1) / 36000;
+		finalForce.y += (buoyForce.y * -1) / 3600;
+		finalForce.y += hydroDragForce.y*0.5;
 	}
 	/*if (velocity.y >= 5)
 	{
