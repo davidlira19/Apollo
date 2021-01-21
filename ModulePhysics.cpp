@@ -111,10 +111,9 @@ Vec2 ModulePhysics::HydroDragForce(ModulePlayer *player)
 	return dragVector;
 }
 
-Vec2 ModulePhysics::BuoyancyForce(float density, float gravity)
+Vec2 ModulePhysics::BuoyancyForce(float density, float gravity, float waterLevel)
 {
 	//angle
-	float waterLevel = -1500.0f;
 	float area = 0;
 	float pression = (App->scene->player->position.y - waterLevel);
 
@@ -135,8 +134,8 @@ Vec2 ModulePhysics::BuoyancyForce(float density, float gravity)
 		float dif = 103 - (waterLevel - App->scene->player->position.y);
 		area = 40 * dif;
 	}
-	LOG("%f", App->scene->player->velocity.y);
-	return Vec2(0, (density * gravity * (area/100)* (pression) ));
+	
+	return Vec2(0, (density * gravity * (area)* (pression) ));
 }
 
 Vec2 ModulePhysics::SpringsForce(float cK, float dDisplacement)

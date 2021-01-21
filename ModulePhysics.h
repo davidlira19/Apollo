@@ -26,7 +26,7 @@ public:
 	Vec2 AeroDragForce(float density, Vec2 velocity, float surface, float DragCoeficient);
 	Vec2 HydroLiftForce(float density, float velocity, float surface, float LiftCoeficient); // only if you go faaaaast!
 	Vec2 HydroDragForce(ModulePlayer *player); 
-	Vec2 BuoyancyForce(float density, float gravity);
+	Vec2 BuoyancyForce(float density, float gravity, float waterLevel);
 	Vec2 SpringsForce(float cK, float dDisplacement);
 	float* quatMult(float quat1[4], float quat2[4]);
 	float vecMult(float vec1[3], float vec2[3]);

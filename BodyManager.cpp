@@ -120,7 +120,6 @@ Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float m
 	rocket->boodyTexture = Texture;
 	rocket->bodyRect = {0,132,73,74};
 	rocket->Collider= App->collisions->addCollider(rad, colliderType::roket, this, pos.x, pos.y);
-	App->scene->asteroids++;
 
 	bodyList.add(rocket);
 

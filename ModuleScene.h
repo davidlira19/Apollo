@@ -33,6 +33,7 @@ public:
 	int fontAsteroids;
 
 	bool canWin;
+	bool absorbed;
 
 	float gravity;
 	int asteroids;
@@ -52,6 +53,7 @@ public:
 	Asteroid* asteroid14;
 	Asteroid* asteroid15;
 
+	SDL_Texture* nebulosa;
 	ModulePlayer* player;
 	Planet* earth;
 	Planet* moon;
