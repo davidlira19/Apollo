@@ -20,6 +20,7 @@ bool ModuleScene::Start()
 	backgroundTexture = App->textures->Load("Assets/Textures/bg.png");
 	fuelBar = App->textures->Load("Assets/Textures/fuel_bar.png");
 	ammo = App->textures->Load("Assets/Textures/ammo.png");
+	asteroids = 15;
 	asteroidTexture = App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
 	uint number = 1;
 	uint asteroidsLeft = 1;
@@ -29,6 +30,7 @@ bool ModuleScene::Start()
 	bool ret = true;
 	gravity = 10.0f;
 	canWin = false;
+	absorbed = false;
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -51,6 +53,7 @@ bool ModuleScene::Start()
 	player = App->bodyesManager->CreatePlayer({ 670, 1700 }, 100);
 	earth = App->bodyesManager->CreatePlanet(Vec2(300,1900),1, 379, 5.972E7, 379.0f, Vec2(0, 9.81));
 	moon = App->bodyesManager->CreatePlanet(Vec2(600,-12500),2, 190, 14.349E6, 190.0f, Vec2(0, 1.62));
+	nebulosa = App->textures->Load("Assets/Textures/nebulosa.png");
 
 	shootFx = App->audio->LoadFx("Assets/Audio/shoot.wav");
 	destroyFx = App->audio->LoadFx("Assets/Audio/destroy.wav");
@@ -79,24 +82,7 @@ update_status ModuleScene::Update(float dt)
 	LOG("%d", canWin);
 
 	App->renderer->Blit(backgroundTexture, 200, -13000);
-	/*App->renderer->Blit(backgroundTexture, 920, 0);
-	App->renderer->Blit(backgroundTexture, 0, 518);
-	App->renderer->Blit(backgroundTexture, 1840, 0);
-	App->renderer->Blit(backgroundTexture, 0, 1036);
-	App->renderer->Blit(backgroundTexture, 2760, 0);
-	App->renderer->Blit(backgroundTexture, 0, 1554);
-
-	App->renderer->Blit(backgroundTexture, 920, 518);
-	App->renderer->Blit(backgroundTexture, 920, 1036);
-	App->renderer->Blit(backgroundTexture, 920, 1554);
-
-	App->renderer->Blit(backgroundTexture, 1840, 518);
-	App->renderer->Blit(backgroundTexture, 1840, 1036);
-	App->renderer->Blit(backgroundTexture, 1840, 1554);
-
-	App->renderer->Blit(backgroundTexture, 2760, 518);
-	App->renderer->Blit(backgroundTexture, 2760, 1036);
-	App->renderer->Blit(backgroundTexture, 2760, 1554);*/
+	App->renderer->Blit(nebulosa, 200, -5000);
 
 	App->renderer->camera.x = -200;
 	App->renderer->camera.y = ( metersToPixels(player->position.y)* -1) + 379;
@@ -113,12 +99,14 @@ update_status ModuleScene::Update(float dt)
 		App->renderer->camera.y = 12999;
 	}
 
-
-	//if (player->position.x > 3500 || player->position.x < -30 || player->position.y > 2030 || player->position.y < -30 || player->fuel <= 0)
-	//{
-	//	App->fade->FadeToBlack((Module*)this, (Module*)App->scene_lose, 60);
-	//}
-
+	if (pixelsToMeters(player->position.y <= -5000))
+	{
+		absorbed = true;
+	}
+	else if (pixelsToMeters(player->position.y >= -3000))
+	{
+		absorbed = false;
+	}
 
 	/*p2List_item<collider*>* auxiliar;
 	auxiliar = App->collisions->colliderList.getFirst();

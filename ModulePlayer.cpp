@@ -122,7 +122,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 			auxiliar = auxiliar->next;
 		}
 	}
-	if (metersToPixels(position.y) >= 850)
+	if (metersToPixels(position.y) >= 850 && app->scene->canWin == false)
 	{
 		Vec2 force;
 		force += app->physics->AeroDragForce(AIR_DENSITY, Vec2(velocity.x, velocity.y), SURFACE, DRAG_COEFICIENT);
@@ -135,7 +135,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 		if (fuel > 0)
 		{
 			state = playerState::Free;
-			fuel -= (1.5f);
+			fuel -= (0.5f);
 			float ang;
 			SDL_Rect rec = currentAnimation->GetCurrentFrame();
 			currentAnimation = &fireAnimation;
@@ -203,22 +203,54 @@ bool ModulePlayer::Update(float dt, Application* app)
 		angularVelocity = 10;
 	}
 	rotation += angularVelocity * 0.20;
-	if (metersToPixels(position.y) > -2000 && metersToPixels(position.y) < 0)
+
+
+	if (metersToPixels(position.y) > -4500 && metersToPixels(position.y) < -4000)
 	{
-		finalForce.y = 0;
-		Vec2 buoyForce = (app->physics->BuoyancyForce(WATER_DENSITY, GRAVITY));
+		int level = -3000;
+		Vec2 buoyForce = app->physics->BuoyancyForce(WATER_DENSITY, GRAVITY, level);
 		Vec2 hydroDragForce = app->physics->HydroDragForce(app->scene->player);
+
 		if (fuel < 200)
 		{
 			fuel += 3;
 		}
 
-		finalForce.y += (buoyForce.y * -1) / 3600;
-		finalForce.y += hydroDragForce.y*0.5;
+		if (app->scene->absorbed == false)
+		{
+			finalForce.y += hydroDragForce.y;
+		}
+		else
+		{
+			finalForce.y -= (-buoyForce.y) * 0.0001;
+			finalForce.y += hydroDragForce.y * 100;
+		}
+	}
+	if (metersToPixels(position.y) > -5000 && metersToPixels(position.y) < -4501)
+	{
+		int level = -5000;
+		Vec2 buoyForce = app->physics->BuoyancyForce(WATER_DENSITY, GRAVITY, level);
+		Vec2 hydroDragForce = app->physics->HydroDragForce(app->scene->player);
+
+		if (fuel < 200)
+		{
+			fuel += 3;
+		}
+
+		if (app->scene->absorbed == false)
+		{
+			finalForce.y += (buoyForce.y * -1) * 0.0001;
+			finalForce.y += hydroDragForce.y * 100;
+		}
+		else
+		{
+			finalForce.y += hydroDragForce.y;
+		}
 	}
 
 	acceleration.x += (finalForce.x) / (mass);
 	acceleration.y += (finalForce.y) / (mass);
+
 	if (acceleration.y > 2)
 	{
 		acceleration.y = 2;
