@@ -48,7 +48,7 @@ public:
 	bool intersect(collider* vec1)
 	{
 
-		float respX = this->position.x - vec1->position.x;
+		float respX = this->position.x - vec1->position.x ;
 		float respY = this->position.y - vec1->position.y;
 		float totalResp = sqrt((respX * respX) + (respY * respY));
 		if (totalResp <= this->circleRad + vec1->circleRad) {
@@ -105,7 +105,8 @@ public:
 		return UPDATE_CONTINUE;
 	}
 
-	update_status Update(float dt)override {
+	update_status Update(float dt)override 
+	{
 		p2List_item<collider*>* auxiliar1;
 		p2List_item<collider*>* auxiliar2;
 		auxiliar1 = colliderList.getFirst();

@@ -110,7 +110,8 @@ bool bodyManager::CleanUp()
 Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity)
 {
 	Asteroid* rocket = new Asteroid();
-	rocket->position = pos;
+	rocket->position.x = pixelsToMeters(pos.x);
+	rocket->position.y = pixelsToMeters(pos.y);
 	rocket->rotation = rotation;
 	rocket->mass = mass;
 	rocket->type = bodyType::Asteroid;
@@ -128,7 +129,8 @@ Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float m
 Planet* bodyManager::CreatePlanet(Vec2 pos,int type, int rad, float mass, float radius, Vec2 localGravity)
 {
 	Planet* planet = new Planet();
-	planet->position = pos;
+	planet->position.x = pixelsToMeters(pos.x);
+	planet->position.y = pixelsToMeters(pos.y);
 	planet->mass = mass;
 	planet->radius = radius;
 	planet->localGravity = localGravity;
@@ -153,7 +155,8 @@ Planet* bodyManager::CreatePlanet(Vec2 pos,int type, int rad, float mass, float 
 Torpedo* bodyManager::CreateTorpedo(Vec2 pos, Vec2 velocity, double rotation, Vec2 acceleration)
 {
 	Torpedo* torpedo = new Torpedo();
-	torpedo->position = pos;
+	torpedo->position.x = pos.x;
+	torpedo->position.y = pos.y;
 	torpedo->acceleration = acceleration;
 	torpedo->velocity = velocity;
 	torpedo->rotation = rotation;
@@ -168,7 +171,9 @@ Torpedo* bodyManager::CreateTorpedo(Vec2 pos, Vec2 velocity, double rotation, Ve
 ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 {
 	ModulePlayer* player = new ModulePlayer(Texture1);
-	player->position = pos;
+	player->position.x = pixelsToMeters(pos.x);
+	player->position.y = pixelsToMeters(pos.y);
+	
 	player->mass = mass;
 	//player->boodyTexture = Texture;
 	player->bodyRect = { 186,215,40,103 };
@@ -223,20 +228,21 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 				auxiliar1->data->Collision(body1, body2, app);
 			}
 
-			if (auxiliar1->data->type == bodyType::Planet && auxiliar1->data->position.y == -12500 && app->scene->asteroids <= 1)
+			if (auxiliar1->data->type == bodyType::Planet && metersToPixels(auxiliar1->data->position.y)  == -12500 && app->scene->asteroids <= 1)
 			{
+				
 				app->scene->canWin = true;
 			}
-			else if (auxiliar1->data->type == bodyType::Planet && auxiliar1->data->position.y == 1900 && app->scene->canWin == true)
+			else if (auxiliar1->data->type == bodyType::Planet && metersToPixels(auxiliar1->data->position.y)  == 1900 && app->scene->canWin == true)
 			{
 				auxiliar1->data->pendingToDelete = true;
 				App->fade->FadeToBlack(this, App->scene_win);
 			}
-			if (auxiliar2->data->type == bodyType::Planet && auxiliar2->data->position.y == -12500 && app->scene->asteroids <= 1)
+			if (auxiliar2->data->type == bodyType::Planet && metersToPixels(auxiliar2->data->position.y) == -12500 && app->scene->asteroids <= 1)
 			{
 				app->scene->canWin = true;
 			}
-			else if (auxiliar2->data->type == bodyType::Planet && auxiliar2->data->position.y == 1900 && app->scene->canWin == true)
+			else if (auxiliar2->data->type == bodyType::Planet && metersToPixels(auxiliar2->data->position.y) == 1900 && app->scene->canWin == true)
 			{
 				auxiliar2->data->pendingToDelete = true;
 				App->fade->FadeToBlack(this, App->scene_win);

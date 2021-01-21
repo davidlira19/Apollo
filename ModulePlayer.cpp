@@ -5,6 +5,16 @@
 #include "Application.h"
 #include"Globals.h"
 #include "Fonts.h"
+#define SURFACE 30
+#define DRAG_COEFICIENT 0.000021
+#define DT 0.064
+#define TORPEDO_POWER 20
+#define PLAYER_POWER 20
+#define AIR_DENSITY 1.29
+#define WATER_DENSITY 1
+#define GRAVITY 9.8
+#define HALF_CIRCLE 180
+#define M 10
 ModulePlayer::ModulePlayer(SDL_Texture* adTexture)
 {
 	ship = adTexture;
@@ -102,8 +112,8 @@ bool ModulePlayer::Update(float dt, Application* app)
 			if (auxiliar->data->type == bodyType::Planet)
 			{
 				Vec2 sum;
-				distanceX = auxiliar->data->position.x + auxiliar->data->getXMiddle() - position.x + getXMiddle();
-				distanceY = auxiliar->data->position.y + auxiliar->data->getYMiddle() - position.y + getYMiddle();
+				distanceX = metersToPixels(auxiliar->data->position.x) + auxiliar->data->getXMiddle() - metersToPixels(position.x) + getXMiddle();
+				distanceY = metersToPixels(auxiliar->data->position.y) + auxiliar->data->getYMiddle() - metersToPixels(position.y) + getYMiddle();
 				distance = sqrt((distanceX * distanceX) + (distanceY * distanceY));
 				sum = app->physics->GravityForce(auxiliar->data->mass, mass, distance, Vec2(distanceX, distanceY));
 				finalForce.x -= (sum.x) * 25000;
@@ -112,10 +122,10 @@ bool ModulePlayer::Update(float dt, Application* app)
 			auxiliar = auxiliar->next;
 		}
 	}
-	if (position.y >= 850)
+	if (metersToPixels(position.y) >= 850)
 	{
 		Vec2 force;
-		force += app->physics->AeroDragForce(1.29f, Vec2(velocity.x, velocity.y), 30.0f, 0.000021);
+		force += app->physics->AeroDragForce(AIR_DENSITY, Vec2(velocity.x, velocity.y), SURFACE, DRAG_COEFICIENT);
 		finalForce.y += (force.y) * 10000;
 		finalForce.x += (force.x) * 100;
 	}
@@ -130,10 +140,11 @@ bool ModulePlayer::Update(float dt, Application* app)
 			SDL_Rect rec = currentAnimation->GetCurrentFrame();
 			currentAnimation = &fireAnimation;
 			currentAnimation->Update();
-			app->renderer->Blit(ship, position.x, position.y, &rec, 2, 1.0f, rotation, 20, 52);
-			ang = ((rotation * M_PI) / 180);
-			finalForce.y -= (20 * cos(ang));//0.2
-			finalForce.x += (20 * sin(ang));
+			
+			app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
+			ang = ((rotation * M_PI) / HALF_CIRCLE);
+			finalForce.y -= (PLAYER_POWER * cos(ang));//0.2
+			finalForce.x += (PLAYER_POWER * sin(ang));
 		}
 		else
 		{
@@ -141,7 +152,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 			SDL_Rect rec = currentAnimation->GetCurrentFrame();
 			currentAnimation = &stopAnimation;
 			currentAnimation->Update();
-			app->renderer->Blit(ship, position.x, position.y, &rec, 2, 1.0f, rotation, 20, 52);
+			app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
 		}
 	}
 	else
@@ -150,7 +161,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 		SDL_Rect rec = currentAnimation->GetCurrentFrame();
 		currentAnimation = &stopAnimation;
 		currentAnimation->Update();
-		app->renderer->Blit(ship, position.x, position.y, &rec, 2, 1.0f, rotation, 20, 52);
+		app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
 
 	}
 
@@ -192,10 +203,10 @@ bool ModulePlayer::Update(float dt, Application* app)
 		angularVelocity = 10;
 	}
 	rotation += angularVelocity * 0.20;
-	if (position.y > -2000 && position.y < 0)
+	if (metersToPixels(position.y) > -2000 && metersToPixels(position.y) < 0)
 	{
 		finalForce.y = 0;
-		Vec2 buoyForce = (app->physics->BuoyancyForce(1, 9.81));
+		Vec2 buoyForce = (app->physics->BuoyancyForce(WATER_DENSITY, GRAVITY));
 		Vec2 hydroDragForce = app->physics->HydroDragForce(app->scene->player);
 		if (fuel < 200)
 		{
@@ -205,22 +216,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 		finalForce.y += (buoyForce.y * -1) / 3600;
 		finalForce.y += hydroDragForce.y*0.5;
 	}
-	/*if (velocity.y >= 5)
-	{
-		velocity.y = 5;
-	}
-	if (velocity.y <= -5)
-	{
-		velocity.y = -5;
-	}
-	if (velocity.x >= 5)
-	{
-		velocity.x = 5;
-	}
-	if (velocity.x <= -5)
-	{
-		velocity.x = -5;
-	}*/
+
 	acceleration.x += (finalForce.x) / (mass);
 	acceleration.y += (finalForce.y) / (mass);
 	if (acceleration.y > 2)
@@ -239,34 +235,18 @@ bool ModulePlayer::Update(float dt, Application* app)
 	{
 		acceleration.x = -2;
 	}
-	/*
-	if (finalForce.y > 2)
-	{
-		finalForce.y = 2;
-	}
-	else if (finalForce.y < -2)
-	{
-		finalForce.y = -2;
-	}
-	if (finalForce.x > 2)
-	{
-		finalForce.x = 2;
-	}
-	else if (finalForce.x < -2)
-	{
-		finalForce.x = -2;
-	}*/
+
 	Vec2 pos;
-	pos = app->physics->Integrator(&velocity, 0.064, acceleration);
-	position.y += metersToPixels(pos.y);
-	position.x += metersToPixels(pos.x);
+	pos = app->physics->Integrator(&velocity, DT, acceleration);
+	position.y += pos.y;
+	position.x += pos.x;
 	finalForce.x = 0;
 	finalForce.y = 0;
 	return true;
 }
 void ModulePlayer::Draw(Application* app)
 {
-	app->renderer->Blit(boodyTexture, position.x, position.y, &bodyRect, 1, 1, rotation, getXMiddle(), getYMiddle());
+	app->renderer->Blit(boodyTexture, metersToPixels(position.x), metersToPixels(position.y), &bodyRect, 1, 1, rotation, getXMiddle(), getYMiddle());
 	sprintf_s(text, 10, "%2d", ammo);
 	app->fonts->BlitText(app, (app->renderer->camera.x - 900) * -1, (app->renderer->camera.y - 675) * -1, app->scene->font, text);
 
@@ -280,11 +260,11 @@ void ModulePlayer::launchTorpedo(Application* app)
 	if (ammo > 0)
 	{
 		float ang;
-		ang = ((rotation * M_PI) / 180);
+		ang = ((rotation * M_PI) / HALF_CIRCLE);
 		//velocity.y = ( cos(ang));
 		//velocity.x = ( sin(ang));
-
-		app->bodyesManager->CreateTorpedo(Vec2(position.x, position.y), Vec2((sin(ang)) * 1000, (cos(ang)) * -1000), rotation, Vec2(acceleration.x, acceleration.y));
+		
+		app->bodyesManager->CreateTorpedo(Vec2(position.x, position.y), Vec2((sin(ang)) * TORPEDO_POWER, (cos(ang)) * -TORPEDO_POWER), rotation, Vec2(acceleration.x, acceleration.y));
 		ammo -= 1;
 		app->audio->PlayFx(app->scene->shootFx);
 	}
@@ -293,7 +273,7 @@ void ModulePlayer::setPos(Application* app)
 {
 	for (int i = 0; i < 6; i++)
 	{
-		float ang = ((-rotation * M_PI) / 180);
+		float ang = ((-rotation * M_PI) / HALF_CIRCLE);
 		ang = ang / 2;
 		float cuat1[4] = { cos(ang),0,0,sin(ang) };
 		int desp = 0;
@@ -330,7 +310,8 @@ void ModulePlayer::setPos(Application* app)
 
 		int b = res[1];
 		int c = res[2];
-		playerArr[i]->setPos(position.x + b + app->renderer->camera.x + getXMiddle(), position.y + c + app->renderer->camera.y + getYMiddle());
+		
+		playerArr[i]->setPos( metersToPixels(position.x)+ b + app->renderer->camera.x + getXMiddle(), metersToPixels(position.y) + c + app->renderer->camera.y + getYMiddle());
 
 	}
 }
@@ -346,8 +327,8 @@ void ModulePlayer::Collision(collider* bodies, collider* external, Application* 
 		{
 			if (velocity.y <= -1.0f && velocity.y > -3.0f|| velocity.y >= 1.0f && velocity.y < 3.0f)
 			{
-				velocity = app->physics->AddMomentum(velocity.x, velocity.y, velocity, 10);
-				if (base->position.x < external->position.x)
+				velocity = app->physics->AddMomentum(velocity.x, velocity.y, velocity, M);
+				if (base->position.x <external->position.x )
 				{
 					if (velocity.x > 0)
 					{
@@ -395,8 +376,8 @@ void ModulePlayer::Collision(collider* bodies, collider* external, Application* 
 				Vec2 pos;
 				pos.x = velocity.x * 0.0016;
 				pos.y = velocity.y * 0.0016;
-				position.y += metersToPixels(pos.y);
-				position.x += metersToPixels(pos.x);
+				position.y += pos.y;
+				position.x += pos.x;
 			}
 			else if (velocity.y < 1.0f)
 			{
@@ -409,9 +390,7 @@ void ModulePlayer::Collision(collider* bodies, collider* external, Application* 
 			else
 			{
 				app->bodyesManager->playerLose = true;
-
 			}
-
 		}
 	}
 }

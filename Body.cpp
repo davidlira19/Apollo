@@ -29,7 +29,8 @@
 		Collider->setPos(finalPositionX+ respX, finalPositionY+ respY);*/
 		if (Collider->Type != colliderType::player) 
 		{
-			Collider->setPos(getXMiddle()+position.x +app->renderer->camera.x , position.y +app->renderer->camera.y + getYMiddle());
+			
+			Collider->setPos(getXMiddle()+ metersToPixels(position.x) +app->renderer->camera.x , metersToPixels(position.y)  +app->renderer->camera.y + getYMiddle());
 		}
 		//Collider->setPos(position.x + getXMiddle(), position.y + getYMiddle());
 
@@ -50,13 +51,14 @@
 		return true;
 	}
 	bool Body::PreUpdate(Application* app) {
-		if ((app->renderer->camera.w - app->renderer->camera.x) <= position.x)
+		if ((app->renderer->camera.w - app->renderer->camera.x) <= metersToPixels(position.x) )
 		{
-			position.x = 170;
+			
+			position.x = pixelsToMeters(170) ;
 		}
-		else if (position.x < 170)
+		else if (metersToPixels(position.x) < 170)
 		{
-			position.x = app->renderer->camera.w - app->renderer->camera.x;
+			position.x = pixelsToMeters(app->renderer->camera.w - app->renderer->camera.x);
 		}
 		return true;
 	}

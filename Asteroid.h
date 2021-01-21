@@ -11,8 +11,8 @@ public:
 public:
 
 	float force;
-
 public:
+
 	void Draw(Application* app)override;
 	bool Start(Application* app) override;
 	bool PreUpdate(Application* app) override;

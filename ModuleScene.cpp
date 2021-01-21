@@ -99,8 +99,8 @@ update_status ModuleScene::Update(float dt)
 	App->renderer->Blit(backgroundTexture, 2760, 1554);*/
 
 	App->renderer->camera.x = -200;
-	App->renderer->camera.y = (player->position.y * -1) + 379;
-
+	App->renderer->camera.y = ( metersToPixels(player->position.y)* -1) + 379;
+	
 	
 
 	//Camera Limits
