@@ -15,6 +15,7 @@ bool bodyManager::Start()
 	Texture1 = App->textures->Load("Assets/Textures/ship.png");
 	Texture2 = App->textures->Load("Assets/Textures/earth.png");
 	Texture3 = App->textures->Load("Assets/Textures/moon.png");
+	TextureAmmo = App->textures->Load("Assets/Textures/max_ammo.png");
 	playerLose = false;
 	count = false;
 	return true;
@@ -90,6 +91,7 @@ bool bodyManager::CleanUp()
 {
 	
 	App->textures->Unload(Texture);
+	App->textures->Unload(TextureAmmo);
 	App->textures->Unload(Texture1);
 	App->textures->Unload(Texture2);
 	App->textures->Unload(Texture3);
@@ -107,6 +109,21 @@ bool bodyManager::CleanUp()
 	App->scene->Disable();
 	return true;
 }
+
+Ammo* bodyManager::CreateAmmo(Vec2 pos)
+{
+	Ammo* ammo = new Ammo(TextureAmmo);
+	ammo->position.x = pixelsToMeters(pos.x);
+	ammo->position.y = pixelsToMeters(pos.y);
+	ammo->type = bodyType::Ammo;
+	ammo->bodyRect = { 0,0,100,100 };
+	ammo->Collider = App->collisions->addRectCollider(ammo->bodyRect, colliderType::ammo, this, pos.x, pos.y);
+
+	bodyList.add(ammo);
+
+	return ammo;
+}
+
 Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity)
 {
 	Asteroid* rocket = new Asteroid();
@@ -174,7 +191,6 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 	player->position.y = pixelsToMeters(pos.y);
 	
 	player->mass = mass;
-	//player->boodyTexture = Texture;
 	player->bodyRect = { 186,215,40,103 };
 	player->type = bodyType::Player;
 	player->col1 = App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
@@ -189,7 +205,6 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 	player->playerArr[3] = player->col4;
 	player->playerArr[4] = player->col5;
 	player->playerArr[5] = player->col6;
-	//App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
 	bodyList.add(player);
 	return player;
 }
@@ -277,6 +292,19 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 				playerLose = true;
 				App->scene->player->alive = false;
 				App->audio->PlayFx(App->scene->destroyFx);
+			}
+		}
+		if (body1->Type == colliderType::player && body2->Type == colliderType::ammo || body1->Type == colliderType::player && body2->Type == colliderType::ammo)
+		{
+			app->scene->player->ammo = 30;
+			App->audio->PlayFx(App->scene->ammoFx);
+			if (auxiliar1->data->type == bodyType::Ammo)
+			{
+				auxiliar1->data->pendingToDelete = true;
+			}
+			if (auxiliar2->data->type == bodyType::Ammo)
+			{
+				auxiliar2->data->pendingToDelete = true;
 			}
 		}
 	}

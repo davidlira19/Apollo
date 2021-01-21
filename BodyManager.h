@@ -7,6 +7,7 @@
 #include"Asteroid.h"
 #include"planet.h"
 #include "Torpedo.h"
+#include "Ammo.h"
 #include"ModulePlayer.h"
 
 class bodyManager :public Module 
@@ -21,6 +22,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 	Asteroid* CreateAsteroid(Vec2 pos, int rad, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity);
+	Ammo* CreateAmmo(Vec2 pos);
 	Planet* CreatePlanet(Vec2 pos,int type, int rad, float mass, float radius, Vec2 localGravity);
 	Torpedo* CreateTorpedo(Vec2 pos, Vec2 velocity, double rotation, Vec2 acceleration);
 	ModulePlayer* CreatePlayer(Vec2 pos, float mass);
@@ -29,6 +31,7 @@ public:
 	SDL_Texture* Texture1;
 	SDL_Texture* Texture2;
 	SDL_Texture* Texture3;
+	SDL_Texture* TextureAmmo;
 	SDL_Texture* fireText;
 	bool playerLose;
 	bool count;

@@ -3,6 +3,7 @@
 #include"ModuleSceneIntro.h"
 #include"Asteroid.h"
 #include "Planet.h"
+#include "Ammo.h"
 #include "Animation.h"
 #include "p2DynArray.h"
 #include "Globals.h"
@@ -27,6 +28,7 @@ public:
 	//FX
 	int shootFx;
 	int destroyFx;
+	int ammoFx;
 	//Fonts
 	char textAsteroids[5] = { "\0" };
 	int font;
@@ -57,6 +59,7 @@ public:
 	ModulePlayer* player;
 	Planet* earth;
 	Planet* moon;
+	Ammo* maxAmmo;
 	SDL_Texture* fuelBar;
 	SDL_Texture* ammo;
 	SDL_Texture* asteroidTexture;

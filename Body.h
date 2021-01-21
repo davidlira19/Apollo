@@ -8,7 +8,7 @@
 //#include"Application.h"
 enum class bodyType 
 {
-	Planet,Player,Asteroid,Torpedo
+	Planet,Player,Asteroid,Torpedo,Ammo
 };
 class Body
 {

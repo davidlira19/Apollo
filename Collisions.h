@@ -6,7 +6,7 @@
 //#include"Application.h"
 #include"SDL/include/SDL.h"
 enum class colliderType {
-	player, roket,planet, torpedo
+	player, roket, planet, torpedo, ammo
 };
 class collider {
 public:
