@@ -87,7 +87,7 @@ update_status ModuleScene::Update(float dt)
 	App->renderer->camera.x = -200;
 	App->renderer->camera.y = ( metersToPixels(player->position.y)* -1) + 379;
 	
-	
+	LOG("%f", player->position.x);
 
 	//Camera Limits
 	if (App->renderer->camera.y < -1600)
