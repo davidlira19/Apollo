@@ -17,8 +17,12 @@ bool ModuleSceneLose::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	App->audio->PlayMusic("Assets/Audio/silence.ogg");
+
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 	loseTexture = App->textures->Load("Assets/Textures/lose_screen.png");
+	App->audio->PlayMusic("Assets/Audio/silence.ogg");
+	App->audio->PlayFx(App->scene->loseFx);
 	return ret;
 }
 

@@ -63,6 +63,8 @@ bool ModuleScene::Start()
 	shootFx = App->audio->LoadFx("Assets/Audio/shoot.wav");
 	destroyFx = App->audio->LoadFx("Assets/Audio/destroy.wav");
 	ammoFx = App->audio->LoadFx("Assets/Audio/ammo.wav");
+	winFx = App->audio->LoadFx("Assets/Audio/win.wav");
+	loseFx = App->audio->LoadFx("Assets/Audio/you_suck.wav");
 
 	return ret;
 }
@@ -70,7 +72,6 @@ bool ModuleScene::Start()
 // Load assets
 bool ModuleScene::CleanUp()
 {
-
 	App->textures->Unload(caution);
 	App->textures->Unload(backgroundTexture);
 	App->textures->Unload(fuelBar);

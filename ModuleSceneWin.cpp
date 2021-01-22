@@ -17,8 +17,10 @@ bool ModuleSceneWin::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	App->audio->PlayMusic("Assets/Audio/silence.ogg");
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 	winTexture = App->textures->Load("Assets/Textures/win_screen.png");
+	App->audio->PlayFx(App->scene->winFx);
 	return ret;
 }
 

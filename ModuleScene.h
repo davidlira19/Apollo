@@ -29,6 +29,8 @@ public:
 	int shootFx;
 	int destroyFx;
 	int ammoFx;
+	int winFx;
+	int loseFx;
 	//Fonts
 	char textAsteroids[5] = { "\0" };
 	int font;
