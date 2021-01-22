@@ -93,6 +93,7 @@ bool ModulePlayer::PreUpdate(Application* app)
 // Update: draw background
 bool ModulePlayer::Update(float dt, Application* app)
 {
+
 	if (alive == false)
 	{
 		velocity = Vec2(0, 0);
@@ -100,6 +101,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 		currentAnimation = &shipDestroy;
 		currentAnimation->Update();
 	}
+
 	if (state == playerState::Free) {
 		Vec2 finalGravity;
 		p2List_item<Body*>* auxiliar = nullptr;
@@ -122,12 +124,18 @@ bool ModulePlayer::Update(float dt, Application* app)
 			auxiliar = auxiliar->next;
 		}
 	}
+
 	if (metersToPixels(position.y) >= 850 && app->scene->canWin == false)
 	{
 		Vec2 force;
 		force += app->physics->AeroDragForce(AIR_DENSITY, Vec2(velocity.x, velocity.y), SURFACE, DRAG_COEFICIENT);
 		finalForce.y += (force.y) * 10000;
 		finalForce.x += (force.x) * 100;
+	}
+
+	if (position.y > pixelsToMeters(-5000) && position.y < pixelsToMeters(-4000))
+	{
+		fuel += 3;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)

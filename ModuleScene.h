@@ -34,11 +34,18 @@ public:
 	int font;
 	int fontAsteroids;
 
+	char textPoints[5] = { "\0" };
+	char textMaxPoints[5] = { "\0" };
+
 	bool canWin;
 	bool absorbed;
 
 	float gravity;
 	int asteroids;
+
+	uint points;
+	uint maxPoints;
+
 	Asteroid* asteroid;
 	Asteroid* asteroid2;
 	Asteroid* asteroid3;
@@ -56,6 +63,8 @@ public:
 	Asteroid* asteroid15;
 
 	SDL_Texture* nebulosa;
+	SDL_Texture* highScore;
+	SDL_Texture* score;
 	ModulePlayer* player;
 	Planet* earth;
 	Planet* moon;

@@ -116,7 +116,7 @@ Ammo* bodyManager::CreateAmmo(Vec2 pos)
 	ammo->position.x = pixelsToMeters(pos.x);
 	ammo->position.y = pixelsToMeters(pos.y);
 	ammo->type = bodyType::Ammo;
-	ammo->bodyRect = { 0,0,100,100 };
+	ammo->bodyRect = { 0,0,300,300 };
 	ammo->Collider = App->collisions->addRectCollider(ammo->bodyRect, colliderType::ammo, this, pos.x, pos.y);
 
 	bodyList.add(ammo);
@@ -142,6 +142,7 @@ Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float m
 
 	return rocket;
 }
+
 Planet* bodyManager::CreatePlanet(Vec2 pos,int type, int rad, float mass, float radius, Vec2 localGravity)
 {
 	Planet* planet = new Planet();
@@ -268,12 +269,16 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 			{
 				auxiliar1->data->pendingToDelete = true;
 				App->scene->asteroids--;
+				App->scene->points += 100;
+				if (App->scene->maxPoints < App->scene->points) App->scene->maxPoints = App->scene->points;
 				App->audio->PlayFx(App->scene->destroyFx);
 			}
 			if (auxiliar2->data->type == bodyType::Asteroid)
 			{
 				auxiliar2->data->pendingToDelete = true;
 				App->scene->asteroids--;
+				App->scene->points += 100;
+				if (App->scene->maxPoints < App->scene->points) App->scene->maxPoints = App->scene->points;
 				App->audio->PlayFx(App->scene->destroyFx);
 			}
 		}

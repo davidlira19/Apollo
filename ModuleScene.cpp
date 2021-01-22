@@ -20,6 +20,7 @@ bool ModuleScene::Start()
 	backgroundTexture = App->textures->Load("Assets/Textures/bg.png");
 	fuelBar = App->textures->Load("Assets/Textures/fuel_bar.png");
 	ammo = App->textures->Load("Assets/Textures/ammo.png");
+	highScore = App->textures->Load("Assets/Textures/max_points.png");
 	asteroids = 15;
 	asteroidTexture = App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
 	uint number = 1;
@@ -31,6 +32,7 @@ bool ModuleScene::Start()
 	gravity = 10.0f;
 	canWin = false;
 	absorbed = false;
+	points = 0;
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -81,15 +83,11 @@ update_status ModuleScene::Update(float dt)
 	int widthBar = (float)player->fuel / 5000 * 200;
 	rectBar = { 0,0,widthBar,20 };
 
-	LOG("%d", canWin);
-
 	App->renderer->Blit(backgroundTexture, 200, -13000);
 	App->renderer->Blit(nebulosa, 200, -5000);
 
 	App->renderer->camera.x = -200;
 	App->renderer->camera.y = ( metersToPixels(player->position.y)* -1) + 379;
-	
-	LOG("%f", player->position.x);
 
 	//Camera Limits
 	if (App->renderer->camera.y < -1600)
@@ -118,17 +116,24 @@ update_status ModuleScene::Update(float dt)
 		auxiliar = auxiliar->next;
 	}*/
 
-	App->renderer->Blit(fuelBar, App->renderer->camera.x * -1, App->renderer->camera.y * -1, &rectBar);
+	App->renderer->Blit(fuelBar, App->renderer->camera.x * -1 + 375, App->renderer->camera.y * -1, &rectBar);
 	App->renderer->Blit(ammo, App->renderer->camera.x * -1 +800, App->renderer->camera.y * -1+650);
+	App->renderer->Blit(highScore, App->renderer->camera.x * -1 + 770, App->renderer->camera.y * -1 + 10);
+
+	SDL_Rect scoreRect = { 113,0,136,39 };
+	App->renderer->Blit(highScore, App->renderer->camera.x * -1 + 10, App->renderer->camera.y * -1 + 10, &scoreRect);
 
 	sprintf_s(textAsteroids, 5, "%2d", asteroids);
 	App->fonts->BlitText(App, (App->renderer->camera.x - 900) * -1, (App->renderer->camera.y - 560) * -1, fontAsteroids, textAsteroids);
 
+	sprintf_s(textPoints, 5, "%2d", points);
+	App->fonts->BlitText(App, (App->renderer->camera.x - 10) * -1, (App->renderer->camera.y - 50) * -1, font, textPoints);
+
+	sprintf_s(textMaxPoints, 5, "%2d", maxPoints);
+	App->fonts->BlitText(App, (App->renderer->camera.x - 770) * -1, (App->renderer->camera.y - 50) * -1, font, textMaxPoints);
+
 	SDL_Rect section = {0,132,72,73};
 	App->renderer->Blit(asteroidTexture, (App->renderer->camera.x - 820) * -1, (App->renderer->camera.y - 550) * -1, &section);
-
-	App->renderer->DrawLine(-200, 0, 5000, -10, 255, 0, 0);
-	App->renderer->DrawLine(-200,-2000,5000,-2010,255,0,0);
 	
 	return UPDATE_CONTINUE;
 }
