@@ -21,7 +21,6 @@
 			
 			Collider->setPos(getXMiddle()+ metersToPixels(position.x) +app->renderer->camera.x , metersToPixels(position.y)  +app->renderer->camera.y + getYMiddle());
 		}
-		//Collider->setPos(position.x + getXMiddle(), position.y + getYMiddle());
 	}
 	void Body::Draw(Application* app) {
 		//app->renderer->Blit(boodyTexture, position.x, position.y, &bodyRect, 1, 1, rotation, getXMiddle(), getYMiddle());
