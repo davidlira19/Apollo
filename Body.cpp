@@ -16,10 +16,12 @@
 	//Variables
 	void Body::setPos(Application* app)
 	{
-		if (Collider->Type != colliderType::player) 
-		{
-			
-			Collider->setPos(getXMiddle()+ metersToPixels(position.x) +app->renderer->camera.x , metersToPixels(position.y)  +app->renderer->camera.y + getYMiddle());
+		if (Collider != nullptr) {
+			if (Collider->Type != colliderType::player)
+			{
+
+				Collider->setPos(getXMiddle() + metersToPixels(position.x) + app->renderer->camera.x, metersToPixels(position.y) + app->renderer->camera.y + getYMiddle());
+			}
 		}
 	}
 	void Body::Draw(Application* app) {

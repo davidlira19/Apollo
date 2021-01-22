@@ -78,6 +78,7 @@
     <ClInclude Include="Collisions.h" />
     <ClInclude Include="Defs.h" />
     <ClInclude Include="FadeToBlack.h" />
+    <ClInclude Include="Fire.h" />
     <ClInclude Include="Fonts.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="ModulePhysics.h" />
@@ -107,6 +108,7 @@
     <ClCompile Include="Body.cpp" />
     <ClCompile Include="BodyManager.cpp" />
     <ClCompile Include="FadeToBlack.cpp" />
+    <ClCompile Include="Fire.cpp" />
     <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />

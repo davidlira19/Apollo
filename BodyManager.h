@@ -9,7 +9,7 @@
 #include "Torpedo.h"
 #include "Ammo.h"
 #include"ModulePlayer.h"
-
+#include"Fire.h"
 class bodyManager :public Module 
 {
 public:
@@ -26,6 +26,8 @@ public:
 	Planet* CreatePlanet(Vec2 pos,int type, int rad, float mass, float radius, Vec2 localGravity);
 	Torpedo* CreateTorpedo(Vec2 pos, Vec2 velocity, double rotation, Vec2 acceleration);
 	ModulePlayer* CreatePlayer(Vec2 pos, float mass);
+	Fire* CreateFire(int x,int y);
+	Fire* finalFire;
 	p2List<Body*>bodyList;
 	SDL_Texture* Texture;
 	SDL_Texture* Texture1;
@@ -33,6 +35,11 @@ public:
 	SDL_Texture* Texture3;
 	SDL_Texture* TextureAmmo;
 	SDL_Texture* fireText;
+	int fire1;
+	int fire2;
+	int fire3;
+	int fire4;
+	int counterToFire;
 	bool playerLose;
 	bool count;
 };

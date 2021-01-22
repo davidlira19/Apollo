@@ -10,7 +10,12 @@ bodyManager::~bodyManager() {
 
 bool bodyManager::Start() 
 {
-	//fireText = App->textures->Load("Assets/Textures/fire.png");
+	counterToFire = 0;
+	fire1=App->audio->LoadFx("Assets/Audio/fire1.wav");
+	fire2 = App->audio->LoadFx("Assets/Audio/fire2.wav");
+	fire3 = App->audio->LoadFx("Assets/Audio/fire3.wav");
+	fire4 = App->audio->LoadFx("Assets/Audio/fire4.wav");
+	fireText = App->textures->Load("Assets/Textures/fireworks.png");
 	Texture = App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
 	Texture1 = App->textures->Load("Assets/Textures/ship.png");
 	Texture2 = App->textures->Load("Assets/Textures/earth.png");
@@ -41,6 +46,7 @@ update_status bodyManager::PreUpdate()
 	auxiliar = bodyList.getFirst();
 	while (auxiliar != nullptr)
 	{
+
 		auxiliar->data->setPos(App);
 		auxiliar = auxiliar->next;
 	}
@@ -61,6 +67,11 @@ update_status bodyManager::Update(float dt)
 		auxiliar->data->Update(dt, App);
 		auxiliar = auxiliar->next;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) 
+	{
+		App->scene->canWin = true;
+	}
+	
 	return UPDATE_CONTINUE;
 }
 update_status bodyManager::PostUpdate() 
@@ -90,6 +101,7 @@ update_status bodyManager::PostUpdate()
 bool bodyManager::CleanUp() 
 {
 	
+	App->textures->Unload(fireText);
 	App->textures->Unload(Texture);
 	App->textures->Unload(TextureAmmo);
 	App->textures->Unload(Texture1);
@@ -123,7 +135,14 @@ Ammo* bodyManager::CreateAmmo(Vec2 pos)
 
 	return ammo;
 }
-
+Fire* bodyManager::CreateFire(int x,int y)
+{
+	Fire* fire = new Fire(fireText);
+	fire->position.x = x;
+	fire->position.y = y;
+	bodyList.add(fire);
+	return fire;
+}
 Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float mass, int life, int ammo, float fuel, Vec2 acceleration, Vec2 velocity)
 {
 	Asteroid* rocket = new Asteroid();
@@ -250,8 +269,54 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 			}
 			else if (auxiliar1->data->type == bodyType::Planet && metersToPixels(auxiliar1->data->position.y)  == 1900 && app->scene->canWin == true)
 			{
-				auxiliar1->data->pendingToDelete = true;
-				App->fade->FadeToBlack(this, App->scene_win);
+				app->scene->player->acceleration.x = 0;
+				app->scene->player->acceleration.y = 0;
+				app->scene->player->velocity.y = 0;
+				app->scene->player->velocity.x = 0;
+				app->scene->player->angularVelocity = 0;
+				if (counterToFire < 60)
+				{
+					counterToFire++;
+					if (counterToFire == 1)
+					{
+						app->audio->PlayFx(fire1);
+						CreateFire(App->scene->player->position.x - 2, App->scene->player->position.y - 2);
+					}
+				}
+				else if (counterToFire < 120)
+				{
+					counterToFire++;
+					if (counterToFire == 61)
+					{
+						app->audio->PlayFx(fire2);
+						CreateFire(App->scene->player->position.x + 2, App->scene->player->position.y - 2);
+					}
+				}
+				else if (counterToFire < 180)
+				{
+					counterToFire++;
+					if (counterToFire == 121)
+					{
+						app->audio->PlayFx(fire3);
+						CreateFire(App->scene->player->position.x - 2, App->scene->player->position.y + 3);
+					}
+				}
+				else if (counterToFire < 240)
+				{
+					if (counterToFire == 180)
+					{
+						app->audio->PlayFx(fire4);
+						finalFire = CreateFire(App->scene->player->position.x + 2, App->scene->player->position.y + 3);
+						counterToFire = 181;
+					}
+
+					if (finalFire->fireAnimation.HasFinished() == true)
+					{
+						auxiliar1->data->pendingToDelete = true;
+						App->fade->FadeToBlack(this, App->scene_win);
+						counterToFire = 241;
+					}
+				}
 			}
 			if (auxiliar2->data->type == bodyType::Planet && metersToPixels(auxiliar2->data->position.y) == -12500 && app->scene->asteroids <= 1)
 			{
@@ -259,8 +324,52 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 			}
 			else if (auxiliar2->data->type == bodyType::Planet && metersToPixels(auxiliar2->data->position.y) == 1900 && app->scene->canWin == true)
 			{
-				auxiliar2->data->pendingToDelete = true;
-				App->fade->FadeToBlack(this, App->scene_win);
+				if (counterToFire < 60) 
+				{
+					counterToFire++;
+					if (counterToFire == 1) 
+					{
+						app->audio->PlayFx(fire1);
+						CreateFire(App->scene->player->position.x-2, App->scene->player->position.y-2);
+					}
+				}
+				else if (counterToFire < 120) 
+				{
+					counterToFire++;
+					if (counterToFire == 61)
+					{
+						app->audio->PlayFx(fire2);
+						CreateFire(App->scene->player->position.x+2, App->scene->player->position.y-2);
+					}
+				}
+				else if (counterToFire < 180)
+				{
+					counterToFire++;
+					if (counterToFire == 121)
+					{
+						app->audio->PlayFx(fire3);
+						CreateFire(App->scene->player->position.x-2, App->scene->player->position.y+3);
+					}
+				}
+				else if (counterToFire < 240)
+				{
+					if (counterToFire == 180)
+					{
+						app->audio->PlayFx(fire4);
+						finalFire=CreateFire(App->scene->player->position.x+2, App->scene->player->position.y+3);
+						counterToFire = 181;
+					}
+					
+					if (finalFire->fireAnimation.HasFinished() == true)
+					{
+						auxiliar2->data->pendingToDelete = true;
+						App->fade->FadeToBlack(this, App->scene_win);
+						counterToFire = 241;
+					}
+				}
+				//auxiliar2->data->pendingToDelete = true;
+				
+				
 			}
 		}
 		if ((body1->Type == colliderType::torpedo && body2->Type == colliderType::roket) || (body1->Type == colliderType::roket && body2->Type == colliderType::torpedo))
