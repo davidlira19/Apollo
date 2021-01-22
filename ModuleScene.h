@@ -33,7 +33,7 @@ public:
 	char textAsteroids[5] = { "\0" };
 	int font;
 	int fontAsteroids;
-
+	int contCaution;
 	char textPoints[5] = { "\0" };
 	char textMaxPoints[5] = { "\0" };
 
@@ -61,7 +61,7 @@ public:
 	Asteroid* asteroid13;
 	Asteroid* asteroid14;
 	Asteroid* asteroid15;
-
+	SDL_Texture* caution;
 	SDL_Texture* nebulosa;
 	SDL_Texture* highScore;
 	SDL_Texture* score;

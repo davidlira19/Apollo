@@ -17,6 +17,7 @@ ModuleScene::~ModuleScene()
 bool ModuleScene::Start()
 {
 	App->bodyesManager->Enable();
+	caution= App->textures->Load("Assets/Textures/caution1.png");
 	backgroundTexture = App->textures->Load("Assets/Textures/bg.png");
 	fuelBar = App->textures->Load("Assets/Textures/fuel_bar.png");
 	ammo = App->textures->Load("Assets/Textures/ammo.png");
@@ -33,6 +34,7 @@ bool ModuleScene::Start()
 	canWin = false;
 	absorbed = false;
 	points = 0;
+	contCaution = 0;
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -68,6 +70,8 @@ bool ModuleScene::Start()
 // Load assets
 bool ModuleScene::CleanUp()
 {
+
+	App->textures->Unload(caution);
 	App->textures->Unload(backgroundTexture);
 	App->textures->Unload(fuelBar);
 	App->textures->Unload(ammo);
@@ -134,6 +138,21 @@ update_status ModuleScene::Update(float dt)
 
 	SDL_Rect section = {0,132,72,73};
 	App->renderer->Blit(asteroidTexture, (App->renderer->camera.x - 820) * -1, (App->renderer->camera.y - 550) * -1, &section);
-	
+	if (player->fuel < 1000) 
+	{
+		if (contCaution < 60) 
+		{
+			contCaution++;
+			App->renderer->Blit(caution, (App->renderer->camera.x-500) * -1, (App->renderer->camera.y - 10) * -1);
+		}
+		else if(contCaution < 120)
+		{
+			contCaution++;
+		}
+		else 
+		{
+			contCaution = 0;
+		}
+	}
 	return UPDATE_CONTINUE;
 }
