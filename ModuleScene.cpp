@@ -19,6 +19,8 @@ bool ModuleScene::Start()
 	App->bodyesManager->Enable();
 	caution= App->textures->Load("Assets/Textures/caution1.png");
 	backgroundTexture = App->textures->Load("Assets/Textures/bg.png");
+	backgroundTexture2 = App->textures->Load("Assets/Textures/bg2.png");
+	backgroundTexture3 = App->textures->Load("Assets/Textures/bg3.png");
 	fuelBar = App->textures->Load("Assets/Textures/fuel_bar.png");
 	highScore = App->textures->Load("Assets/Textures/max_points.png");
 	asteroids = 15;
@@ -77,6 +79,8 @@ bool ModuleScene::CleanUp()
 {
 	App->textures->Unload(caution);
 	App->textures->Unload(backgroundTexture);
+	App->textures->Unload(backgroundTexture2);
+	App->textures->Unload(backgroundTexture3);
 	App->textures->Unload(fuelBar);
 	App->textures->Unload(ammo);
 	App->fonts->UnLoad(App,font);
@@ -100,7 +104,10 @@ update_status ModuleScene::Update(float dt)
 	int widthBar = (float)player->fuel / 5000 * 200;
 	rectBar = { 0,0,widthBar,20 };
 
-	App->renderer->Blit(backgroundTexture, 200, -13000);
+	App->renderer->Blit(backgroundTexture, 200, -2760);
+	App->renderer->Blit(backgroundTexture2, 200, -7880);
+	App->renderer->Blit(backgroundTexture3, 200, -13000);
+	
 	App->renderer->Blit(nebulosa, 200, -5000);
 
 	App->renderer->camera.x = -200;

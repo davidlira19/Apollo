@@ -86,7 +86,11 @@ public:
 
 	Bouncer side_bouncer1;
 	Bouncer side_bouncer2;
+
 	SDL_Texture* backgroundTexture;
+	SDL_Texture* backgroundTexture2;
+	SDL_Texture* backgroundTexture3;
+
 	SDL_Texture* tex_light_tiny;
 	SDL_Texture* tex_light_medium;
 	SDL_Texture* tex_light_big;
