@@ -6,7 +6,7 @@
 #include"Globals.h"
 #include "Fonts.h"
 #define SURFACE 30
-#define DRAG_COEFICIENT 0.000021
+#define DRAG_COEFICIENT 0.021
 #define DT 0.064
 #define TORPEDO_POWER 20
 #define PLAYER_POWER 20
@@ -291,7 +291,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 			fuel += 3;
 		}
 
-		/*if (app->scene->absorbed == false)
+		if (app->scene->absorbed == false)
 		{
 			finalForce.y += hydroDragForce.y;
 		}
@@ -299,7 +299,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 		{
 			finalForce.y -= (-buoyForce.y) ;
 			finalForce.y += hydroDragForce.y ;
-		}*/
+		}
 	}
 	if (metersToPixels(position.y) > -5000 && metersToPixels(position.y) < -4501)
 	{
@@ -312,7 +312,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 			fuel += 3;
 		}
 
-		/*if (app->scene->absorbed == false)
+		if (app->scene->absorbed == false)
 		{
 			finalForce.y += (buoyForce.y * -1) ;
 			finalForce.y += hydroDragForce.y;
@@ -320,7 +320,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 		else
 		{
 			finalForce.y += hydroDragForce.y;
-		}*/
+		}
 	}
 
 	acceleration.x += (finalForce.x) / (mass);

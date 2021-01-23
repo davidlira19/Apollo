@@ -133,27 +133,23 @@ Vec2 ModulePhysics::BuoyancyForce(float density, float gravity, float waterLevel
 {
 	//angle
 	float area = 0;
-	float pression = (App->scene->player->position.y - waterLevel);
-
-	if (pression <= 0)
+	
+	if (App->scene->player->position.y > pixelsToMeters(waterLevel))
 	{
-		pression = 0;
+		area = pixelsToMeters(40) * pixelsToMeters(103);
+		
 	}
-	if (App->scene->player->position.y > waterLevel)
-	{
-		area = 40 * 103;
-	}
-	else if (App->scene->player->position.y + 103 < waterLevel)
+	else if (App->scene->player->position.y + pixelsToMeters(103)  < pixelsToMeters(waterLevel) )
 	{
 		area = 0;
 	}
 	else
 	{
-		float dif = 103 - (waterLevel - App->scene->player->position.y);
-		area = 40 * dif;
+		float dif = pixelsToMeters(103) - (pixelsToMeters(waterLevel) - App->scene->player->position.y);
+		area = pixelsToMeters(40) * dif;
 	}
 	
-	return Vec2(0, (density * gravity * (area)* (pression) ));
+	return Vec2(0, (density * gravity * area));
 }
 
 Vec2 ModulePhysics::SpringsForce(float cK, float dDisplacement)
