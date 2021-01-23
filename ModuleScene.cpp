@@ -79,6 +79,10 @@ bool ModuleScene::CleanUp()
 	App->textures->Unload(fuelBar);
 	App->textures->Unload(ammo);
 	App->fonts->UnLoad(App,font);
+
+	App->textures->Unload(highScore);
+	App->textures->Unload(nebulosa);
+
 	LOG("Unloading Intro scene");	
 	return true;
 }

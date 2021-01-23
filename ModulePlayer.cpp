@@ -103,6 +103,9 @@ bool ModulePlayer::Update(float dt, Application* app)
 		}
 		else
 		{
+			velocity = Vec2(0, 0);
+			acceleration = Vec2(0, 0);
+			finalForce = Vec2(0, 0);
 			arcadeMode = true;
 			app->audio->PlayFx(app->scene->arcadeModeFx);
 		}

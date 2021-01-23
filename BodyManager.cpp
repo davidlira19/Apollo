@@ -34,11 +34,14 @@ update_status bodyManager::PreUpdate()
 		if (auxiliar->data->pendingToDelete == true)
 		{
 			auxiliar = auxiliar->next;
-			delete auxiliar->prev->data;
-			bodyList.del(auxiliar->prev);
-
+			if (auxiliar != nullptr)
+			{
+				delete auxiliar->prev->data;
+				bodyList.del(auxiliar->prev);
+			}
 		}
-		else {
+		else 
+		{
 			auxiliar = auxiliar->next;
 		}
 
@@ -378,7 +381,9 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 		{
 			if (auxiliar1->data->type == bodyType::Asteroid)
 			{
+				auxiliar2->data->pendingToDelete = true;
 				auxiliar1->data->pendingToDelete = true;
+				
 				App->scene->asteroids--;
 				App->scene->points += 100;
 				if (App->scene->maxPoints < App->scene->points) App->scene->maxPoints = App->scene->points;
@@ -386,7 +391,9 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 			}
 			if (auxiliar2->data->type == bodyType::Asteroid)
 			{
+				auxiliar1->data->pendingToDelete = true;
 				auxiliar2->data->pendingToDelete = true;
+				
 				App->scene->asteroids--;
 				App->scene->points += 100;
 				if (App->scene->maxPoints < App->scene->points) App->scene->maxPoints = App->scene->points;
