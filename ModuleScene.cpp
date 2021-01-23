@@ -65,6 +65,8 @@ bool ModuleScene::Start()
 	ammoFx = App->audio->LoadFx("Assets/Audio/ammo.wav");
 	winFx = App->audio->LoadFx("Assets/Audio/win.wav");
 	loseFx = App->audio->LoadFx("Assets/Audio/you_suck.wav");
+	arcadeModeFx = App->audio->LoadFx("Assets/Audio/arcade_mode.wav");
+	physicsModeFx = App->audio->LoadFx("Assets/Audio/physics_mode.wav");
 
 	return ret;
 }

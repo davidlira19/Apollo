@@ -96,8 +96,16 @@ bool ModulePlayer::Update(float dt, Application* app)
 {
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
-		if (arcadeMode == true) arcadeMode = false;
-		else arcadeMode = true;
+		if (arcadeMode == true)
+		{
+			arcadeMode = false;
+			app->audio->PlayFx(app->scene->physicsModeFx);
+		}
+		else
+		{
+			arcadeMode = true;
+			app->audio->PlayFx(app->scene->arcadeModeFx);
+		}
 	}
 
 	if (arcadeMode == true)
@@ -216,7 +224,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 			}
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && arcadeMode == true)
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && arcadeMode == true)
 		{
 			if (fuel > 0)
 			{
@@ -237,15 +245,15 @@ bool ModulePlayer::Update(float dt, Application* app)
 				app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
 			}
 		}
-		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && arcadeMode == true)
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && arcadeMode == true)
 		{
 			position.y += 0.15;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && arcadeMode == true)
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && arcadeMode == true)
 		{
 			position.x -= 0.3;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && arcadeMode == true)
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && arcadeMode == true)
 		{
 			position.x += 0.3;
 		}

@@ -31,6 +31,8 @@ public:
 	int ammoFx;
 	int winFx;
 	int loseFx;
+	int arcadeModeFx;
+	int physicsModeFx;
 	//Fonts
 	char textAsteroids[5] = { "\0" };
 	int font;
