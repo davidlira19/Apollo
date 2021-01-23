@@ -262,8 +262,9 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 
 			if (auxiliar1->data->type == bodyType::Planet && metersToPixels(auxiliar1->data->position.y)  == -12500)
 			{
-				
+				app->audio->PlayFx(app->scene->moonLandingFx);
 				app->scene->canWin = true;
+				app->scene->moonLandingFx = 0;
 			}
 			else if (auxiliar1->data->type == bodyType::Planet && metersToPixels(auxiliar1->data->position.y)  == 1900 && app->scene->canWin == true)
 			{
@@ -320,6 +321,8 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 			if (auxiliar2->data->type == bodyType::Planet && metersToPixels(auxiliar2->data->position.y) == -12500)
 			{
 				app->scene->canWin = true;
+				app->audio->PlayFx(app->scene->moonLandingFx);
+				app->scene->moonLandingFx = 0;
 			}
 			else if (auxiliar2->data->type == bodyType::Planet && metersToPixels(auxiliar2->data->position.y) == 1900 && app->scene->canWin == true)
 			{

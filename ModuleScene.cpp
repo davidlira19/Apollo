@@ -67,6 +67,7 @@ bool ModuleScene::Start()
 	loseFx = App->audio->LoadFx("Assets/Audio/you_suck.wav");
 	arcadeModeFx = App->audio->LoadFx("Assets/Audio/arcade_mode.wav");
 	physicsModeFx = App->audio->LoadFx("Assets/Audio/physics_mode.wav");
+	moonLandingFx = App->audio->LoadFx("Assets/Audio/moon_landing.wav");
 
 	return ret;
 }

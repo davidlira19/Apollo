@@ -33,6 +33,7 @@ public:
 	int loseFx;
 	int arcadeModeFx;
 	int physicsModeFx;
+	int moonLandingFx;
 	//Fonts
 	char textAsteroids[5] = { "\0" };
 	int font;
