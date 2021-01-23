@@ -199,7 +199,8 @@ Torpedo* bodyManager::CreateTorpedo(Vec2 pos, Vec2 velocity, double rotation, Ve
 	torpedo->rotation = rotation;
 	torpedo->boodyTexture = Texture;
 	torpedo->bodyRect = { 319,139,12,48 };
-	torpedo->Collider = App->collisions->addRectCollider(torpedo->bodyRect, colliderType::torpedo, this, pos.x, pos.y);
+	torpedo->bodySize = { pixelsToMeters(40),pixelsToMeters(103) };
+	torpedo->Collider = App->collisions->addCollider(5, colliderType::torpedo, this, pos.x, pos.y);
 	bodyList.add(torpedo);
 
 	return torpedo;

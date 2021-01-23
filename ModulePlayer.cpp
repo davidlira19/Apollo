@@ -11,7 +11,7 @@
 #define TORPEDO_POWER 20
 #define PLAYER_POWER 20
 #define AIR_DENSITY 1.29
-#define WATER_DENSITY 1
+#define WATER_DENSITY 0.5
 #define GRAVITY 9.8
 #define HALF_CIRCLE 180
 #define M 10
@@ -282,7 +282,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 
 	if (metersToPixels(position.y) > -4500 && metersToPixels(position.y) < -4000)
 	{
-		int level = -3000;
+		int level = -2000;
 		Vec2 buoyForce = app->physics->BuoyancyForce(WATER_DENSITY, GRAVITY, level);
 		Vec2 hydroDragForce = app->physics->HydroDragForce(app->scene->player);
 
@@ -291,15 +291,8 @@ bool ModulePlayer::Update(float dt, Application* app)
 			fuel += 3;
 		}
 
-		if (app->scene->absorbed == false)
-		{
-			finalForce.y += hydroDragForce.y;
-		}
-		else
-		{
-			finalForce.y -= (-buoyForce.y) ;
-			finalForce.y += hydroDragForce.y ;
-		}
+		finalForce.y += buoyForce.y;
+		finalForce.y += hydroDragForce.y;
 	}
 	if (metersToPixels(position.y) > -5000 && metersToPixels(position.y) < -4501)
 	{
@@ -312,15 +305,8 @@ bool ModulePlayer::Update(float dt, Application* app)
 			fuel += 3;
 		}
 
-		if (app->scene->absorbed == false)
-		{
-			finalForce.y += (buoyForce.y * -1) ;
-			finalForce.y += hydroDragForce.y;
-		}
-		else
-		{
-			finalForce.y += hydroDragForce.y;
-		}
+		finalForce.y -= buoyForce.y ;
+		finalForce.y += hydroDragForce.y;
 	}
 
 	acceleration.x += (finalForce.x) / (mass);
