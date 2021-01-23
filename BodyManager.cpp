@@ -260,7 +260,7 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 				auxiliar1->data->Collision(body1, body2, app);
 			}
 
-			if (auxiliar1->data->type == bodyType::Planet && metersToPixels(auxiliar1->data->position.y)  == -12500 && app->scene->asteroids <= 1)
+			if (auxiliar1->data->type == bodyType::Planet && metersToPixels(auxiliar1->data->position.y)  == -12500)
 			{
 				
 				app->scene->canWin = true;
@@ -317,7 +317,7 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 					}
 				}
 			}
-			if (auxiliar2->data->type == bodyType::Planet && metersToPixels(auxiliar2->data->position.y) == -12500 && app->scene->asteroids <= 1)
+			if (auxiliar2->data->type == bodyType::Planet && metersToPixels(auxiliar2->data->position.y) == -12500)
 			{
 				app->scene->canWin = true;
 			}
