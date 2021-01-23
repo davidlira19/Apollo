@@ -16,6 +16,7 @@
 #define HALF_CIRCLE 180
 #define MAX_VELOCITY 1.75
 #define M 10
+
 ModulePlayer::ModulePlayer(SDL_Texture* adTexture)
 {
 	ship = adTexture;

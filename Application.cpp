@@ -146,7 +146,7 @@ update_status Application::Update()
 	uint framesOnLastUpdate = prevLastSecFrameCount;
 
 	static char title[256];
-	sprintf_s(title, 256, "FPS: %i / Avg.FPS: %.2f / Last-Frame MS: %.3f", framesOnLastUpdate, averageFps, dt);
+	sprintf_s(title, 256, "Super Apollo Odyssey");
 	window->SetTitle(title);
 
 	if (maxFPS > 0 && lastFrameMs < maxFPS)
