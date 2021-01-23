@@ -1,5 +1,6 @@
 #include"Asteroid.h"
 #include"Application.h"
+
 void Asteroid::Draw(Application* app)
 {
 	
@@ -14,10 +15,8 @@ bool Asteroid::PreUpdate(Application* app) {
 }
 bool Asteroid::Update(float dt, Application* app) {
 	
-	position.x +=pixelsToMeters(0.5f);
+	position.x +=pixelsToMeters(1.5);
 
-
-	
 	return true;
 	
 }

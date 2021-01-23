@@ -56,6 +56,7 @@ ModulePlayer::ModulePlayer(SDL_Texture* adTexture)
 	rotation = 0;
 	ammo = 30;
 	alive = true;
+	arcadeMode = false;
 
 }
 
@@ -93,6 +94,20 @@ bool ModulePlayer::PreUpdate(Application* app)
 // Update: draw background
 bool ModulePlayer::Update(float dt, Application* app)
 {
+	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		if (arcadeMode == true) arcadeMode = false;
+		else arcadeMode = true;
+	}
+
+	if (arcadeMode == true)
+	{
+		state = playerState::Static;
+		rotation = 0;
+		finalForce = Vec2(0, 0);
+		acceleration = Vec2(0, 0);
+	}
+	else state = playerState::Free;
 
 	if (alive == false)
 	{
@@ -138,7 +153,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 		fuel += 3;
 	}
 	if (app->bodyesManager->counterToFire < 1) {
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && arcadeMode == false)
 		{
 			if (fuel > 0)
 			{
@@ -173,11 +188,11 @@ bool ModulePlayer::Update(float dt, Application* app)
 
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && arcadeMode == false)
 		{
 			//position.y += 0.1 * dt;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && arcadeMode == false)
 		{
 			if (state != playerState::Static)
 			{
@@ -190,7 +205,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 
 			//rotation -= 0.15 * dt;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && arcadeMode == false)
 		{
 			if (state != playerState::Static)
 			{
@@ -200,6 +215,41 @@ bool ModulePlayer::Update(float dt, Application* app)
 				}
 			}
 		}
+
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && arcadeMode == true)
+		{
+			if (fuel > 0)
+			{
+				state = playerState::Free;
+				fuel -= (0.5f);
+				SDL_Rect rec = currentAnimation->GetCurrentFrame();
+				currentAnimation = &fireAnimation;
+				currentAnimation->Update();
+				position.y -= 0.15;
+
+				app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
+			}
+			else
+			{
+				SDL_Rect rec = currentAnimation->GetCurrentFrame();
+				currentAnimation = &stopAnimation;
+				currentAnimation->Update();
+				app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
+			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && arcadeMode == true)
+		{
+			position.y += 0.15;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && arcadeMode == true)
+		{
+			position.x -= 0.3;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && arcadeMode == true)
+		{
+			position.x += 0.3;
+		}
+
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			launchTorpedo(app);
