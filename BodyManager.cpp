@@ -128,7 +128,7 @@ Ammo* bodyManager::CreateAmmo(Vec2 pos)
 	ammo->position.x = pixelsToMeters(pos.x);
 	ammo->position.y = pixelsToMeters(pos.y);
 	ammo->type = bodyType::Ammo;
-	ammo->bodyRect = { 0,0,metersToPixels(300),metersToPixels(300) };
+	ammo->bodyRect = { 0,0,300,300 };
 	ammo->Collider = App->collisions->addRectCollider(ammo->bodyRect, colliderType::ammo, this, pos.x, pos.y);
 
 	bodyList.add(ammo);

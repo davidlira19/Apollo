@@ -20,6 +20,7 @@ bool ModuleScene::Start()
 	caution= App->textures->Load("Assets/Textures/caution1.png");
 	backgroundTexture = App->textures->Load("Assets/Textures/bg.png");
 	fuelBar = App->textures->Load("Assets/Textures/fuel_bar.png");
+	ammo = App->textures->Load("Assets/Textures/ammo.png");
 	highScore = App->textures->Load("Assets/Textures/max_points.png");
 	asteroids = 15;
 	asteroidTexture = App->textures->Load("Assets/Textures/spaceShooter2_spritesheet.png");
@@ -53,7 +54,7 @@ bool ModuleScene::Start()
 	asteroid14 = App->bodyesManager->CreateAsteroid({ 800, -10500 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 	asteroid15 = App->bodyesManager->CreateAsteroid({ 400, -11000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 
-	player = App->bodyesManager->CreatePlayer({ 670, 1720 }, 100);
+	player = App->bodyesManager->CreatePlayer({ 670, 1700 }, 100);
 	earth = App->bodyesManager->CreatePlanet(Vec2(300,1900),1, 379, 5.972E7, 379.0f, Vec2(0, 9.81));
 	moon = App->bodyesManager->CreatePlanet(Vec2(600,-12500),2, 190, 14.349E6, 190.0f, Vec2(0, 1.62));
 	maxAmmo = App->bodyesManager->CreateAmmo(Vec2(400, -7000));
