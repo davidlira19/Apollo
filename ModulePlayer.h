@@ -35,6 +35,7 @@ public:
 	int ammo;
 	int fuel;
 	bool alive;
+	bool arcadeMode;
 	bool checkColliders(collider* body)override;
 	void Collision(collider* bodies, collider* external, Application* app)override;
 	collider* base;
