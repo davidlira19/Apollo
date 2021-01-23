@@ -137,22 +137,31 @@ bool ModulePlayer::Update(float dt, Application* app)
 	{
 		fuel += 3;
 	}
-
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-		if (fuel > 0)
+	if (app->bodyesManager->counterToFire < 1) {
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
-			state = playerState::Free;
-			fuel -= (0.5f);
-			float ang;
-			SDL_Rect rec = currentAnimation->GetCurrentFrame();
-			currentAnimation = &fireAnimation;
-			currentAnimation->Update();
-			
-			app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
-			ang = ((rotation * M_PI) / HALF_CIRCLE);
-			finalForce.y -= (PLAYER_POWER * cos(ang));//0.2
-			finalForce.x += (PLAYER_POWER * sin(ang));
+			if (fuel > 0)
+			{
+				state = playerState::Free;
+				fuel -= (0.5f);
+				float ang;
+				SDL_Rect rec = currentAnimation->GetCurrentFrame();
+				currentAnimation = &fireAnimation;
+				currentAnimation->Update();
+
+				app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
+				ang = ((rotation * M_PI) / HALF_CIRCLE);
+				finalForce.y -= (PLAYER_POWER * cos(ang));//0.2
+				finalForce.x += (PLAYER_POWER * sin(ang));
+			}
+			else
+			{
+				float ang;
+				SDL_Rect rec = currentAnimation->GetCurrentFrame();
+				currentAnimation = &stopAnimation;
+				currentAnimation->Update();
+				app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
+			}
 		}
 		else
 		{
@@ -161,56 +170,56 @@ bool ModulePlayer::Update(float dt, Application* app)
 			currentAnimation = &stopAnimation;
 			currentAnimation->Update();
 			app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
+
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			//position.y += 0.1 * dt;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			if (state != playerState::Static)
+			{
+				if (fuel > 0)
+				{
+					angularVelocity += -1.5 * 0.2;
+				}
+			}
+
+
+			//rotation -= 0.15 * dt;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			if (state != playerState::Static)
+			{
+				if (fuel > 0)
+				{
+					angularVelocity += 1.5 * 0.2;
+				}
+			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			launchTorpedo(app);
 		}
 	}
 	else
 	{
-		float ang;
 		SDL_Rect rec = currentAnimation->GetCurrentFrame();
-		currentAnimation = &stopAnimation;
-		currentAnimation->Update();
 		app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
-
 	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (angularVelocity != 0 && state != playerState::Static)
 	{
-		//position.y += 0.1 * dt;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		if (state != playerState::Static)
-		{
-			if (fuel > 0)
-			{
-				angularVelocity += -1.5 * 0.2;
-			}
+		if (angularVelocity < -10) {
+			angularVelocity = -10;
 		}
-
-
-		//rotation -= 0.15 * dt;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		if (state != playerState::Static)
-		{
-			if (fuel > 0)
-			{
-				angularVelocity += 1.5 * 0.2;
-			}
+		else if (angularVelocity > 10) {
+			angularVelocity = 10;
 		}
+		rotation += angularVelocity * 0.20;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		launchTorpedo(app);
-	}
-	if (angularVelocity < -10) {
-		angularVelocity = -10;
-	}
-	else if (angularVelocity > 10) {
-		angularVelocity = 10;
-	}
-	rotation += angularVelocity * 0.20;
 
 
 	if (metersToPixels(position.y) > -4500 && metersToPixels(position.y) < -4000)

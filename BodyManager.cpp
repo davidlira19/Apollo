@@ -67,10 +67,6 @@ update_status bodyManager::Update(float dt)
 		auxiliar->data->Update(dt, App);
 		auxiliar = auxiliar->next;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) 
-	{
-		App->scene->canWin = true;
-	}
 	
 	return UPDATE_CONTINUE;
 }
@@ -268,6 +264,7 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 			}
 			else if (auxiliar1->data->type == bodyType::Planet && metersToPixels(auxiliar1->data->position.y)  == 1900 && app->scene->canWin == true)
 			{
+				app->scene->player->state = playerState::Static;
 				app->scene->player->acceleration.x = 0;
 				app->scene->player->acceleration.y = 0;
 				app->scene->player->velocity.y = 0;
@@ -323,6 +320,12 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 			}
 			else if (auxiliar2->data->type == bodyType::Planet && metersToPixels(auxiliar2->data->position.y) == 1900 && app->scene->canWin == true)
 			{
+				app->scene->player->state = playerState::Static;
+				app->scene->player->acceleration.x = 0;
+				app->scene->player->acceleration.y = 0;
+				app->scene->player->velocity.y = 0;
+				app->scene->player->velocity.x = 0;
+				app->scene->player->angularVelocity = 0;
 				if (counterToFire < 60) 
 				{
 					counterToFire++;
