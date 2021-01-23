@@ -14,6 +14,7 @@
 #define WATER_DENSITY 0.5
 #define GRAVITY 9.8
 #define HALF_CIRCLE 180
+#define MAX_VELOCITY 1.75
 #define M 10
 ModulePlayer::ModulePlayer(SDL_Texture* adTexture)
 {
@@ -327,6 +328,25 @@ bool ModulePlayer::Update(float dt, Application* app)
 	else if (acceleration.x < -2)
 	{
 		acceleration.x = -2;
+	}
+
+	LOG("%f %f", velocity.x, velocity.y);
+
+	if (velocity.x > MAX_VELOCITY)
+	{
+		velocity.x = MAX_VELOCITY;
+	}
+	if (velocity.x < -MAX_VELOCITY)
+	{
+		velocity.x = -MAX_VELOCITY;
+	}
+	if (velocity.y > MAX_VELOCITY)
+	{
+		velocity.y = MAX_VELOCITY;
+	}
+	if (velocity.y < -MAX_VELOCITY)
+	{
+		velocity.y = -MAX_VELOCITY;
 	}
 
 	Vec2 pos;
