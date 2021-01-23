@@ -34,7 +34,7 @@ bool ModuleScene::Start()
 	absorbed = false;
 	points = 0;
 	contCaution = 0;
-
+	canSeeColliders = false;
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	asteroid = App->bodyesManager->CreateAsteroid({ 300, 1000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
@@ -53,9 +53,9 @@ bool ModuleScene::Start()
 	asteroid14 = App->bodyesManager->CreateAsteroid({ 800, -10500 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 	asteroid15 = App->bodyesManager->CreateAsteroid({ 400, -11000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 
-	player = App->bodyesManager->CreatePlayer({ 670, 1720 }, 80);
-	earth = App->bodyesManager->CreatePlanet(Vec2(300,1900),1, 379, 5.972E7, 379.0f, Vec2(0, 9.81));
-	moon = App->bodyesManager->CreatePlanet(Vec2(600,-12500),2, 190, 14.349E6, 190.0f, Vec2(0, 1.62));
+	player = App->bodyesManager->CreatePlayer({ 670, 1720 }, 80);//1720
+	earth = App->bodyesManager->CreatePlanet(Vec2(300,1900),1, 200, 379.0f, Vec2(0, 9.81));
+	moon = App->bodyesManager->CreatePlanet(Vec2(600,-12500),2, 100, 190.0f, Vec2(0, 1.62));
 	maxAmmo = App->bodyesManager->CreateAmmo(Vec2(600, -7000));
 	nebulosa = App->textures->Load("Assets/Textures/nebulosa.png");
 	ammo = App->textures->Load("Assets/Textures/ammo.png");
@@ -91,6 +91,11 @@ bool ModuleScene::CleanUp()
 // Update: draw background
 update_status ModuleScene::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+	{
+		if (canSeeColliders == false) { canSeeColliders = true; }
+		else { canSeeColliders = false; }
+	}
 	SDL_Rect rectBar = { 0,0,200,20 };
 	int widthBar = (float)player->fuel / 5000 * 200;
 	rectBar = { 0,0,widthBar,20 };
@@ -119,15 +124,15 @@ update_status ModuleScene::Update(float dt)
 	{
 		absorbed = false;
 	}
-
-	/*p2List_item<collider*>* auxiliar;
-	auxiliar = App->collisions->colliderList.getFirst();
-	while (auxiliar != nullptr)
-	{
-		App->renderer->DrawCircle(auxiliar->data->position.x,auxiliar->data->position.y, auxiliar->data->circleRad, 255, 0, 0, 255);
-		auxiliar = auxiliar->next;
-	}*/
-
+	if (canSeeColliders == true) {
+		p2List_item<collider*>* auxiliar;
+		auxiliar = App->collisions->colliderList.getFirst();
+		while (auxiliar != nullptr)
+		{
+			App->renderer->DrawCircle(auxiliar->data->position.x, auxiliar->data->position.y, auxiliar->data->circleRad, 255, 0, 0, 255);
+			auxiliar = auxiliar->next;
+		}
+	}
 	App->renderer->Blit(fuelBar, App->renderer->camera.x * -1 + 375, App->renderer->camera.y * -1, &rectBar);
 	App->renderer->Blit(ammo, App->renderer->camera.x * -1 +800, App->renderer->camera.y * -1+650);
 	App->renderer->Blit(highScore, App->renderer->camera.x * -1 + 770, App->renderer->camera.y * -1 + 10);

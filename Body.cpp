@@ -20,7 +20,7 @@
 			if (Collider->Type != colliderType::player)
 			{
 
-				Collider->setPos(getXMiddle() + metersToPixels(position.x) + app->renderer->camera.x, metersToPixels(position.y) + app->renderer->camera.y + getYMiddle());
+				Collider->setPos((bodyRect.w/2) + metersToPixels(position.x) + app->renderer->camera.x, metersToPixels(position.y) + app->renderer->camera.y + (bodyRect.h / 2));
 			}
 		}
 	}
@@ -28,10 +28,10 @@
 		//app->renderer->Blit(boodyTexture, position.x, position.y, &bodyRect, 1, 1, rotation, getXMiddle(), getYMiddle());
 	}
 	int Body::getXMiddle() {
-		return bodyRect.w / 2;
+		return bodySize.x;
 	}
 	int Body::getYMiddle() {
-		return bodyRect.h / 2;
+		return bodySize.y;
 	}
 
 	bool Body::Start(Application* app) {

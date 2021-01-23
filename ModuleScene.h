@@ -44,7 +44,7 @@ public:
 
 	bool canWin;
 	bool absorbed;
-
+	bool canSeeColliders;
 	float gravity;
 	int asteroids;
 

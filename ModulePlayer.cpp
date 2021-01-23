@@ -139,12 +139,12 @@ bool ModulePlayer::Update(float dt, Application* app)
 			if (auxiliar->data->type == bodyType::Planet)
 			{
 				Vec2 sum;
-				distanceX = metersToPixels(auxiliar->data->position.x) + auxiliar->data->getXMiddle() - metersToPixels(position.x) + getXMiddle();
-				distanceY = metersToPixels(auxiliar->data->position.y) + auxiliar->data->getYMiddle() - metersToPixels(position.y) + getYMiddle();
+				distanceX = auxiliar->data->position.x+ auxiliar->data->getXMiddle() - position.x ;
+				distanceY = auxiliar->data->position.y+ auxiliar->data->getYMiddle() - position.y ;
 				distance = sqrt((distanceX * distanceX) + (distanceY * distanceY));
 				sum = app->physics->GravityForce(auxiliar->data->mass, mass, distance, Vec2(distanceX, distanceY));
-				finalForce.x -= (sum.x) * 25000;
-				finalForce.y -= (sum.y) * 25000;
+				finalForce.x -= (sum.x);
+				finalForce.y -= (sum.y);
 			}
 			auxiliar = auxiliar->next;
 		}
@@ -152,8 +152,8 @@ bool ModulePlayer::Update(float dt, Application* app)
 		{
 			Vec2 force;
 			force += app->physics->AeroDragForce(AIR_DENSITY, Vec2(velocity.x, velocity.y), SURFACE, DRAG_COEFICIENT);
-			finalForce.y += (force.y) * 10000;
-			finalForce.x += (force.x) * 100;
+			finalForce.y += (force.y);
+			finalForce.x += (force.x);
 		}
 	}
 	if (position.y > pixelsToMeters(-5000) && position.y < pixelsToMeters(-4000))
@@ -174,7 +174,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 
 				app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
 				ang = ((rotation * M_PI) / HALF_CIRCLE);
-				finalForce.y -= (PLAYER_POWER * cos(ang));//0.2
+				finalForce.y -= (PLAYER_POWER * cos(ang));
 				finalForce.x += (PLAYER_POWER * sin(ang));
 			}
 			else
@@ -291,15 +291,15 @@ bool ModulePlayer::Update(float dt, Application* app)
 			fuel += 3;
 		}
 
-		if (app->scene->absorbed == false)
+		/*if (app->scene->absorbed == false)
 		{
 			finalForce.y += hydroDragForce.y;
 		}
 		else
 		{
-			finalForce.y -= (-buoyForce.y) * 0.0001;
-			finalForce.y += hydroDragForce.y * 100;
-		}
+			finalForce.y -= (-buoyForce.y) ;
+			finalForce.y += hydroDragForce.y ;
+		}*/
 	}
 	if (metersToPixels(position.y) > -5000 && metersToPixels(position.y) < -4501)
 	{
@@ -312,15 +312,15 @@ bool ModulePlayer::Update(float dt, Application* app)
 			fuel += 3;
 		}
 
-		if (app->scene->absorbed == false)
+		/*if (app->scene->absorbed == false)
 		{
-			finalForce.y += (buoyForce.y * -1) * 0.0001;
-			finalForce.y += hydroDragForce.y * 100;
+			finalForce.y += (buoyForce.y * -1) ;
+			finalForce.y += hydroDragForce.y;
 		}
 		else
 		{
 			finalForce.y += hydroDragForce.y;
-		}
+		}*/
 	}
 
 	acceleration.x += (finalForce.x) / (mass);
@@ -419,7 +419,7 @@ void ModulePlayer::setPos(Application* app)
 		int b = res[1];
 		int c = res[2];
 		
-		playerArr[i]->setPos( metersToPixels(position.x)+ b + app->renderer->camera.x + getXMiddle(), metersToPixels(position.y) + c + app->renderer->camera.y + getYMiddle());
+		playerArr[i]->setPos( metersToPixels(position.x)+ b + app->renderer->camera.x + (bodyRect.w/2), metersToPixels(position.y) + c + app->renderer->camera.y + (bodyRect.h / 2));
 
 	}
 }

@@ -63,10 +63,10 @@ Vec2 ModulePhysics::Integrator(Vec2* velocity, float dt, Vec2 acceleration)
 
 Vec2 ModulePhysics::GravityForce(double M, double m, double distance, Vec2 direction)
 {
-	const double G = 6.674E-11;
+	const double G = 0.010;
 	Vec2 Fg = Vec2(0, 0);
-	double F_x = -G * (m * M / (distance * distance)) * direction.x;
-	double F_y = -G * (m * M / (distance * distance)) * direction.y;
+	double F_x = -G * (m * M / (distance* distance)) * direction.x;
+	double F_y = -G * (m * M / (distance* distance)) * direction.y;
 
 	Fg = Vec2((float)F_x, (float)F_y);
 
@@ -80,7 +80,19 @@ Vec2 ModulePhysics::AeroLiftForce(float density, float velocity, float surface, 
 
 Vec2 ModulePhysics::AeroDragForce(float density, Vec2 velocity, float surface, float DragCoeficient)
 {
-	return Vec2((density * velocity.x * velocity.x * surface * DragCoeficient) / 2, (density * velocity.y * velocity.y * surface * DragCoeficient) / 2);
+
+	
+	float modVelocity = sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
+	Vec2 direction = velocity;
+	direction.x = direction.x / modVelocity;
+	direction.y = direction.y / modVelocity;
+	LOG("%f", modVelocity);
+	if (modVelocity == 0) 
+	{
+		return Vec2(0, 0);
+	}
+	return Vec2(((density * modVelocity* modVelocity * surface * DragCoeficient) / 2) * direction.x, ((density * modVelocity* modVelocity * surface * DragCoeficient) / 2) * direction.y);
+	
 }
 
 Vec2 ModulePhysics::HydroLiftForce(float density, float velocity, float surface, float LiftCoeficient)
@@ -101,6 +113,10 @@ Vec2 ModulePhysics::HydroDragForce(ModulePlayer *player)
 	float forceDrag = velocityCoeficient * velocity;
 
 	Vec2 direction = player->velocity;
+	float module = sqrt((direction.x * direction.x) + (direction.y * direction.y));
+	direction.x = direction.x / module;
+	direction.y = direction.y / module;
+
 	direction.x = -direction.x;
 	direction.y = -direction.y;
 
@@ -108,6 +124,8 @@ Vec2 ModulePhysics::HydroDragForce(ModulePlayer *player)
 	dragVector.x = direction.x * forceDrag;
 	dragVector.y = direction.y * forceDrag;
 
+
+	
 	return dragVector;
 }
 

@@ -42,6 +42,7 @@ public:
     SDL_Rect bodyRect;
     collider* Collider;
     //Methods
+	Vec2 bodySize;
     void addForce(int force);
     void addMomentum(int momentum);
 };

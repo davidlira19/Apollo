@@ -154,19 +154,19 @@ Asteroid* bodyManager::CreateAsteroid(Vec2 pos,int rad, double rotation, float m
 	rocket->boodyTexture = Texture;
 	rocket->bodyRect = {0,132,73,74};
 	rocket->Collider= App->collisions->addCollider(rad, colliderType::roket, this, pos.x, pos.y);
-
+	rocket->bodySize = { pixelsToMeters((float)rad),pixelsToMeters((float)rad) };
 	bodyList.add(rocket);
 
 	return rocket;
 }
 
-Planet* bodyManager::CreatePlanet(Vec2 pos,int type, int rad, float mass, float radius, Vec2 localGravity)
+Planet* bodyManager::CreatePlanet(Vec2 pos,int type, float mass, float radius, Vec2 localGravity)
 {
 	Planet* planet = new Planet();
 	planet->position.x = pixelsToMeters(pos.x);
 	planet->position.y = pixelsToMeters(pos.y);
 	planet->mass = mass;
-	planet->radius = radius;
+	planet->radius = pixelsToMeters(radius);
 	planet->localGravity = localGravity;
 	planet->type = bodyType::Planet;
 	switch (type)
@@ -174,14 +174,17 @@ Planet* bodyManager::CreatePlanet(Vec2 pos,int type, int rad, float mass, float 
 	case 1:
 		planet->boodyTexture = Texture2;
 		planet->bodyRect = { 0,0,800,800 };
+		planet->bodySize = { pixelsToMeters(400),pixelsToMeters(400) };
 		break;
 	case 2:
 		planet->boodyTexture = Texture3;
 		planet->bodyRect = { 0,0,600,600 };
+		planet->bodySize = { pixelsToMeters(300),pixelsToMeters(300) };
 		break;
 	}
+	
 	//planet->boodyTexture = Texture;
-	planet->Collider=App->collisions->addCollider(rad, colliderType::planet, this, pos.x, pos.y);
+	planet->Collider=App->collisions->addCollider(radius, colliderType::planet, this, pos.x, pos.y);
 	bodyList.add(planet);
 	return planet;
 }
@@ -210,6 +213,7 @@ ModulePlayer* bodyManager::CreatePlayer(Vec2 pos, float mass)
 	
 	player->mass = mass;
 	player->bodyRect = { 186,215,40,103 };
+	player->bodySize = { pixelsToMeters(40)/2,pixelsToMeters(103)/2 };
 	player->type = bodyType::Player;
 	player->col1 = App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
 	player->base = App->collisions->addCollider(20, colliderType::player, this, pos.x, pos.y);
