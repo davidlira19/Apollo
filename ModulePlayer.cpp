@@ -282,7 +282,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 
 	if (metersToPixels(position.y) > -4500 && metersToPixels(position.y) < -4000)
 	{
-		int level = -2000;
+		int level = -5000;
 		Vec2 buoyForce = app->physics->BuoyancyForce(WATER_DENSITY, GRAVITY, level);
 		Vec2 hydroDragForce = app->physics->HydroDragForce(app->scene->player);
 

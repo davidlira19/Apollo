@@ -53,7 +53,7 @@ bool ModuleScene::Start()
 	asteroid14 = App->bodyesManager->CreateAsteroid({ 800, -10500 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 	asteroid15 = App->bodyesManager->CreateAsteroid({ 400, -11000 },30, 0, 100, 100, 50, 1500, Vec2(0, 0), Vec2(0, 0));
 
-	player = App->bodyesManager->CreatePlayer({ 670, 1720 }, 80);//1720
+	player = App->bodyesManager->CreatePlayer({ 670, 1720 }, 80);
 	earth = App->bodyesManager->CreatePlanet(Vec2(300,1900),1, 300, 379.0f, Vec2(0, 9.81));
 	moon = App->bodyesManager->CreatePlanet(Vec2(600,-12500),2, 100, 190.0f, Vec2(0, 1.62));
 	maxAmmo = App->bodyesManager->CreateAmmo(Vec2(600, -7000));
