@@ -56,8 +56,9 @@ bool ModuleScene::Start()
 	player = App->bodyesManager->CreatePlayer({ 670, 1720 }, 100);
 	earth = App->bodyesManager->CreatePlanet(Vec2(300,1900),1, 379, 5.972E7, 379.0f, Vec2(0, 9.81));
 	moon = App->bodyesManager->CreatePlanet(Vec2(600,-12500),2, 190, 14.349E6, 190.0f, Vec2(0, 1.62));
-	maxAmmo = App->bodyesManager->CreateAmmo(Vec2(400, -7000));
+	maxAmmo = App->bodyesManager->CreateAmmo(Vec2(600, -7000));
 	nebulosa = App->textures->Load("Assets/Textures/nebulosa.png");
+	ammo = App->textures->Load("Assets/Textures/ammo.png");
 
 	shootFx = App->audio->LoadFx("Assets/Audio/shoot.wav");
 	destroyFx = App->audio->LoadFx("Assets/Audio/destroy.wav");
