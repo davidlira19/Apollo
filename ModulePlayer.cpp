@@ -331,8 +331,6 @@ bool ModulePlayer::Update(float dt, Application* app)
 		acceleration.x = -2;
 	}
 
-	LOG("%f %f", velocity.x, velocity.y);
-
 	if (velocity.x > MAX_VELOCITY)
 	{
 		velocity.x = MAX_VELOCITY;
