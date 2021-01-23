@@ -118,7 +118,6 @@ bool ModulePlayer::Update(float dt, Application* app)
 		finalForce = Vec2(0, 0);
 		acceleration = Vec2(0, 0);
 	}
-	else state = playerState::Free;
 
 	if (alive == false)
 	{
@@ -149,16 +148,14 @@ bool ModulePlayer::Update(float dt, Application* app)
 			}
 			auxiliar = auxiliar->next;
 		}
+		if (metersToPixels(position.y) >= 850 && app->scene->canWin == false)
+		{
+			Vec2 force;
+			force += app->physics->AeroDragForce(AIR_DENSITY, Vec2(velocity.x, velocity.y), SURFACE, DRAG_COEFICIENT);
+			finalForce.y += (force.y) * 10000;
+			finalForce.x += (force.x) * 100;
+		}
 	}
-
-	if (metersToPixels(position.y) >= 850 && app->scene->canWin == false)
-	{
-		Vec2 force;
-		force += app->physics->AeroDragForce(AIR_DENSITY, Vec2(velocity.x, velocity.y), SURFACE, DRAG_COEFICIENT);
-		finalForce.y += (force.y) * 10000;
-		finalForce.x += (force.x) * 100;
-	}
-
 	if (position.y > pixelsToMeters(-5000) && position.y < pixelsToMeters(-4000))
 	{
 		fuel += 3;
@@ -168,7 +165,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 		{
 			if (fuel > 0)
 			{
-				state = playerState::Free;
+				//state = playerState::Free;
 				fuel -= (0.5f);
 				float ang;
 				SDL_Rect rec = currentAnimation->GetCurrentFrame();
@@ -231,7 +228,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 		{
 			if (fuel > 0)
 			{
-				state = playerState::Free;
+			
 				fuel -= (0.5f);
 				SDL_Rect rec = currentAnimation->GetCurrentFrame();
 				currentAnimation = &fireAnimation;
@@ -352,6 +349,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 	position.x += pos.x;
 	finalForce.x = 0;
 	finalForce.y = 0;
+	state = playerState::Free;
 	return true;
 }
 void ModulePlayer::Draw(Application* app)

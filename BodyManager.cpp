@@ -258,6 +258,12 @@ void bodyManager::OnCollision(collider* body1, collider* body2,Application* app)
 			if (body1->Type == colliderType::player && body2->Type == colliderType::planet)
 			{
 				auxiliar1->data->Collision(body1, body2, app);
+				app->scene->player->state = playerState::Static;
+				app->scene->player->acceleration.x = 0;
+				app->scene->player->acceleration.y = 0;
+				app->scene->player->velocity.y = 0;
+				app->scene->player->velocity.x = 0;
+				app->scene->player->angularVelocity = 0;
 			}
 
 			if (auxiliar1->data->type == bodyType::Planet && metersToPixels(auxiliar1->data->position.y)  == -12500)
