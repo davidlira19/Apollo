@@ -73,11 +73,6 @@ Vec2 ModulePhysics::GravityForce(double M, double m, double distance, Vec2 direc
 	return Fg;
 }
 
-Vec2 ModulePhysics::AeroLiftForce(float density, float velocity, float surface, float LiftCoeficient)
-{
-	return Vec2(0, (density * velocity * velocity * surface * LiftCoeficient) / 2);
-}
-
 Vec2 ModulePhysics::AeroDragForce(float density, Vec2 velocity, float surface, float DragCoeficient)
 {
 
@@ -86,17 +81,14 @@ Vec2 ModulePhysics::AeroDragForce(float density, Vec2 velocity, float surface, f
 	Vec2 direction = velocity;
 	direction.x = direction.x / modVelocity;
 	direction.y = direction.y / modVelocity;
+	//We need that if because if the modular velocity is 0, the direction wold be infinite or a number that could cause some issues in the videogame
 	if (modVelocity == 0) 
 	{
 		return Vec2(0, 0);
 	}
+
 	return Vec2(((density * modVelocity* modVelocity * surface * DragCoeficient) / 2) * direction.x, ((density * modVelocity* modVelocity * surface * DragCoeficient) / 2) * direction.y);
 	
-}
-
-Vec2 ModulePhysics::HydroLiftForce(float density, float velocity, float surface, float LiftCoeficient)
-{
-	return Vec2( 0, (density * velocity * velocity * surface * LiftCoeficient) / 2 );
 }
 
 Vec2 ModulePhysics::HydroDragForce(ModulePlayer *player)
@@ -133,15 +125,18 @@ Vec2 ModulePhysics::BuoyancyForce(float density, float gravity, float waterLevel
 
 	float area = 0;
 	
+	//Here, if the player is completely submerged, the area will be all the player's surface
 	if (App->scene->player->position.y > pixelsToMeters(waterLevel))
 	{
 		area = pixelsToMeters(40) * pixelsToMeters(103);
 		
 	}
+	//Here, if the player is completely over the "water level" the area submerged will be, obviously 0.
 	else if (App->scene->player->position.y + pixelsToMeters(103)  < pixelsToMeters(waterLevel) )
 	{
 		area = 0;
 	}
+	//Finally, if the player is partially submerged, we will calculate the total area submerged.
 	else
 	{
 		float dif = pixelsToMeters(103) - (pixelsToMeters(waterLevel) - App->scene->player->position.y);
@@ -149,11 +144,6 @@ Vec2 ModulePhysics::BuoyancyForce(float density, float gravity, float waterLevel
 	}
 	
 	return Vec2(0, (density * gravity * area));
-}
-
-Vec2 ModulePhysics::SpringsForce(float cK, float dDisplacement)
-{
-	return Vec2(-cK * dDisplacement, 0);
 }
 
 Vec2 ModulePhysics::AddMomentum(float x, float y, Vec2 velocity, float m)
