@@ -86,7 +86,6 @@ Vec2 ModulePhysics::AeroDragForce(float density, Vec2 velocity, float surface, f
 	Vec2 direction = velocity;
 	direction.x = direction.x / modVelocity;
 	direction.y = direction.y / modVelocity;
-	LOG("%f", modVelocity);
 	if (modVelocity == 0) 
 	{
 		return Vec2(0, 0);
@@ -131,7 +130,7 @@ Vec2 ModulePhysics::HydroDragForce(ModulePlayer *player)
 
 Vec2 ModulePhysics::BuoyancyForce(float density, float gravity, float waterLevel)
 {
-	//angle
+
 	float area = 0;
 	
 	if (App->scene->player->position.y > pixelsToMeters(waterLevel))
@@ -168,14 +167,6 @@ Vec2 ModulePhysics::AddMomentum(float x, float y, Vec2 velocity, float m)
 }
 float* ModulePhysics::quatMult(float quat1[4], float quat2[4])
 {
-	/*q10 = q1(1);
-	q20 = q2(1);
-	q1g = q1(2:4);
-	q2g = q2(2:4);
-
-	q3 = zeros(4, 1);
-	q3(1) = q10 * q20 - q1g'*q2g;
-		q3(2:4) = q10 * q2g + q20 * q1g +cross(q1g,q2g);*/
 	float q10 = quat1[0];
 	float q20 = quat2[0];
 

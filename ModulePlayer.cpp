@@ -1,4 +1,4 @@
-
+﻿
 #include"ModulePlayer.h"
 #include "ModuleScene.h"
 #include "ModulePhysics.h"
@@ -15,6 +15,7 @@
 #define GRAVITY 9.8
 #define HALF_CIRCLE 180
 #define MAX_VELOCITY 1.75
+#define MAX_ACCELERATION 2
 #define M 10
 
 ModulePlayer::ModulePlayer(SDL_Texture* adTexture)
@@ -133,9 +134,14 @@ bool ModulePlayer::Update(float dt, Application* app)
 		Vec2 finalGravity;
 		p2List_item<Body*>* auxiliar = nullptr;
 		auxiliar = app->bodyesManager->bodyList.getFirst();
+		
+		//All the forces that are calculatedand all the values ​​that are put into the formulas are in the international system, 
+		//we change to pixels only when we have to draw on the screenand for some things of the colliders.
 		float distanceX;
 		float distanceY;
 		float distance;
+		//In the next section we take all the planetsand calculate(in meters) 
+		//the gravitational force they exert on the player.
 		while (auxiliar != nullptr)
 		{
 			if (auxiliar->data->type == bodyType::Planet)
@@ -145,6 +151,8 @@ bool ModulePlayer::Update(float dt, Application* app)
 				distanceY = auxiliar->data->position.y+ auxiliar->data->getYMiddle() - position.y ;
 				distance = sqrt((distanceX * distanceX) + (distanceY * distanceY));
 				sum = app->physics->GravityForce(auxiliar->data->mass, mass, distance, Vec2(distanceX, distanceY));
+				//Here we take the result of the force of a planet on the player and 
+				//add it to the result of the total forces that affect the player.
 				finalForce.x -= (sum.x);
 				finalForce.y -= (sum.y);
 			}
@@ -152,6 +160,7 @@ bool ModulePlayer::Update(float dt, Application* app)
 		}
 		if (metersToPixels(position.y) >= 850 && app->scene->canWin == false)
 		{
+			//here we calculate the AeroDragForce one that affects the player at a certain height
 			Vec2 force;
 			force += app->physics->AeroDragForce(AIR_DENSITY, Vec2(velocity.x, velocity.y), SURFACE, DRAG_COEFICIENT);
 			finalForce.y += (force.y);
@@ -173,7 +182,9 @@ bool ModulePlayer::Update(float dt, Application* app)
 				SDL_Rect rec = currentAnimation->GetCurrentFrame();
 				currentAnimation = &fireAnimation;
 				currentAnimation->Update();
-
+				
+				//Here we calculate the rotation of the playerand with that rotation we apply a force(the propulsion) 
+				//and we add it as the rest of the forces to the final force
 				app->renderer->Blit(ship, metersToPixels(position.x), metersToPixels(position.y), &rec, 2, 1.0f, rotation, 20, 52);
 				ang = ((rotation * M_PI) / HALF_CIRCLE);
 				finalForce.y -= (PLAYER_POWER * cos(ang));
@@ -284,6 +295,9 @@ bool ModulePlayer::Update(float dt, Application* app)
 
 	if (metersToPixels(position.y) > -4500 && metersToPixels(position.y) < -4000)
 	{
+		
+		//Here the forces of the nebula are calculated we calculate the BuoyancyForce and the HydroDragForce 
+		//to give that effect of expulsion of the nebula.
 		int level = -5000;
 		Vec2 buoyForce = app->physics->BuoyancyForce(WATER_DENSITY, GRAVITY, level);
 		Vec2 hydroDragForce = app->physics->HydroDragForce(app->scene->player);
@@ -310,25 +324,28 @@ bool ModulePlayer::Update(float dt, Application* app)
 		finalForce.y -= buoyForce.y ;
 		finalForce.y += hydroDragForce.y;
 	}
-
+	
+	//here we follow the physical formula to take the total forceand depending on the mass calculate the 
+	//total acceleration to be able to integrate it.
 	acceleration.x += (finalForce.x) / (mass);
 	acceleration.y += (finalForce.y) / (mass);
 
-	if (acceleration.y > 2)
+	//here we take accelerationand speedand limit them so as not to lose control of the physics
+	if (acceleration.y > MAX_ACCELERATION)
 	{
-		acceleration.y = 2;
+		acceleration.y = MAX_ACCELERATION;
 	}
-	else if (acceleration.y < -2)
+	else if (acceleration.y < -MAX_ACCELERATION)
 	{
-		acceleration.y = -2;
+		acceleration.y = -MAX_ACCELERATION;
 	}
-	if (acceleration.x > 2)
+	if (acceleration.x > MAX_ACCELERATION)
 	{
-		acceleration.x = 2;
+		acceleration.x = MAX_ACCELERATION;
 	}
-	else if (acceleration.x < -2)
+	else if (acceleration.x < -MAX_ACCELERATION)
 	{
-		acceleration.x = -2;
+		acceleration.x = -MAX_ACCELERATION;
 	}
 
 	if (velocity.x > MAX_VELOCITY)
@@ -347,7 +364,9 @@ bool ModulePlayer::Update(float dt, Application* app)
 	{
 		velocity.y = -MAX_VELOCITY;
 	}
-
+	
+	//Here we do the integration of the acceleration, this function is in charge of taking that accelerationand 
+	//giving us a speed and a position that will be added to the ones we already had
 	Vec2 pos;
 	pos = app->physics->Integrator(&velocity, DT, acceleration);
 	position.y += pos.y;
@@ -374,8 +393,6 @@ void ModulePlayer::launchTorpedo(Application* app)
 	{
 		float ang;
 		ang = ((rotation * M_PI) / HALF_CIRCLE);
-		//velocity.y = ( cos(ang));
-		//velocity.x = ( sin(ang));
 		
 		app->bodyesManager->CreateTorpedo(Vec2(position.x, position.y), Vec2((sin(ang)) * TORPEDO_POWER, (cos(ang)) * -TORPEDO_POWER), rotation, Vec2(acceleration.x, acceleration.y));
 		ammo -= 1;
@@ -386,6 +403,8 @@ void ModulePlayer::setPos(Application* app)
 {
 	for (int i = 0; i < 6; i++)
 	{
+		
+		//here we use quaternions to calculate the rotation of the different colliders that the player has.
 		float ang = ((-rotation * M_PI) / HALF_CIRCLE);
 		ang = ang / 2;
 		float cuat1[4] = { cos(ang),0,0,sin(ang) };
